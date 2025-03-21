@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Article</title>
+  <!--  CKEditor 5 Classic Build -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <h1>Add Article</h1>
+  
+  <form id="add-article-form">
+    <label for="articleTitle">Article Title:</label>
+    <input type="text" id="articleTitle" name="title" required><br><br>
+    
+    <label for="articleContent">Content:</label>
+    <!-- 使用 textarea 作为 CKEditor 的容器 -->
+    <textarea id="editor" name="content"></textarea>
+    <br>
+    
+    <label for="locationSelect">Select Locations (optional):</label>
+    <div id="locationContainer"></div>
+    <!-- 地点选项由 add_article.js 动态加载 -->
+    
+    <br>
+    
+    <button type="submit">Submit</button>
+  </form>
+  
+  <p id="output"></p>
+  
+  <script src="js/add_article.js"></script>
+</body>
+</html>
