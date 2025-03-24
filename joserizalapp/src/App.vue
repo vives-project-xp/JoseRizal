@@ -1,13 +1,18 @@
 <template>
   <div class="app-container">
-    <div class="page-container">
-      <div class="page-header">
-        <AppHeaderComponent @changePage="scrollToComponent" />
-        <div id="introduction" class="pageContent">
-          <IntoductionPageComponent />
-        </div>
-        <div id="test" class="pageContent">
-          <test />
+    <div class="landing-page">
+      <div class="page-container">
+        <div class="page-header">
+          <AppHeaderComponent @changePage="scrollToComponent" />
+          <div class="LandingPage">
+            <LandingPageComponent />
+          </div>
+          <div id="introduction" class="pageContent">
+            <IntoductionPageComponent />
+          </div>
+          <div id="test" class="pageContent">
+            <test />
+          </div>
         </div>
       </div>
     </div>
@@ -18,6 +23,7 @@
 import AppHeaderComponent from './components/AppHeaderComponent.vue';
 import IntoductionPageComponent from './components/IntroductionPageComponent.vue';
 import test from './components/AddEditComponent.vue';
+import LandingPageComponent from './components/LandingPageComponent.vue'
 </script>
 
 <script>
