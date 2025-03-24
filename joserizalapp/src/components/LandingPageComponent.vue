@@ -2,7 +2,7 @@
     <div class="LandingPage"> 
         <div class="overlay">
             <h1 class="title">JOSE RIZAL</h1>
-            <img src= "@/assets/jose_rizal_clipping.png" alt="Jose Rizal Portrait" class="logo" />
+            <img src= "@/assets/jose_rizal_clippingv2.png" alt="Jose Rizal Portrait" class="logo" />
         </div>
     </div>
 </template>
