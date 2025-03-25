@@ -1,6 +1,8 @@
 <template>
     <div class="header">
-        <button @click="toggleMenu"><img src="../assets/list.svg"></button>
+        <button @click="toggleMenu">
+            <img src="../assets/list.svg" alt="Menu">
+        </button>
         <div v-if="showMenu" class="menu">
             <a @click="navigate('introduction')">Introduction</a>
             <a @click="navigate('login')">Login</a>
@@ -35,6 +37,7 @@ export default {
     position: fixed;
     right: 25px;
     top: 20px;
+    z-index: 1000;
 }
 
 .header button {
