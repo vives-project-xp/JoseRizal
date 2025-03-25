@@ -66,14 +66,11 @@ export default {
   color: black;
   background-image: url("@/assets/background.png");
   background-size: cover;
-  background-repeat:inherit;
   background-attachment: fixed;
 }
 
-.pageContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.pageContainer {
+  padding: 5px;
 }
+
 </style>
