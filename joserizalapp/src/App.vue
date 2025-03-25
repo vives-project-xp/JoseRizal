@@ -1,10 +1,9 @@
 <template>
-  <div class="app-container">
-    <div class="landing-page">
+  <div class="appContainer">
       <div class="page-container">
         <div class="page-header">
           <AppHeaderComponent @changePage="scrollToComponent" />
-          <div class="LandingPage">
+          <div class="pageContent">
             <LandingPageComponent />
           </div>
           <div id="introduction" class="pageContent">
@@ -15,7 +14,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -52,7 +50,24 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Pompiere&display=swap');
+</style>
+
+<style scoped>
+.appContainer {
+  font-family: 'Pompiere', sans-serif;
+  font-style: normal;
+  color: black;
+  background-image: url("@/assets/background.png");
+  background-size: cover;
+  background-repeat:inherit;
+  background-attachment: fixed;
+}
+
 .pageContent {
-  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

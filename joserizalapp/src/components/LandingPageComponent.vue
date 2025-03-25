@@ -20,9 +20,6 @@ export default {
 
 <style scoped>
 .LandingPage {
-    background-image: url("@/assets/background.png");
-    background-size: cover;
-    background-position: center;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -31,16 +28,8 @@ export default {
     position: relative;
 }
 
-.overlay {
-    padding: 20px;
-    border-radius: 10px
-}
-
 .title {
-    font-family: "Pompiere", sans-serif;
     font-weight: 400;
-    font-style: normal;
-    color: black;
     font-size: 5rem;
     margin-top: 50px;
     margin-bottom: -150px;
