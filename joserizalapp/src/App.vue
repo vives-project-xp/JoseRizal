@@ -6,13 +6,13 @@
           <div class="pageContent">
             <LandingPageComponent />
           </div>
-          <div class="pageContent">
+          <div class="pageContent" id="introduction">
             <IntoductionPageComponent />
           </div>
-          <div class="pageContent">
+          <div class="pageContent" id="login">
             <loginPageComponent/>
           </div>
-          <div class="pageContent">
+          <div class="pageContent" id="addEdit">
             <AddEditPageComponent />
           </div>
         </div>
@@ -42,15 +42,11 @@ export default {
         const element = document.getElementById(componentId);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          console.error(`Element with ID '${componentId}' not found`);
         }
       });
     }
-  },
-  components: {
-    IntoductionPageComponent,
-    AddEditPageComponent,
-    loginPageComponent,
-    
   }
 }
 </script>

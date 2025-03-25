@@ -1,10 +1,10 @@
 <template>
     <div class="header">
-        <button @click="showMenu = !showMenu"><img src="../assets/list.svg"></button>
+        <button @click="toggleMenu"><img src="../assets/list.svg"></button>
         <div v-if="showMenu" class="menu">
             <a @click="navigate('introduction')">Introduction</a>
             <a @click="navigate('login')">Login</a>
-            <a @click="navigate('addEdit')">Add - Edit</a>
+            <a @click="navigate('addEdit')" v-if="isLoggedIn">Add - Edit</a>
         </div>
     </div>
 </template>
@@ -13,11 +13,16 @@
 export default {
     data() {
         return {
-            showMenu: false
+            showMenu: false,
+            isLoggedIn: false
         };
     },
     methods: {
+        toggleMenu() {
+            this.showMenu = !this.showMenu;
+        },
         navigate(componentId) {
+            console.log('Navigating to:', componentId);
             this.$emit('changePage', componentId);
             this.showMenu = false;
         }
@@ -30,7 +35,6 @@ export default {
     position: fixed;
     right: 25px;
     top: 20px;
-
 }
 
 .header button {
