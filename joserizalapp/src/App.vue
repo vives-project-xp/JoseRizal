@@ -1,16 +1,19 @@
 <template>
   <div class="appContainer">
-      <div class="page-container">
-        <div class="page-header">
+      <div class="pageContainer">
+        <div class="pageHeader">
           <AppHeaderComponent @changePage="scrollToComponent" />
           <div class="pageContent">
             <LandingPageComponent />
           </div>
-          <div id="introduction" class="pageContent">
+          <div class="pageContent">
             <IntoductionPageComponent />
           </div>
-          <div id="test" class="pageContent">
-            <test />
+          <div class="pageContent">
+            <loginPageComponent/>
+          </div>
+          <div class="pageContent">
+            <AddEditPageComponent />
           </div>
         </div>
       </div>
@@ -20,8 +23,9 @@
 <script setup>
 import AppHeaderComponent from './components/AppHeaderComponent.vue';
 import IntoductionPageComponent from './components/IntroductionPageComponent.vue';
-import test from './components/AddEditComponent.vue';
+import AddEditPageComponent from './components/AddEditPageComponent.vue';
 import LandingPageComponent from './components/LandingPageComponent.vue'
+import loginPageComponent from './components/LoginPageComponent.vue'
 </script>
 
 <script>
@@ -44,7 +48,9 @@ export default {
   },
   components: {
     IntoductionPageComponent,
-    test,
+    AddEditPageComponent,
+    loginPageComponent,
+    
   }
 }
 </script>

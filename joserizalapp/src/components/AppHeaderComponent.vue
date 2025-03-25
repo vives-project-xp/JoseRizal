@@ -3,7 +3,8 @@
         <button @click="showMenu = !showMenu"><img src="../assets/list.svg"></button>
         <div v-if="showMenu" class="menu">
             <a @click="navigate('introduction')">Introduction</a>
-            <a @click="navigate('test')">Test</a>
+            <a @click="navigate('login')">Login</a>
+            <a @click="navigate('addEdit')">Add - Edit</a>
         </div>
     </div>
 </template>
@@ -26,18 +27,16 @@ export default {
 
 <style scoped>
 .header {
-    position: sticky;
-    background-color: white;
-    position: sticky;
-    top: 10px;
+    position: fixed;
+    right: 25px;
+    top: 20px;
+
 }
 
 .header button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    right: 0;
-    position: absolute;
 }
 
 .header button img {
