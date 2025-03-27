@@ -18,7 +18,7 @@ async function fetchCityDetails() {
         return;
     }
     try {
-        const response = await fetch(`http://127.0.0.1:8000/city/${cityId}`, {
+        const response = await fetch(`http://100.107.144.48:8000/city/${cityId}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         if (!response.ok) {
@@ -43,9 +43,9 @@ async function fetchCityDetails() {
     }
 }
 
-// -------------------- list of Location --------------------
+// -------------------- 获取 Location 列表 --------------------
 async function fetchLocations() {
-    // Dynamically obtain the latest selected_city_id
+    // 每次调用时动态获取最新的 selected_city_id
     const cityId = localStorage.getItem("selected_city_id");
     console.log("Fetching locations for cityId:", cityId);
     if (!cityId) {
@@ -54,7 +54,7 @@ async function fetchLocations() {
         return;
     }
     try {
-        const response = await fetch(`http://127.0.0.1:8000/city/${cityId}/locations`, {
+        const response = await fetch(`http://100.107.144.48:8000/city/${cityId}/locations`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         if (!response.ok) {
@@ -92,7 +92,7 @@ async function fetchLocations() {
 async function deleteLocation(location_id) {
     if (!confirm("Are you sure you want to delete this location?")) return;
     try {
-        const response = await fetch(`http://127.0.0.1:8000/delete_location/${location_id}`, {
+        const response = await fetch(`http://100.107.144.48:8000/delete_location/${location_id}`, {
             method: "DELETE",
             headers: { "Authorization": `Bearer ${token}` }
         });
@@ -107,105 +107,63 @@ async function deleteLocation(location_id) {
 
 // -------------------- Add Location --------------------
 async function addLocation() {
-<<<<<<< HEAD
-    // Get the selected city ID from local storage
-=======
     // 获取本地存储的选定城市 ID
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
     const cityId = localStorage.getItem("selected_city_id");
     if (!cityId) {
         alert("❌ No city selected! Redirecting to city list.");
         window.location.href = "cities.html";
         return;
     }
-<<<<<<< HEAD
-    
-    // Retrieve form values
-=======
 
     // 获取表单数据
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
     const name = document.getElementById("locationName").value;
     const description = document.getElementById("locationDescription").value;
     const latitude = document.getElementById("latitude").value;
     const longitude = document.getElementById("longitude").value;
-<<<<<<< HEAD
-    
-    // Basic form validation
-    if (!name || !description || !latitude || !longitude) {
-        alert("Please fill out all required fields.");
-        return;
-    }
-    
-    // Prepare location_data object
-=======
 
-    // 确保用户已经在地图上选择了一个位置
+    
     if (!latitude || !longitude) {
         alert("❌ Please select a location on the map!");
         return;
     }
 
-    // 构造 JSON 数据
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
+    
     const locationData = {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude)
     };
-<<<<<<< HEAD
-    
-=======
 
     const data = {
-        city_id: parseInt(cityId),  // 确保 city_id 是整数
+        city_id: parseInt(cityId),  
         name: name,
         description: description,
         location_data: locationData
     };
 
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
     try {
-        const response = await fetch("http://127.0.0.1:8000/add_location/", {
+        const response = await fetch("http://100.107.144.48:8000/add_location/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-<<<<<<< HEAD
-            body: JSON.stringify({
-                city_id: cityId,
-                name: name,
-                description: description,
-                location_data: locationData
-            })
-        });
-=======
             body: JSON.stringify(data)
         });
 
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.detail || "Failed to add location");
         }
-<<<<<<< HEAD
-        const data = await response.json();
-        alert(data.message);
-        window.location.href = "locations.html"; // Redirect back to locations page after adding
-=======
 
         const result = await response.json();
         alert(result.message);
-        window.location.href = "locations.html"; // 跳转到地点列表页面
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
+        window.location.href = "locations.html"; 
     } catch (error) {
         console.error("Error adding location:", error);
         alert("❌ Error adding location: " + error.message);
     }
 }
 
-<<<<<<< HEAD
-=======
 let map;
 let marker;
 
@@ -233,11 +191,11 @@ function placeMarker(location) {
         });
     }
 
-    // 将选定的坐标填充到输入框（隐藏字段）
+    
     document.getElementById("latitude").value = location.lat();
     document.getElementById("longitude").value = location.lng();
 
-    // 更新显示区域（如果需要显示当前选中坐标）
+
     document.getElementById("selectedCoords").innerText =
         "Selected Coordinates: (" + location.lat().toFixed(6) + ", " + location.lng().toFixed(6) + ")";
 }
@@ -247,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (selectBtn) {
       selectBtn.addEventListener("click", function () {
         const mapDiv = document.getElementById("map");
-        // 切换地图显示状态
+        
         if (mapDiv.style.display === "none" || mapDiv.style.display === "") {
           mapDiv.style.display = "block";
-          // 如果地图还没有初始化，则调用 initMap()；否则，触发 resize 事件确保地图正确显示
+         
           if (!map) {
             initMap();
           } else {
@@ -265,7 +223,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
->>>>>>> 70572b9 (Add database, backend, and admin_frontend folders)
 
 // -------------------- Called when the page loads --------------------
 const selectedCityId = localStorage.getItem("selected_city_id");
@@ -276,4 +233,3 @@ if (selectedCityId) {
     alert("❌ No city selected. Redirecting to city list.");
     window.location.href = "cities.html";
 }
-
