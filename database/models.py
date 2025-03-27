@@ -111,7 +111,7 @@ class admin(Base):
     def verify_password(self, plain_password):
         return bcrypt.checkpw(plain_password.encode('utf-8'), self.password_hash.encode('utf-8'))
     
-# 多对多关联表: article_location
+
 article_location = Table(
     'article_location',
     Base.metadata,
@@ -124,12 +124,12 @@ class Article(Base):
     __tablename__ = 'article'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(255), nullable=False)            # 文章标题
-    content_html = Column(Text, nullable=False)              # 存储 WYSIWYG 编辑器生成的 HTML 内容
+    title = Column(String(255), nullable=False)            
+    content_html = Column(Text, nullable=False)              
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
-    # 定义与 Location 的多对多关系
+    
     locations = relationship(
         "Location",
         secondary=article_location,
