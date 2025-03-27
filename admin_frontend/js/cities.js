@@ -1,23 +1,23 @@
 // Author: YIBO LIANG
 
 document.addEventListener("DOMContentLoaded", function () {
-    // 如果页面中存在城市列表，则调用 fetchCities()
+    // If there is a list of cities on the page, call fetchCities()
     if (document.getElementById("city-list")) {
         fetchCities();
     }
-    // 如果页面中存在添加城市的表单，则注册表单提交事件
+    // If there is a form to add a city on the page, the registration form submission event
     if (document.getElementById("add-city-form")) {
         document.getElementById("add-city-form").addEventListener("submit", addCity);
     }
 });
 
-// 显示所有城市的功能
+// Show all cities
 async function fetchCities() {
     const token = localStorage.getItem("access_token");
     console.log("Token:", token);
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/cities", {
+        const response = await fetch("http://100.107.144.48:8000/cities", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -32,7 +32,7 @@ async function fetchCities() {
         cities.forEach(city => {
             const li = document.createElement("li");
             
-            // 如果有图片，则在城市名称前显示
+            // If there is an image, it will be displayed before the city name
             if (city.image_url) {
                 const img = document.createElement("img");
                 img.src = city.image_url;
@@ -46,7 +46,7 @@ async function fetchCities() {
             cityText.innerText = city.name;
             cityText.style.cursor = "pointer";
             cityText.addEventListener("click", () => {
-                // 每次点击城市时，存储最新的城市 ID
+               
                 localStorage.setItem("selected_city_id", city.id);
                 console.log("Selected city ID set to:", localStorage.getItem("selected_city_id"));
                 window.location.href = "locations.html";
@@ -62,9 +62,9 @@ async function fetchCities() {
     }
 }
 
-// 添加城市（支持图片上传）的功能
+// add a city
 async function addCity(event) {
-    event.preventDefault(); // 阻止表单默认提交
+    event.preventDefault(); 
 
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -73,24 +73,24 @@ async function addCity(event) {
         return;
     }
 
-    // 使用 FormData 来提交 multipart/form-data 数据（文本和文件）
+    
     const formData = new FormData();
     formData.append("name", document.getElementById("cityName").value);
     formData.append("description", document.getElementById("cityDescription").value);
 
-    // 获取文件上传的 input（可选）
+    
     const fileInput = document.getElementById("cityImage");
     if (fileInput && fileInput.files.length > 0) {
         formData.append("file", fileInput.files[0]);
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/add_city/", {
+        const response = await fetch("http://100.107.144.48:8000/add_city/", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${token}` // 认证信息
+                "Authorization": `Bearer ${token}` 
             },
-            body: formData // 直接传输 FormData，浏览器会自动设置 Content-Type
+            body: formData 
         });
 
         const data = await response.json();
@@ -99,7 +99,7 @@ async function addCity(event) {
             console.log("Uploaded image URL:", data.image_url);
         }
         alert("✅ City added successfully!");
-        window.location.href = "cities.html"; // 添加成功后跳转回城市列表
+        window.location.href = "cities.html"; // After adding successfully, jump back to the city list
 
     } catch (error) {
         console.error("Error adding city:", error);
@@ -108,24 +108,80 @@ async function addCity(event) {
 }
 
 
-// 加载文章列表，展示每篇文章的标题和更新时间（或创建时间）
+
+// Load the article list, display the title and update time of each article,and add delete and edit buttons for each article.
 async function loadArticles() {
     try {
-      const response = await fetch('http://localhost:8000/articles');
-      const articles = await response.json();
-      const articleList = document.getElementById('article-list');
-      articleList.innerHTML = '';
-      articles.forEach(article => {
-        const li = document.createElement('li');
-        // 如果有 updated_at 则显示 updated_at，否则显示 created_at
-        const time = article.updated_at || article.created_at;
-        li.innerText = `${article.title} (Updated: ${time})`;
-        articleList.appendChild(li);
-      });
+        const response = await fetch('http://100.107.144.48:8000/articles');
+        const articles = await response.json();
+        const articleList = document.getElementById('article-list');
+        articleList.innerHTML = '';
+
+        articles.forEach(article => {
+            // Create list items and set styles so that information and buttons are distributed appropriately
+            const li = document.createElement('li');
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.alignItems = "center";
+            li.style.padding = "10px";
+            li.style.marginBottom = "10px";
+            li.style.backgroundColor = "#fff";
+            li.style.borderRadius = "5px";
+
+            // Create an information area that jumps to the details page when clicked
+            const infoSpan = document.createElement("span");
+            infoSpan.style.cursor = "pointer";
+            const time = article.updated_at || article.created_at;
+            infoSpan.innerHTML = `${article.title} (Updated: ${time})`;
+            infoSpan.addEventListener('click', () => {
+                window.location.href = `article_detail.html?id=${article.id}`;
+            });
+            li.appendChild(infoSpan);
+
+            // Creating a Button Container
+            const btnContainer = document.createElement("div");
+
+            // delete button
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerText = "delete";
+            deleteBtn.style.marginRight = "10px";
+            deleteBtn.addEventListener("click", async (event) => {
+                
+                event.stopPropagation();
+                if (confirm("Are you sure you want to delete this article?")) {
+                    try {
+                        const res = await fetch(`http://100.107.144.48:8000/articles/${article.id}`, {
+                            method: "DELETE"
+                        });
+                        const result = await res.json();
+                        alert(result.message);
+                        // After the deletion is successful, remove the item from the list
+                        li.remove();
+                    } catch (error) {
+                        console.error("Error deleting article", error);
+                        alert("Deletion failed");
+                    }
+                }
+            });
+            btnContainer.appendChild(deleteBtn);
+
+            
+            const editBtn = document.createElement("button");
+            editBtn.innerText = "edit";
+            editBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                
+                window.location.href = `article_edit.html?id=${article.id}`;
+            });
+            btnContainer.appendChild(editBtn);
+
+            li.appendChild(btnContainer);
+            articleList.appendChild(li);
+        });
     } catch (error) {
-      console.error('Error loading articles:', error);
+        console.error('Error loading articles:', error);
     }
-  }
-  
-  loadArticles();
+}
+
+loadArticles();
   
