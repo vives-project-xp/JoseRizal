@@ -18,7 +18,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 async def upload_image(file: UploadFile = File(...)):
     
     if not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="只允许上传图片文件")
+        raise HTTPException(status_code=400, detail="Only allow image files to be uploaded")
     
     
     ext = os.path.splitext(file.filename)[1]
@@ -29,7 +29,7 @@ async def upload_image(file: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
     except Exception as e:
-        raise HTTPException(status_code=500, detail="上传图片失败: " + str(e))
+        raise HTTPException(status_code=500, detail="Failed to upload image: " + str(e))
     
     
     return {"url": f"http://localhost:8000/{UPLOAD_FOLDER}/{unique_filename}"}
@@ -69,7 +69,7 @@ def get_article(article_id: int, db: Session = Depends(get_db)):
     }
     return result
 
-# 创建新文章
+# Create a new article
 @router.post("/articles")
 def create_article(data: dict, db: Session = Depends(get_db)):
     if not data or 'title' not in data or 'content_html' not in data:
@@ -80,7 +80,7 @@ def create_article(data: dict, db: Session = Depends(get_db)):
         content_html=data['content_html']
     )
 
-    # 如果传入了 location_ids，则将文章与对应地点关联
+    # If location_ids is passed in, associate the article with the corresponding location
     location_ids = data.get('location_ids')
     if location_ids and isinstance(location_ids, list):
         for loc_id in location_ids:
@@ -102,7 +102,7 @@ def create_article(data: dict, db: Session = Depends(get_db)):
 def update_article(article_id: int, data: dict, db: Session = Depends(get_db)):
     article = db.query(Article).get(article_id)
     if not article:
-        raise HTTPException(status_code=404, detail="Article not exite")
+        raise HTTPException(status_code=404, detail="Article not exist")
     if not data:
         raise HTTPException(status_code=400, detail="No updated data provided")
 
@@ -112,7 +112,10 @@ def update_article(article_id: int, data: dict, db: Session = Depends(get_db)):
         article.content_html = data['content_html']
 
     if 'location_ids' in data:
-        article.locations.clear()
+        # Remove all connected places first
+        for loc in article.locations.all():
+            article.locations.remove(loc)
+        # Add a new associated location
         for loc_id in data['location_ids']:
             location = db.query(Location).get(loc_id)
             if location:
