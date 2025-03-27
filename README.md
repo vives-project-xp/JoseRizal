@@ -45,3 +45,7 @@
 
 ## License
 <-- Write the license of José Rizal walk -->
+
+necessary packages for backend
+bcrypt version 4.0.1
+pyjwt
