@@ -13,7 +13,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Marked } from 'marked'
+// import { Marked } from 'marked'
 
 import fetchArticles from '@/services/fetchArticles'
 

@@ -5,6 +5,8 @@
         </button>
         <div v-if="showMenu" class="menu">
             <a @click="navigate('introduction')">Introduction</a>
+            <a @click="navigate('walkingTour')">Walking Tour</a>
+            <a @click="navigate('articleList')">Articles</a>
             <a @click="navigate('login')">Login</a>
             <a @click="navigate('addEdit')" v-if="isLoggedIn">Add - Edit</a>
         </div>

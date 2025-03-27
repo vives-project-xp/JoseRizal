@@ -5,10 +5,13 @@
             <div v-if="errorMessage" class="error-message">
                 {{ errorMessage }}
             </div>
-            <form @submit.prevent="handleLogin">
+            <div v-if="successMessage" class="success-message">
+                {{ successMessage }}
+            </div>
+            <form @submit.prevent="handleLogin" v-if="!isLoggedIn">
                 <div class="formGroup">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" v-model="email" required placeholder="Enter your email">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" v-model="username" required placeholder="Enter your name">
                 </div>
                 <div class="formGroup">
                     <label for="password">Password</label>
@@ -18,56 +21,81 @@
                     <button type="submit" class="loginButton">Login</button>
                 </div>
             </form>
+            <div v-else class="logoutAction">
+                <p>You are logged in as {{ loggedInUser }}</p>
+                <button @click="handleLogout" class="logoutButton">Logout</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     name: 'LoginPageComponent',
     data() {
         return {
-            email: '',
+            username: '',
             password: '',
-            errorMessage: ''
+            errorMessage: '',
+            successMessage: '',
+            isLoggedIn: false,
+            loggedInUser: null
         }
     },
     methods: {
         async handleLogin() {
+            this.errorMessage = '';
+            this.successMessage = '';
             try {
-                const response = await fetch('http://localhost:8000/auth/token', {
+                const response = await fetch('http://127.0.0.1:8000/auth/token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
-                        username: this.email,
+                        username: this.username,
                         password: this.password
                     })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (!response.ok) {
                     this.errorMessage = data.detail || 'Login failed. Please check your credentials.';
                     return;
+                } else {
+                    localStorage.setItem('token', data.access);
+                    localStorage.setItem('username', JSON.stringify(data.username));
+
+                    this.successMessage = 'Login successful!';
+                    this.isLoggedIn = true;
+                    this.loggedInUser = data.user.username;
+
+                    this.username = '';
+                    this.password = '';
+
+                    this.$emit('login');
+
+                    if (this.$parent) {
+                        this.$parent.isLoggedIn = true;
+                    }
                 }
-                
-                localStorage.setItem('token', data.access_token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-                
-                this.$emit('login-success');
-                
-                this.email = '';
-                this.password = '';
-                this.errorMessage = '';
-                
-                this.$emit('changePage', 'addEdit');
             } catch (error) {
-                console.error('Login error:', error);
-                this.errorMessage = 'An error occurred during login. Please try again.';
+                this.errorMessage = 'An error occurred. Please try again.';
+            }
+        },
+
+        handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            this.isLoggedIn = false;
+            this.loggedInUser = null;
+            this.$emit('logout');
+
+            this.successMessage = 'You have been logged out.';
+
+            if (this.$parent) {
+                this.$parent.isLoggedIn = false;
             }
         }
     }

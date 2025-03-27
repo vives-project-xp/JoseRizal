@@ -1,17 +1,19 @@
 <template>
-    <h1>Walking tour</h1>
-    <div class="article-list">
-        <ArticleCard
-        v-for="article in filteredArticles"
-        :key="article.id"
-        :image-url="article.imageUrl"
-        :title="article.title"
-        :preview-text="article.preview"
-        :article-id="article.id"
-        />
+    <div>
+        <h1>Walking tour</h1>
+        <div class="article-list">
+            <ArticleCard
+            v-for="article in filteredArticles"
+            :key="article.id"
+            :image-url="article.imageUrl"
+            :title="article.title"
+            :preview-text="article.preview"
+            :article-id="article.id"
+            />
+        </div>
     </div>
 </template>
-      
+
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 

@@ -1,4 +1,5 @@
 <template>
+  <div>
     <h1>Walking tour</h1>
 
     <div class="article-controls">
@@ -24,7 +25,8 @@
         :article-id="article.id"
       />
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
   import { ref, computed, onMounted } from 'vue'
