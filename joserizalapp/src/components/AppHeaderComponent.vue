@@ -15,10 +15,15 @@
 
 <script>
 export default {
+    props: {
+        isLoggedIn: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
-            showMenu: false,
-            isLoggedIn: false
+            showMenu: false
         };
     },
     methods: {
