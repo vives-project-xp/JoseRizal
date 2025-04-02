@@ -59,8 +59,9 @@ export default {
 
                 if (response.ok) {
                     localStorage.setItem('token', data.access_token);
-                    this.$router.push('/admin');
-                    return;
+                    this.isLoggedIn = true;
+                    this.loggedInUser = this.username;
+                    this.$router.push('/admin'); 
                 } else {
                     this.errorMessage = data.detail || 'Login failed. Please try again.';
                 }
@@ -69,9 +70,14 @@ export default {
                 this.errorMessage = 'An error occurred. Please try again later.';
             }
         },
+        handleLogout() {
+            localStorage.removeItem('token');
+            this.isLoggedIn = false;
+            this.loggedInUser = null;
+            this.$router.push('/login'); // Redirect to login page
+        }
     }
 }
-
 </script>
 
 <style>
