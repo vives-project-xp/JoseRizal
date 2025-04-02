@@ -2,7 +2,7 @@
   <div class="appContainer">
     <div class="pageContainer">
       <div class="pageHeader">
-        <AppHeaderComponent @changePage="scrollToComponent" :isLoggedIn="isLoggedIn" />
+        <AppHeaderComponent @changePage="scrollToComponent" />
           <div class="pageContent">
             <LandingPageComponent />
           </div>
@@ -17,12 +17,6 @@
           </div>
           <div class="pageContent" id="articleList">
             <ArticleList />
-          <!-- <div class="pageContent" id="login">
-            <LoginPageComponent @login="handleLogin" @logout="handleLogout" />
-          </div>
-          <div class="pageContent" id="addEdit" v-if="isLoggedIn">
-            <AddEditPageComponent />
-          </div> -->
         </div>
       </div>
     </div>
@@ -32,9 +26,7 @@
 <script setup>
 import AppHeaderComponent from '../components/AppHeaderComponent.vue';
 import IntoductionPageComponent from '../components/IntroductionPageComponent.vue';
-// import AddEditPageComponent from '../components/AddEditPageComponent.vue';
 import LandingPageComponent from '../components/LandingPageComponent.vue'
-// import LoginPageComponent from '../components/LoginPageComponent.vue'
 import ArticleList from '../components/ArticleList.vue';
 import WalkingTour from '@/components/WalkingTour.vue';
 import CustomTour from '@/components/CustomTour.vue';
@@ -45,7 +37,6 @@ export default {
   data() {
     return {
       selectedComponent: 'introduction',
-      // isLoggedIn: false
     }
   },
   methods: {
@@ -61,13 +52,6 @@ export default {
       });
     }
   }
-  // mounted(){
-  // const token = localStorage.getItem('token');
-  //   const username = localStorage.getItem('username');
-  //   if (token && username) {
-  //     this.isLoggedIn = true;
-  //   }
-  // },
 }
 </script>
 
