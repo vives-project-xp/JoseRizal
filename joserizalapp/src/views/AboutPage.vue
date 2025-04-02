@@ -7,6 +7,7 @@
         <img :src="article.imageUrl" :alt="article.title" class="article-image">
         <div class="content" v-html="parsedContent"></div>
         </div>
+        
     </div>  
 </template>
 
