@@ -5,9 +5,9 @@
             <div v-if="errorMessage" class="error-message">
                 {{ errorMessage }}
             </div>
-            <div v-if="successMessage" class="success-message">
+            <!-- <div v-if="successMessage" class="success-message">
                 {{ successMessage }}
-            </div>
+            </div> -->
             <form @submit.prevent="handleLogin" v-if="!isLoggedIn">
                 <div class="formGroup">
                     <label for="name">Name</label>
@@ -60,47 +60,37 @@ export default {
 
                 const data = await response.json();
 
-                if (!response.ok) {
-                    this.errorMessage = data.detail || 'Login failed. Please check your credentials.';
+                if (response.ok) {
+                    localStorage.setItem('token', data.access_token);
+                    this.$router.push('/admin');
                     return;
                 } else {
-                    localStorage.setItem('token', data.access);
-                    localStorage.setItem('username', JSON.stringify(data.username));
-
-                    this.successMessage = 'Login successful!';
-                    this.isLoggedIn = true;
-                    this.loggedInUser = data.user.username;
-
-                    this.username = '';
-                    this.password = '';
-
-                    this.$emit('login');
-
-                    if (this.$parent) {
-                        this.$parent.isLoggedIn = true;
-                    }
+                    this.errorMessage = data.detail || 'Login failed. Please try again.';
                 }
             } catch (error) {
-                this.errorMessage = 'An error occurred. Please try again.';
+                console.error('Error during login:', error);
+                this.errorMessage = 'An error occurred. Please try again later.';
             }
         },
 
-        handleLogout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            this.isLoggedIn = false;
-            this.loggedInUser = null;
-            this.$emit('logout');
+        // handleLogout() {
+        //     localStorage.removeItem('token');
+        //     localStorage.removeItem('username');
+        //     this.isLoggedIn = false;
+        //     this.loggedInUser = null;
+        //     this.$emit('logout');
 
-            this.successMessage = 'You have been logged out.';
+        //     this.successMessage = 'You have been logged out.';
 
-            if (this.$parent) {
-                this.$parent.isLoggedIn = false;
-            }
-        }
+        //     if (this.$parent) {
+        //         this.$parent.isLoggedIn = false;
+        //     }
+        // }
     }
 }
 
 </script>
 
-<style></style>
+<style>
+
+</style>

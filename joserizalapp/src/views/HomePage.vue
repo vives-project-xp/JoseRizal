@@ -17,12 +17,12 @@
           </div>
           <div class="pageContent" id="articleList">
             <ArticleList />
-          <div class="pageContent" id="login">
+          <!-- <div class="pageContent" id="login">
             <LoginPageComponent @login="handleLogin" @logout="handleLogout" />
           </div>
           <div class="pageContent" id="addEdit" v-if="isLoggedIn">
             <AddEditPageComponent />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -32,9 +32,9 @@
 <script setup>
 import AppHeaderComponent from '../components/AppHeaderComponent.vue';
 import IntoductionPageComponent from '../components/IntroductionPageComponent.vue';
-import AddEditPageComponent from '../components/AddEditPageComponent.vue';
+// import AddEditPageComponent from '../components/AddEditPageComponent.vue';
 import LandingPageComponent from '../components/LandingPageComponent.vue'
-import LoginPageComponent from '../components/LoginPageComponent.vue'
+// import LoginPageComponent from '../components/LoginPageComponent.vue'
 import ArticleList from '../components/ArticleList.vue';
 import WalkingTour from '@/components/WalkingTour.vue';
 import CustomTour from '@/components/CustomTour.vue';
@@ -45,37 +45,29 @@ export default {
   data() {
     return {
       selectedComponent: 'introduction',
-      isLoggedIn: false
+      // isLoggedIn: false
     }
   },
-
-  mounted(){
-  const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
-    if (token && username) {
-      this.isLoggedIn = true;
-    }
-  },
-
   methods: {
-  scrollToComponent(componentId) {
-    this.selectedComponent = componentId;
-    this.$nextTick(() => {
-      const element = document.getElementById(componentId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        console.error(`Element with ID '${componentId}' not found`);
-      }
-    });
-  },
-  handleLogin() {
-    this.isLoggedIn = true;
-  },
-  handleLogout() {
-    this.isLoggedIn = false;
+    scrollToComponent(componentId) {
+      this.selectedComponent = componentId;
+      this.$nextTick(() => {
+        const element = document.getElementById(componentId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          console.error(`Element with ID '${componentId}' not found`);
+        }
+      });
+    }
   }
-}
+  // mounted(){
+  // const token = localStorage.getItem('token');
+  //   const username = localStorage.getItem('username');
+  //   if (token && username) {
+  //     this.isLoggedIn = true;
+  //   }
+  // },
 }
 </script>
 
