@@ -7,20 +7,12 @@
             <a @click="navigate('introduction')">Introduction</a>
             <a @click="navigate('walkingTour')">Walking Tour</a>
             <a @click="navigate('articleList')">Articles</a>
-            <a @click="navigate('login')">Login</a>
-            <a @click="navigate('addEdit')" v-if="isLoggedIn">Add - Edit</a>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: {
-        isLoggedIn: {
-            type: Boolean,
-            default: false
-        }
-    },
     data() {
         return {
             showMenu: false
