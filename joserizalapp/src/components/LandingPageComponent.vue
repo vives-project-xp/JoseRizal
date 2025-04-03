@@ -29,6 +29,7 @@ export default {
 }
 
 .title {
+    font-family: "Pompiere", sans-serif;
     font-weight: 400;
     font-size: 5rem;
     margin-top: 50px;

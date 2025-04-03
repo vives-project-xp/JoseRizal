@@ -55,15 +55,8 @@ export default {
 }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Pompiere&display=swap');
-</style>
-
 <style scoped>
 .appContainer {
-  font-family: 'Pompiere', sans-serif;
-  font-style: normal;
-  color: black;
   background-image: url("@/assets/background.png");
   background-size: cover;
   background-attachment: fixed;

@@ -1,0 +1,67 @@
+/* Global Typography Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Pompiere&family=Quicksand:wght@300..700&display=swap');
+
+:root {
+  /* Define color variables for easy maintenance */
+  --primary-text: #000000;
+  --secondary-text: #202020;
+  --light-text: #999999;
+  --accent-color: #666666;
+  --accent-hover: rgb(140, 140, 140);
+  --background-color: #ffffff;
+}
+
+/* Base styles for the entire app */
+body {
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  color: var(--primary-text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+/* Typography hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Marcellus', serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+}
+
+p {
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  color: var(--primary-text);
+  margin: 0;
+  padding: 1.0em;
+  line-height: 1.5;
+  font-size: 16px;   
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+
+img{
+  display: block;
+  margin: auto;
+  width: 45%
+}
