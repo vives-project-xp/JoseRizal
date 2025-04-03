@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             titles: [
-                { id: 1, title: 'José Rizal' },
+                { id: 1, title: 'Biography' },
                 { id: 2, title: 'Education' },
                 { id: 3, title: 'Personal life, relationships and ventures' }
             ],
@@ -44,5 +44,67 @@ export default {
 </script>
 
 <style scoped>
+.pageContent {
+    font-family: 'Pompiere', sans-serif;
+    font-style: normal;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1,
+h3 {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+img {
+    display: block;
+    margin: 0 auto 1.5rem;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    line-height: 1.6;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .pageContent {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        padding: 0 1rem;
+    }
+}
 
 </style>
