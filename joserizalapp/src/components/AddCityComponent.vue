@@ -32,14 +32,28 @@ export default {
     };
   },
   methods: {
-    addCity() {
-
+    getCookie(name) {
+      const nameEQ = name + '=';
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
     },
+
     handleImageInput(event) {
       this.cityImage = event.target.files[0];
     },
+
     async addCity() {
-      const token = localStorage.getItem("access_token");
+      const token = this.getCookie("access_token");
+      if (!token) {
+        this.showMessage("You must be logged in to add a city", "error");
+        return;
+      }
+
       if (!this.newCity.name.trim()) {
         this.showMessage("City name is required", "error");
         return;
@@ -64,6 +78,7 @@ export default {
 
         if (response.ok) {
           const data = await response.json();
+          console.log("City added successfully:", data);
           this.showMessage("City added successfully", "success");
           this.newCity.name = "";
           this.newCity.description = "";
@@ -181,34 +196,6 @@ input[type="file"].input-field {
   color: #c53030;
 }
 
-/* Form group styling for better spacing */
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-/* Tablet styles */
-@media screen and (min-width: 480px) {
-  .page-content {
-    padding: 24px;
-  }
-
-  .city-card {
-    max-width: 420px;
-  }
-
-  .card-content {
-    padding: 20px;
-  }
-}
-
-/* Desktop styles */
 @media screen and (min-width: 768px) {
   .page-content {
     padding: 32px;
