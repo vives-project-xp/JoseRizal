@@ -70,12 +70,12 @@ export default {
                 this.errorMessage = 'An error occurred. Please try again later.';
             }
         },
-        handleLogout() {
-            localStorage.removeItem('token');
-            this.isLoggedIn = false;
-            this.loggedInUser = null;
-            this.$router.push('/login'); // Redirect to login page
-        }
+        // handleLogout() {
+        //     localStorage.removeItem('token');
+        //     this.isLoggedIn = false;
+        //     this.loggedInUser = null;
+        //     this.$router.push('/login'); // Redirect to login page
+        // }
     }
 }
 </script>

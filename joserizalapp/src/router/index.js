@@ -29,14 +29,14 @@ const routes = [
         path: '/admin',
         name: 'AdminPage',
         component: AdminPage,
-        beforeEnter: (to, from, next) => {
-            if (isAuthenticated()) {
-                next();
-            } else {
-                alert('You must be logged in to access this page.');
-                next('/login');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (isAuthenticated()) {
+        //         next();
+        //     } else {
+        //         alert('You must be logged in to access this page.');
+        //         next('/login');
+        //     }
+        // }
     }
 ]
 
