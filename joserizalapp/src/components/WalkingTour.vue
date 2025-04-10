@@ -1,33 +1,28 @@
 <template>
     <div>
-        <h1>Walking tour</h1>
+        <h1>Walking Tour</h1>
         <div class="article-list">
-            <ArticleCard
-            v-for="article in filteredArticles"
-            :key="article.id"
-            :image-url="article.imageUrl"
-            :title="article.title"
-            :preview-text="article.preview"
-            :article-id="article.id"
+            <CityCard
+            v-for="city in cities"
+            :key="city.id"
+            :image-url="city.imageUrl"
+            :title="city.title"
+            :city-id="city.id"
             />
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
-import ArticleCard from './ArticleCard.vue'
-import fetchArticles from '@/services/fetchArticles'
+import CityCard from './CityCard.vue'
+import fetchCities from '@/services/fetchCities'
 
-const articles = ref([])
-
-const filteredArticles = computed(() => {
-return articles.value.filter(article => article.tour === true)
-})
+const cities = ref([])
 
 onMounted(() => {
-    articles.value = fetchArticles()
+    cities.value = fetchCities()
 })
 </script>
     
@@ -42,9 +37,9 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-.article-list {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-}
+    .article-list {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
 }
 </style>

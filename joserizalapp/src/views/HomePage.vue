@@ -12,9 +12,6 @@
           <div class="pageContent" id="walkingTour">
             <WalkingTour />
           </div>
-          <div class="pageContent" id="customTour">
-            <CustomTour />
-          </div>
           <div class="pageContent" id="articleList">
             <ArticleList />
         </div>
@@ -29,7 +26,6 @@ import IntoductionPageComponent from '../components/IntroductionPageComponent.vu
 import LandingPageComponent from '../components/LandingPageComponent.vue'
 import ArticleList from '../components/ArticleList.vue';
 import WalkingTour from '@/components/WalkingTour.vue';
-import CustomTour from '@/components/CustomTour.vue';
 </script>
 
 <script>
