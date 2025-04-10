@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
 import AboutPage from '@/views/AboutPage.vue'
+import CityPage from '@/views/CityPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
 
@@ -18,6 +19,12 @@ const routes = [
         path: '/articles/:id',
         name: 'AboutPage',
         component: AboutPage,
+        props: true
+    },
+    {
+        path: '/cities/:id',
+        name: 'CityPage',
+        component: CityPage,
         props: true
     },
     {
