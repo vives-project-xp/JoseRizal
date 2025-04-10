@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import AddLocationComponent from '@/components/AddLocationComponent.vue'
+import AddLocationComponent from '@/components/AddCityComponent.vue'
 import AddArticleComponent from '@/components/AddArticleComponent.vue'
 import CityListComponent from '@/components/CityListComponent.vue'
 </script>
