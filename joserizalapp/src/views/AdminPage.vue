@@ -2,8 +2,8 @@
     <div id="adminPage" class="pageContent">
         <h1>Admin Page</h1>
         <div class="addContent">
+            <AddCityComponent />
             <AddLocationComponent />
-            <AddArticleComponent />
         </div>
         <div class="displayContent">
             <h2>City List</h2>
@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import AddLocationComponent from '@/components/AddCityComponent.vue'
-import AddArticleComponent from '@/components/AddArticleComponent.vue'
+import AddCityComponent from '@/components/AddCityComponent.vue'
+import AddLocationComponent from '@/components/AddLocationComponent.vue'
 import CityListComponent from '@/components/CityListComponent.vue'
 </script>
 
