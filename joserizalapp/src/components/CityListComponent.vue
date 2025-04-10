@@ -25,18 +25,30 @@ export default {
         this.fetchCities();
     },
     methods: {
+        getCookie(name) {
+            const nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        },
         async fetchCities() {
+            const token = this.getCookie("access_token");
             try {
                 const response = await fetch("http://127.0.0.1:8000/cities", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                        "Authorization": "Bearer " + token,
                     },
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    this.cities.value = data;
+                    console.log("Cities fetched successfully:", data);
+                    this.cities = data;
                 } else {
                     console.error("Failed to fetch cities:", response.statusText);
                 }

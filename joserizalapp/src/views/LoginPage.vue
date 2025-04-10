@@ -1,7 +1,7 @@
 <template>
   <div class="pageHeader">
     <div class="pageContent">
-      <LoginPageComponent @login="handleLogin" @logout="handleLogout" />
+      <LoginPageComponent/>
     </div>
   </div>  
 </template>

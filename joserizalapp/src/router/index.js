@@ -3,9 +3,10 @@ import HomePage from '@/views/HomePage.vue'
 import AboutPage from '@/views/AboutPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
+import { getCookie } from '@/utils/cookieUtils';
 
 const isAuthenticated = () => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('access_token');
     return token !== null && token !== undefined && token !== '';
 }
 
@@ -29,14 +30,14 @@ const routes = [
         path: '/admin',
         name: 'AdminPage',
         component: AdminPage,
-        // beforeEnter: (to, from, next) => {
-        //     if (isAuthenticated()) {
-        //         next();
-        //     } else {
-        //         alert('You must be logged in to access this page.');
-        //         next('/login');
-        //     }
-        // }
+        beforeEnter: (to, from, next) => {
+            if (isAuthenticated()) {
+                next();
+            } else {
+                alert('You must be logged in to access this page.');
+                next('/login');
+            }
+        }
     }
 ]
 
