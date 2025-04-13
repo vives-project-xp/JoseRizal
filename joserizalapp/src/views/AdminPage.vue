@@ -6,7 +6,6 @@
             <AddLocationComponent />
         </div>
         <div class="displayContent">
-            <h2>City List</h2>
             <CityListComponent />
         </div>
     </div>

@@ -4,10 +4,23 @@
             <h3 class="title">Cities</h3>
             <div v-if="cities.length > 0" class="city-item">
                 <div v-for="city in cities" :key="city.id" class="city-list">
-                    <h4 class="city-name">{{ city.name }}</h4>                </div>
-            </div>
-            <div v-else class="no-cities">
-                <p>No cities available</p>
+                    <div class="city-header" @click="toggleLocations(city.id)">
+                        <h4 class="city-name">{{ city.name }}</h4>
+                    </div>
+                    <div v-if="city.showLocations" class="locations-list">
+                        <h5>Locations:</h5>
+                        <ul>
+                            <li v-for="location in locations" :key="location.id">
+                                <p>{{ location.name }}</p>
+                                <p>{{ location.description }}</p>
+                                <p>Coordinates: {{ location.location_data.latitude }}, {{ location.location_data.longitude }}</p>
+                            </li>
+                        </ul>
+                        <div v-if="locations.length === 0" class="no-locations">
+                            <p>No locations available for this city.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -19,6 +32,9 @@ export default {
     data() {
         return {
             cities: [],
+            selectedCityId: null,
+            locations: [],
+            message: "",
         };
     },
     mounted() {
@@ -48,12 +64,49 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     console.log("Cities fetched successfully:", data);
-                    this.cities = data;
+                    this.cities = data.map(city => ({
+                        ...city,
+                        showLocations: false,
+                    }));
                 } else {
                     console.error("Failed to fetch cities:", response.statusText);
                 }
             } catch (error) {
                 console.error("Error fetching cities:", error);
+            }
+        },
+        async fetchLocation(cityId) {
+            const token = this.getCookie("access_token");
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/city/${cityId}/locations`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Locations fetched successfully:", data);
+                    this.locations = data;
+                } else {
+                    console.error("Failed to fetch locations:", response.statusText);
+                }
+
+            } catch (error) {
+                console.error("Error fetching locations:", error);
+            }
+        },
+        toggleLocations(cityId) {
+            const city = this.cities.find(city => city.id === cityId);
+            if (city) {
+                city.showLocations = !city.showLocations;
+                if (city.showLocations) {
+                    this.fetchLocation(cityId);
+                } else {
+                    this.locations = [];
+                }
             }
         },
     },
