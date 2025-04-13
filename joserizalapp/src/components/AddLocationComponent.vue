@@ -169,11 +169,8 @@ export default {
 </script>
 
 <style scoped>
-.page-content {
+.pageContent {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   padding: 16px;
   background-color: #f5f5f5;
 }
