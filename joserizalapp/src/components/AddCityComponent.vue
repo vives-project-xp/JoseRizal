@@ -79,7 +79,7 @@ export default {
         if (response.ok) {
           const data = await response.json();
           console.log("City added successfully:", data);
-          this.showMessage("City added successfully", "success");
+          this.showMessage(this.newCity.name + " added successfully", "success");
           this.newCity.name = "";
           this.newCity.description = "";
           this.cityImage = null;

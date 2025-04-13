@@ -15,8 +15,8 @@
           v-model="newLocation.description" />
         <p class="subtitle">Location coordinates</p>
         <div class="coordinates-inputs">
-          <input type="text" placeholder="Enter latitude" class="input-field" v-model="newLocation.latitude" />
-          <input type="text" placeholder="Enter longitude" class="input-field" v-model="newLocation.longitude" />
+          <input type="text" placeholder="Enter latitude" class="input-field" v-model="newLocation.location_data.latitude" />
+          <input type="text" placeholder="Enter longitude" class="input-field" v-model="newLocation.location_data.longitude" />
         </div>
         <button class="action-button" @click="addLocation">
           Add Location
@@ -35,8 +35,10 @@ export default {
         city_id: null,
         name: "",
         description: "",
-        latitude: "",
-        longitude: "",
+        location_data: {
+          latitude: null,
+          longitude: null,
+        },
       },
       cities: [],
       message: "",
@@ -71,18 +73,88 @@ export default {
           const data = await response.json();
           console.log("Cities fetched successfully:", data);
           this.cities = data;
-        } else {
-          console.error("Failed to fetch cities:", response.statusText);
         }
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
     },
     async addLocation() {
+      const token = this.getCookie("access_token");
+
       const cityId = this.newLocation.city_id;
       if (!cityId) {
         this.showMessage("City is required", "error");
         return;
+      }
+
+      const name = this.newLocation.name.trim();
+      if (!name) {
+        this.showMessage("Location name is required", "error");
+        return;
+      }
+
+      const description = this.newLocation.description.trim();
+
+      const latitude = this.newLocation.location_data.latitude;
+      if (!latitude && latitude !== 0) {
+        this.showMessage("Location latitude is required", "error");
+        return;
+      } else {
+        const float = parseFloat(latitude);
+        if (isNaN(float) || float < -90 || float > 90) {
+          this.showMessage("Please enter a valid latitude", "error");
+          return;
+        }
+      }
+      const longitude = this.newLocation.location_data.longitude;
+      if (!longitude && longitude !== 0) {
+        this.showMessage("Location longitude is required", "error");
+        return;
+      } else {
+        const float = parseFloat(longitude);
+        if (isNaN(float) || float < -180 || float > 180) {
+          this.showMessage("Please enter a valid longitude", "error");
+          return;
+        }
+      }
+
+      const newLocation = {
+        city_id: cityId,
+        name: name,
+        description: description,
+        location_data: {
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude),
+        },
+      };
+      console.log("New location data:", newLocation);
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/add_location/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify(newLocation),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Location added successfully:", data);
+          this.showMessage(this.newLocation.name + " added successfully", "success");
+          this.newLocation.city_id = null;
+          this.newLocation.name = "";
+          this.newLocation.description = "";
+          this.newLocation.location_data.latitude = null;
+          this.newLocation.location_data.longitude = null;
+        } else {
+          const errorData = await response.json();
+          this.showMessage(errorData.message || "Failed to add location", "error");
+        }
+      } catch (error) {
+        console.error("Error adding location:", error);
+        this.showMessage("An error occurred while adding the location", "error");
       }
     },
     showMessage(text, type) {
