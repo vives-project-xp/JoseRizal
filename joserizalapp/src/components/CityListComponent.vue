@@ -116,10 +116,41 @@ export default {
             if (city) {
                 city.showLocations = !city.showLocations;
                 if (city.showLocations) {
+                    this.selectedCityId = cityId;
                     this.fetchLocation(cityId);
                 } else {
+                    this.selectedCityId = null;
                     this.locations = [];
                 }
+            }
+        },
+        editLocation(locationId) {
+            // Implement edit location logic here
+            console.log("Edit location with ID:", locationId);
+        },
+        async deleteLocation(locationId) {
+            console.log("Delete location with ID:", locationId);
+            const token = this.getCookie("access_token");
+            const confirmDelete = confirm("Are you sure you want to delete this location?");
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/delete_location/${locationId}`, {
+                    method: "DELETE",
+                    headers: {"Authorization": "Bearer " + token},
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    console.log("Location deleted successfully:", data);
+                    this.message = "Location deleted successfully.";
+                    if (this.selectedCityId) {
+                        this.fetchLocation(this.selectedCityId);
+                    }
+                } else {
+                    console.error("Failed to delete location:", response.statusText);
+                    this.message = "Failed to delete location.";
+                }
+            } catch (error) {
+                console.error("Error deleting location:", error);
             }
         },
     },
