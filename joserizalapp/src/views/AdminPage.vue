@@ -26,11 +26,15 @@ export default {
 
 <style>
 .pageContent {
+    background-image: url("@/assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
 }
+
 .addContent {
     display: flex;
     flex-direction: row;

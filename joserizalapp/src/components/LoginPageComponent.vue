@@ -108,8 +108,6 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Pompiere&display=swap');
 
 .loginPageContent {
-    background-image: url("@/assets/background.png");
-    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
