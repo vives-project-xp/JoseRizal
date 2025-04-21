@@ -53,9 +53,8 @@ export default {
     padding: 2rem;
 }
 
-h1,
+h1, 
 h3 {
-    text-align: center;
     margin-top: 2rem;
     margin-bottom: 1.5rem;
 }
@@ -63,9 +62,11 @@ h3 {
 h1 {
     font-size: 2.5rem;
     font-weight: 400;
+	text-align: center;
 }
 
 h3 {
+	text-align: center;
     font-size: 1.8rem;
     font-weight: 400;
 }
@@ -81,7 +82,7 @@ img {
 
 p {
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
     max-width: 800px;
     margin: 0 auto 2rem;
     font-size: 1.1rem;
