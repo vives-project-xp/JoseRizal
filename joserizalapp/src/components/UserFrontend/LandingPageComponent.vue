@@ -40,4 +40,17 @@ export default {
     width: 460px;
     height: auto;
 }
+
+@media (max-width: 480px) {
+    .logo {
+        width: 350px;
+    }
+    .title{
+        margin-top: 30px;
+        margin-bottom: -100px;
+        margin-left: 0px;
+        font-weight: 400;
+        font-size: 4.3rem;
+    }
+}
 </style>

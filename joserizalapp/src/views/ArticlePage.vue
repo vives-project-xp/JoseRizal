@@ -3,6 +3,8 @@
         <div v-if="isLoading">Loading article...</div>
         <div v-else-if="error">{{ error }}</div>
         <div v-else>
+
+        <!-- ARTICLE TITLE,IMAGE,CONTENT -->
         <h1>{{ article.title }}</h1>
         <img :src="article.imageUrl" :alt="article.title" class="article-image">
         <div class="content" v-html="parsedContent"></div>
@@ -59,7 +61,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-    .article-page {
+.article-page {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;

@@ -21,11 +21,11 @@
 </template>
 
 <script setup>
-import AppHeaderComponent from '../components/AppHeaderComponent.vue';
-import IntoductionPageComponent from '../components/IntroductionPageComponent.vue';
-import LandingPageComponent from '../components/LandingPageComponent.vue'
-import ArticleList from '../components/ArticleList.vue';
-import WalkingTour from '@/components/WalkingTour.vue';
+import AppHeaderComponent from '../components/UserFrontend/AppHeaderComponent.vue';
+import IntoductionPageComponent from '../components/UserFrontend/IntroductionPageComponent.vue';
+import LandingPageComponent from '../components/UserFrontend/LandingPageComponent.vue'
+import ArticleList from '../components/UserFrontend/ArticleList.vue';
+import WalkingTour from '@/components/UserFrontend/WalkingTour.vue';
 </script>
 
 <script>
@@ -60,5 +60,12 @@ export default {
 
 .pageContainer {
   padding: 5px;
+}
+
+/*Mobile */
+@media (max-width: 480px) {
+  .pageContainer {
+    padding: 0px;
+}
 }
 </style>

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
-import AboutPage from '@/views/AboutPage.vue'
+import ArticlePage from '@/views/ArticlePage.vue'
 import CityPage from '@/views/CityPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
@@ -18,8 +18,8 @@ const routes = [
     },
     {
         path: '/articles/:id',
-        name: 'AboutPage',
-        component: AboutPage,
+        name: 'ArticlePage',
+        component: ArticlePage,
         props: true
     },
     {

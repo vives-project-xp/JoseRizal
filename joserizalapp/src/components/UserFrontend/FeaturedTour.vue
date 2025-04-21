@@ -14,9 +14,9 @@
         </div>
         <button 
             class="view-tour"
-            @click="navigateToCity"
+            @click="startTour"
         >
-            View Tour
+            Start Tour
         </button>
         </div>
     </div>
@@ -43,11 +43,8 @@ const props = defineProps({
 
 const router = useRouter()
 
-const navigateToCity = () => {
-    router.push({
-        name: 'CityPage', // Using named route
-        params: { id: props.cityId }
-    })
+const startTour = () => {
+    console.log("what up")
 }
 </script>
 
@@ -57,7 +54,7 @@ const navigateToCity = () => {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background: white;
+    background: rgb(221, 221, 221);
     transition: transform 0.2s ease;
     display: flex;
     flex-direction: column;
@@ -108,59 +105,4 @@ const navigateToCity = () => {
 .view-tour:hover {
     background: rgb(140, 140, 140);
 }
-
-/* MEDIUM SIZE */
-@media (max-width: 768px) {
-    .city-card {
-        max-width: 200px;
-        max-height: 225px;
-    }
-
-    .card-image {
-        flex: 2;               
-    }
-
-    .card-content {
-        flex: 1;              
-        padding: 0.5rem;
-    }
-
-    .title {
-        font-size: 0.6rem;
-        padding: 0;
-    }
-
-    .view-tour {
-        padding: 0.25rem 2.9rem;
-        font-size: 0.5rem;
-    }
-}
-
-/* MOBILE SIZE */
-@media (max-width: 480px) {
-    .city-card {
-        max-width: 80px;
-        max-height: 140px;
-    }
-
-    .card-image {
-        flex: 2;               
-    }
-
-    .card-content {
-        flex: 1;              
-        padding: 0.5rem;
-    }
-
-    .title {
-        font-size: 0.4rem;
-        padding: 0;
-    }
-
-    .view-tour {
-        padding: 0.1rem 0.5rem;
-        font-size: 0.4rem;
-    }
-}
-
 </style>

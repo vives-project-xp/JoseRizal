@@ -1,16 +1,14 @@
 <template>
     <div>
-        <h1>Articles</h1>
-        <!-- Wrapper container -->
+        <h1>Walking Tour</h1>
         <div class="article-list-wrapper">
             <div class="article-list">
-                <ArticleCard
-                    v-for="article in articles"
-                    :key="article.id"
-                    :image-url="article.imageUrl"
-                    :title="article.title"
-                    :preview-text="article.preview"
-                    :article-id="article.id"
+                <CityCard
+                v-for="city in cities"
+                :key="city.id"
+                :image-url="city.imageUrl"
+                :title="city.title"
+                :city-id="city.id"
                 />
             </div>
         </div>
@@ -19,16 +17,17 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import ArticleCard from './ArticleCard.vue'
-import fetchArticles from '@/services/fetchArticles'
 
-const articles = ref([])
+import CityCard from './CityCard.vue'
+import fetchCities from '@/services/fetchCities'
+
+const cities = ref([])
 
 onMounted(() => {
-    articles.value = fetchArticles()
+    cities.value = fetchCities()
 })
 </script>
-
+    
 <style scoped>
 .article-list-wrapper {
     width: 100%;
@@ -47,7 +46,17 @@ onMounted(() => {
     margin: 0 auto;
 }
 
+/*Medium size*/ 
 @media (max-width: 768px) {
+    .article-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 articles per row on mobile */
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
+
+/*Mobile size*/
+@media (max-width: 480px) {
     .article-list {
         grid-template-columns: repeat(2, 1fr); /* 2 articles per row on mobile */
         gap: 1rem;
