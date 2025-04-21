@@ -1,19 +1,41 @@
 <template>
-    <div class="city-page">
-        <!-- TOURS -->
+	<div class="page-container">
+		<div class="city-page">
+        	<!-- TOURS -->
         <h1>City</h1>
-
         <FeaturedTour 
-            imageUrl="../assets/generic_city.jpg"
-            title="Type shit"
+            :imageUrl='cityImage'
+            title="City"
             :cityId="1238"
         />
         
+		<h3>Customise Your tour</h3>
+		
         <CustomTour />
-    </div>
+    	</div>
+	</div>
 </template>
 
-<script>
+<script setup>
+
 import FeaturedTour from '../components/UserFrontend/FeaturedTour.vue';
 import CustomTour from '../components/UserFrontend/CustomTour.vue';
+import cityImage  from '../assets/generic_city.jpg';
+
 </script>
+
+<style scoped>
+.page-container {
+	background-image: url("@/assets/background.png");
+  	background-size: cover;
+  	background-attachment: fixed;
+}
+.city-page {
+    display: flex;
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+</style>
