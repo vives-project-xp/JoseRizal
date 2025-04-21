@@ -24,7 +24,8 @@
                                     </div>
                                     <div class="location-actions">
                                         <button class="action-button" @click="editLocation(location.id)">Edit</button>
-                                        <button class="action-button" @click="deleteLocation(location.id)">Delete</button>
+                                        <button class="action-button"
+                                            @click="deleteLocation(location.id)">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -38,20 +39,34 @@
                 <div v-else class="no-cities">
                     <p>No cities available.</p>
                 </div>
+                <div v-if="showEditCityModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" @click="closeEditCityModal">&times;</span>
+                        <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
+import EditCityComponent from './EditCityComponent.vue';
+
 export default {
     name: "CityListComponent",
+    components: {
+        EditCityComponent,
+    },
     data() {
         return {
             cities: [],
             selectedCityId: null,
             locations: [],
             message: "",
+            showEditCityModal: false,
+            selectedCity: null,
         };
     },
     mounted() {
@@ -129,7 +144,6 @@ export default {
             }
         },
         editLocation(locationId) {
-            // Implement edit location logic here
             console.log("Edit location with ID:", locationId);
         },
         async deleteLocation(locationId) {
@@ -140,7 +154,7 @@ export default {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/delete_location/${locationId}`, {
                     method: "DELETE",
-                    headers: {"Authorization": "Bearer " + token},
+                    headers: { "Authorization": "Bearer " + token },
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -158,8 +172,12 @@ export default {
             }
         },
         editCity(cityId) {
-            // Implement edit city logic here
-            console.log("Edit city with ID:", cityId);
+            const city = this.cities.find(city => city.id === cityId);
+            if (city) {
+                this.selectedCity = city;
+                this.showEditCityModal = true;
+                console.log("Selected city for editing:", city);
+            }
         },
         async deleteCity(cityId) {
             console.log("Delete city with ID:", cityId);
@@ -183,6 +201,10 @@ export default {
             } catch (error) {
                 console.error("Error deleting city:", error);
             }
+        },
+        closeEditCityModal() {
+            this.showEditCityModal = false;
+            this.selectedCity = null;
         },
     },
 };
@@ -293,7 +315,8 @@ export default {
     margin-top: 8px;
 }
 
-.location-actions, .city-actions {
+.location-actions,
+.city-actions {
     display: flex;
     gap: 8px;
     margin-top: 12px;
@@ -309,6 +332,7 @@ export default {
     font-size: 0.9rem;
     transition: background-color 0.3s;
 }
+
 .action-button:hover {
     background-color: #666666;
 }
@@ -327,5 +351,36 @@ export default {
         transform: translateY(-2px);
         box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
     }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
 }
 </style>
