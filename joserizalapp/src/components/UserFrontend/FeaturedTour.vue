@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
 
 const props = defineProps({
     imageUrl: {
@@ -40,8 +39,6 @@ const props = defineProps({
         required: true
     }
 })
-
-const router = useRouter()
 
 const startTour = () => {
     console.log("what up")

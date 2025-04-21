@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Walking tour</h1>
+    
 
     <div class="article-controls">
       <div v-for="article in allArticles" :key="article.id" class="control-item">
