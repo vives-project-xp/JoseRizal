@@ -49,7 +49,7 @@ const router = useRouter()
 
   const navigateToArticle = () => {
   router.push({
-      name: 'AboutPage', // Using named route
+      name: 'ArticlePage', // Using named route
       params: { id: props.articleId }
   })
   }
@@ -61,7 +61,7 @@ const router = useRouter()
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: white;
+  background: rgb(221, 221, 221);
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;

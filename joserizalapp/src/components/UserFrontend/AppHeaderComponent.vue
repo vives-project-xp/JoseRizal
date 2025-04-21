@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <button @click="toggleMenu">
-            <img src="../assets/list.svg" alt="Menu">
+            <img src="../../assets/list.svg" alt="Menu">
         </button>
         <div v-if="showMenu" class="menu">
             <a @click="navigate('introduction')">Introduction</a>
@@ -72,4 +72,7 @@ export default {
 .menu a:hover {
     background-color: #f0f0f0;
 }
+
+/*mobile */
+
 </style>
