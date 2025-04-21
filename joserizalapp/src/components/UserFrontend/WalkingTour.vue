@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Walking Tour</h1>
+        <p>Discover more about Jose Rizal's historical whereabouts...</p>
         <div class="article-list-wrapper">
             <div class="article-list">
                 <CityCard
@@ -29,6 +30,10 @@ onMounted(() => {
 </script>
     
 <style scoped>
+p {
+    text-align: center;
+}
+
 .article-list-wrapper {
     width: 100%;
     max-width: 1200px;  /* Controls the maximum width */

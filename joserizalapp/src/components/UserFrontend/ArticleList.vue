@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Articles</h1>
+        <p>Read more about Jose Rizal's life here...</p>
         <!-- Wrapper container -->
         <div class="article-list-wrapper">
             <div class="article-list">
@@ -30,6 +31,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+p {
+    text-align: center;
+}
+
 .article-list-wrapper {
     width: 100%;
     max-width: 1200px;  /* Controls the maximum width */
