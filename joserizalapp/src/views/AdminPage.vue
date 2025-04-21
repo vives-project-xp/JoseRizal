@@ -4,6 +4,7 @@
         <div class="addContent">
             <AddCityComponent />
             <AddLocationComponent />
+            <AddArticleComponent />
         </div>
         <div class="displayContent">
             <CityListComponent />
@@ -15,6 +16,7 @@
 import AddCityComponent from '@/components/AddCityComponent.vue'
 import AddLocationComponent from '@/components/AddLocationComponent.vue'
 import CityListComponent from '@/components/CityListComponent.vue'
+import AddArticleComponent from '@/components/AddArticleComponent.vue'
 </script>
 
 <script>
