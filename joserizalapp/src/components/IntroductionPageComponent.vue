@@ -66,7 +66,7 @@ h1 {
 }
 
 h3 {
-	text-align: center;
+	text-align: left;
     font-size: 1.8rem;
     font-weight: 400;
 }
