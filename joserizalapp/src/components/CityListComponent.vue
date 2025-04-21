@@ -28,6 +28,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="city-actions">
+                                <button class="action-button" @click="editCity(city.id)">Edit City</button>
+                                <button class="action-button" @click="deleteCity(city.id)">Delete City</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,6 +157,33 @@ export default {
                 console.error("Error deleting location:", error);
             }
         },
+        editCity(cityId) {
+            // Implement edit city logic here
+            console.log("Edit city with ID:", cityId);
+        },
+        async deleteCity(cityId) {
+            console.log("Delete city with ID:", cityId);
+            const token = this.getCookie("access_token");
+            const confirmDelete = confirm("Are you sure you want to delete this city?");
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/delete_city/${cityId}`, {
+                    method: "DELETE",
+                    headers: { "Authorization": "Bearer " + token },
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    console.log("City deleted successfully:", data);
+                    this.message = "City deleted successfully.";
+                    this.fetchCities();
+                } else {
+                    console.error("Failed to delete city:", response.statusText);
+                    this.message = "Failed to delete city.";
+                }
+            } catch (error) {
+                console.error("Error deleting city:", error);
+            }
+        },
     },
 };
 </script>
@@ -262,7 +293,7 @@ export default {
     margin-top: 8px;
 }
 
-.location-actions {
+.location-actions, .city-actions {
     display: flex;
     gap: 8px;
     margin-top: 12px;
