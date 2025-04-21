@@ -9,12 +9,12 @@
           <div class="pageContent" id="introduction">
             <IntoductionPageComponent />
           </div>
+          <div class="pageContent" id="articleList">
+            <ArticleList />
+          </div>
           <div class="pageContent" id="walkingTour">
             <WalkingTour />
           </div>
-          <div class="pageContent" id="articleList">
-            <ArticleList />
-        </div>
       </div>
     </div>
   </div>

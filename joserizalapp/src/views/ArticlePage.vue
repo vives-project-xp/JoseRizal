@@ -4,10 +4,14 @@
         <div v-else-if="error">{{ error }}</div>
         <div v-else>
 
-        <!-- ARTICLE TITLE,IMAGE,CONTENT -->
-        <h1>{{ article.title }}</h1>
-        <img :src="article.imageUrl" :alt="article.title" class="article-image">
-        <div class="content" v-html="parsedContent"></div>
+            <!-- ARTICLE TITLE,IMAGE,CONTENT -->
+            <img :src="article.imageUrl" :alt="article.title" class="article-image">
+
+
+            <div class="article-container">
+                <h1 class="article-title">{{ article.title }}</h1>
+                <div class="article-content" v-html="parsedContent"></div>
+            </div>
         </div>
     </div>  
 </template>
@@ -62,9 +66,8 @@ onMounted(async () => {
 
 <style scoped>
 .article-page {
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
-    padding: 2rem;
 }
 
 .article-image {
@@ -72,12 +75,22 @@ onMounted(async () => {
     height: 400px;
     object-fit: cover;
     border-radius: 8px;
-    margin: 1rem 0;
 }
 
-.content {
+.article-container {
+    background-image: url("@/assets/background.png"); 
+    height: 100%;
+}
+
+.article-title {
+    margin-top: 0;
+    padding-top: 2rem;
+}
+
+.article-content {
     line-height: 1.6;
     font-size: 1.1rem;
     color: #333;
+    padding: 2rem;
 }
 </style>
