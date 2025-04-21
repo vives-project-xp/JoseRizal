@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+.env
+
+# Static or uploaded files
+uploaded_images/
+static/
+
+# DB migrations
+migrations/
+alembic.ini
+
+# VS Code config
+.vscode/
