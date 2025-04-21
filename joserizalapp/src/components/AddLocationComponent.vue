@@ -1,6 +1,6 @@
 <template>
   <div class="pageContent">
-    <div class="city-card">
+    <div class="location-card">
       <div class="card-content">
         <h3 class="title">Add Location</h3>
         <p class="subtitle">Pick a city</p>
@@ -175,7 +175,7 @@ export default {
   background-color: #f5f5f5;
 }
 
-.city-card {
+.location-card {
   width: 100%;
   max-width: 100%;
   background-color: white;

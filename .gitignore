@@ -9,3 +9,6 @@ venv.bak/
 
 # Python
 __pycache__
+
+# macOS specific file
+.DS_Store
