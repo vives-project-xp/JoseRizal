@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database.models import CMSContent
-from backend.dependencies import get_db  # 你原来的 DB session getter
+from backend.dependencies import get_db  
 from pydantic import BaseModel
 
 router = APIRouter()
