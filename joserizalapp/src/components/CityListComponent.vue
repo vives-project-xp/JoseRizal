@@ -173,11 +173,13 @@ export default {
         },
         editCity(cityId) {
             const city = this.cities.find(city => city.id === cityId);
-            if (city) {
-                this.selectedCity = city;
-                this.showEditCityModal = true;
-                console.log("Selected city for editing:", city);
+            if (!city) {
+                console.error("City not found:", cityId);
+                return;
             }
+            this.selectedCity = city;
+            this.showEditCityModal = true;
+            console.log("Edit city with ID:", cityId);
         },
         async deleteCity(cityId) {
             console.log("Delete city with ID:", cityId);
