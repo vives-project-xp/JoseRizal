@@ -2,30 +2,33 @@
   <div class="appContainer">
     <div class="pageContainer">
       <div class="pageHeader">
-        <AppHeaderComponent @changePage="scrollToComponent" />
-          <div class="pageContent">
-            <LandingPageComponent />
-          </div>
-          <div class="pageContent" id="introduction">
-            <IntoductionPageComponent />
-          </div>
-          <div class="pageContent" id="articleList">
-            <ArticleList />
-          </div>
-          <div class="pageContent" id="walkingTour">
-            <WalkingTour />
-          </div>
+        <div class="pageContent">
+          <LandingPageComponent />
+        </div>
+        <div class="pageContent" id="introduction">
+          <IntoductionPageComponent />
+        </div>
+        <PageBreakComponent />
+        <div class="pageContent" id="articleList">
+          <ArticleList />
+        </div>
+        <PageBreakComponent />
+        <div class="pageContent" id="walkingTour">
+          <WalkingTour />
+        </div>
+        <PageBreakComponent visibility="top" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import AppHeaderComponent from '../components/UserFrontend/AppHeaderComponent.vue';
 import IntoductionPageComponent from '../components/UserFrontend/IntroductionPageComponent.vue';
 import LandingPageComponent from '../components/UserFrontend/LandingPageComponent.vue'
 import ArticleList from '../components/UserFrontend/ArticleList.vue';
 import WalkingTour from '@/components/UserFrontend/WalkingTour.vue';
+
+import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue';
 </script>
 
 <script>
