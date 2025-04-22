@@ -131,17 +131,20 @@ export default {
             }
         },
         toggleLocations(cityId) {
-            const city = this.cities.find(city => city.id === cityId);
-            if (city) {
-                city.showLocations = !city.showLocations;
-                if (city.showLocations) {
-                    this.selectedCityId = cityId;
-                    this.fetchLocation(cityId);
+            this.cities.forEach(city => {
+                if (city.id === cityId) {
+                    city.showLocations = !city.showLocations;
+                    if (city.showLocations) {
+                        this.selectedCityId = cityId;
+                        this.fetchLocation(cityId);
+                    } else {
+                        this.selectedCityId = null;
+                        this.locations = [];
+                    }
                 } else {
-                    this.selectedCityId = null;
-                    this.locations = [];
+                    city.showLocations = false;
                 }
-            }
+            });
         },
         editLocation(locationId) {
             console.log("Edit location with ID:", locationId);
@@ -184,24 +187,50 @@ export default {
         async deleteCity(cityId) {
             console.log("Delete city with ID:", cityId);
             const token = this.getCookie("access_token");
-            const confirmDelete = confirm("Are you sure you want to delete this city?");
+            const confirmDelete = confirm("Are you sure you want to delete this city and all its locations?");
+
+            if (!confirmDelete) return;
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/delete_city/${cityId}`, {
+                const responseLocations = await fetch(`http://127.0.0.1:8000/city/${cityId}/locations`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token,
+                    },
+                });
+
+                if (responseLocations.ok) {
+                    const locations = await responseLocations.json();
+
+                    for (const location of locations) {
+                        await fetch(`http://127.0.0.1:8000/delete_location/${location.id}`, {
+                            method: "DELETE",
+                            headers: { "Authorization": "Bearer " + token },
+                        });
+                    }
+                    console.log("All locations deleted successfully.");
+                } else {
+                    console.error("Failed to fetch locations for city:", responseLocations.statusText);
+                    this.message = "Failed to delete city locations.";
+                    return;
+                }
+
+                const responseCity = await fetch(`http://127.0.0.1:8000/delete_city/${cityId}`, {
                     method: "DELETE",
                     headers: { "Authorization": "Bearer " + token },
                 });
-                const data = await response.json();
-                if (response.ok) {
-                    console.log("City deleted successfully:", data);
+
+                if (responseCity.ok) {
+                    console.log("City deleted successfully.");
                     this.message = "City deleted successfully.";
                     this.fetchCities();
                 } else {
-                    console.error("Failed to delete city:", response.statusText);
+                    console.error("Failed to delete city:", responseCity.statusText);
                     this.message = "Failed to delete city.";
                 }
             } catch (error) {
-                console.error("Error deleting city:", error);
+                console.error("Error deleting city or its locations:", error);
             }
         },
         closeEditCityModal() {
