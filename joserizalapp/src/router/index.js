@@ -14,6 +14,7 @@ const isAuthenticated = () => {
 const routes = [
     {
         path: '/',
+        name: 'HomePage',
         component: HomePage
     },
     {

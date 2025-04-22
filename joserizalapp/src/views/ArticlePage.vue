@@ -14,6 +14,7 @@
                 <div class="article-content" v-html="parsedContent"></div>
             </div>
         </div>
+        <PageBreakComponent visibility="top" />
     </div>  
 </template>
 
@@ -21,6 +22,8 @@
 import { ref, onMounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { Marked } from 'marked'
+
+import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue'
 
 import fetchArticles from '@/services/fetchArticles'
 
@@ -63,6 +66,7 @@ onMounted(async () => {
         isLoading.value = false
     }
 
+    // STYLING THE ARTICLES
     // After we fetch the markdown article, it is parsed into HTML
     // and inserted into the DOM directly using v-html
     

@@ -1,56 +1,64 @@
 <template>
     <div class="header">
-        <button @click="toggleMenu">
-            <img src="../../assets/list.svg" alt="Menu">
-        </button>
-        <div v-if="showMenu" class="menu">
-            <a @click="navigate('introduction')">Introduction</a>
-            <a @click="navigate('articleList')">Articles</a>
-            <a @click="navigate('walkingTour')">Walking Tour</a>
-        </div>
+      <button @click="toggleMenu">
+        <img src="../../assets/list.svg" alt="Menu">
+      </button>
+      <div v-if="showMenu" class="menu">
+        <a href="#" @click.prevent="navigate('introduction')">Introduction</a>
+        <a href="#" @click.prevent="navigate('articleList')">Articles</a>
+        <a href="#" @click.prevent="navigate('walkingTour')">Walking Tour</a>
+      </div>
     </div>
-</template>
+  </template>
+  
+  <script setup>
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  
+  const showMenu = ref(false);
+  const router = useRouter();
 
-<script>
-export default {
-    data() {
-        return {
-            showMenu: false
-        };
-    },
-    methods: {
-        toggleMenu() {
-            this.showMenu = !this.showMenu;
-        },
-        navigate(componentId) {
-            console.log('Navigating to:', componentId);
-            this.$emit('changePage', componentId);
-            this.showMenu = false;
+  const toggleMenu = () => {
+    showMenu.value = !showMenu.value;
+  };
+  
+  const navigate = (componentId) => {
+    // Navigate to HomePage first, then scroll to component
+    // Give a little delay to wait for that page to load
+    router.push({ name: 'HomePage' }).then(() => {
+      setTimeout(() => {
+        const section = document.getElementById(componentId);
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
         }
-    }
-}
-</script>
-
-<style scoped>
-.header {
+      }, 100); 
+    });
+  
+    // Close the menu after navigation
+    showMenu.value = false;
+  };
+  </script>
+  
+  <style scoped>
+  .header {
     position: fixed;
     right: 25px;
     top: 20px;
     z-index: 1000;
-}
-
-.header button {
+  }
+  
+  .header button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-}
-
-.header button img {
+  }
+  
+  .header button img {
     width: 25px;
     height: 25px;
-}
-
-.menu {
+  }
+  
+  .menu {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -60,19 +68,19 @@ export default {
     right: 10px;
     margin: 10px;
     top: 20px;
-}
-
-.menu a {
+  }
+  
+  .menu a {
     padding: 10px;
     text-decoration: none;
     color: black;
     cursor: pointer;
-}
-
-.menu a:hover {
+  }
+  
+  .menu a:hover {
     background-color: #f0f0f0;
-}
-
-/*mobile */
-
-</style>
+  }
+  
+  /*mobile */
+  </style>
+  
