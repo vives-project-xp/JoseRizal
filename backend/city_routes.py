@@ -116,3 +116,6 @@ def get_city(city_id: int, db: Session = Depends(get_db)):
         "description": city.description,
         "image_url": city.image_url
     }
+
+
+#hellowww
