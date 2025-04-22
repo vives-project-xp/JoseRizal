@@ -63,7 +63,7 @@ onMounted(async () => {
         isLoading.value = false
     }
 
-    // STYLING THE ARTICLES:
+    // STYLING THE ARTICLES
     // After we fetch the markdown article, it is parsed into HTML
     // and inserted into the DOM directly using v-html
     
