@@ -66,6 +66,6 @@ export default {
 @media (max-width: 480px) {
   .pageContainer {
     padding: 0px;
-}
+  }
 }
 </style>

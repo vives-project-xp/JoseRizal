@@ -14,7 +14,7 @@ const fetchArticles = () => {
             id: 2,
             title: 'Jose Rizal Landmark 2',
             preview: 'Another important location in Rizal\'s life...',
-            content: '# This is some content',
+            content: 'This is some content',
             imageUrl: jose_rizal_img1,
             tour: true
         },
@@ -22,7 +22,7 @@ const fetchArticles = () => {
             id: 3,
             title: 'Jose Rizal Landmark 3',
             preview: 'Memorial site honoring the national hero...',
-            content: '# This is some content',
+            content: '* This is some content',
             imageUrl: jose_rizal_img1,
             tour: false
         }

@@ -12,6 +12,21 @@
   --background-color: #ffffff;
 }
 
+/* TEMP FIX: remove blinking caret */
+/* 
+I have no idea why every element shows the caret/cursor 
+after it by default.
+
+Even if you click an image it'll leave behind the typing cusor
+for some reason
+
+Made it invisible for now, but you can still select text
+*/
+* {
+  user-select: text;
+  caret-color: transparent;
+}
+
 /* Base styles for the entire app */
 body {
   font-family: 'Quicksand', sans-serif;
