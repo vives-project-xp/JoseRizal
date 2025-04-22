@@ -1,31 +1,30 @@
 <template>
   <div>
-    
 	<!--landmarks selection list-->
     <div class="landmark-controls">
-		<div
-		v-for="landmark in allLandmarks"
-		:key="landmark.id"
-		class="control-item"
-		>
-		<input
-		type="checkbox"
-		:id="'landmark-${landmark.id}'"
-		v-model="selectedLandmarkIds"
-		:value="landmark.id"
-		@change="handleToggle(landmark.id)"
-		/>
+      <div
+        v-for="landmark in allLandmarks"
+        :key="landmark.id"
+        class="control-item"
+      >
+        <input
+          type="checkbox"
+          :id="'landmark-${{landmark.id}}'"
+          v-model="selectedLandmarkIds"
+          :value="landmark.id"
+          @change="handleToggle(landmark.id)"
+        />
 
         <label :for="'landmark-{{landmark.id}}'" class="control-label">
-		<img
-		:src="landmark.imageUrl"
-		:alt="'Thumbnail of {{landmark.name}}'"
-		class="thumbnail"
-		/>
-		{{ landmark.name }}
-		</label>
+          <img
+            :src="landmark.imageUrl"
+            :alt="'Thumbnail of {{landmark.name}}'"
+            class="thumbnail"
+          />
+          {{ landmark.name }}
+        </label>
       </div>
-    </div>
+  </div>
   </div>
 </template>
   
@@ -40,15 +39,15 @@
   // Initialise list of articles with default order
   onMounted(() => {
     allLandmarks.value = fetchArticles().filter(item => item.landmark === true);
-    selectedLandmarksIds.value = allLandarks.value.map(a => a.id)
-    toggleOrder.value = [...selectedLandmarksIds.value] 
+    selectedLandmarkIds.value = allLandmarks.value.map(a => a.id)
+    toggleOrder.value = [...selectedLandmarkIds.value] 
   })
   
   // Handle toggle changes,
   // Selecting and unselecting an article should change it's position in the list
   // Old articles first, and newly selected articles should be last
   const handleToggle = (landmarkId) => {
-    if (selectedLandmarksIds.value.includes(landmarkId)) {
+    if (selectedLandmarkIds.value.includes(landmarkId)) {
       toggleOrder.value.push(landmarkId)
     } else {
       toggleOrder.value = toggleOrder.value.filter(id => id !== landmarkId)
