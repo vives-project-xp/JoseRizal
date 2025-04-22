@@ -79,8 +79,8 @@ class CityUpdate(BaseModel):
 
 
 @router.put("/update_city/{city_id}")
-def update_city(
-    city_id: int, 
+async def update_city(
+    city_id: int,
     name: str = Form(...),
     description: str = Form(...),
     file: UploadFile = File(None),
@@ -90,7 +90,7 @@ def update_city(
     city = db.query(City).filter(City.id == city_id).first()
     if not city:
         raise HTTPException(status_code=404, detail="❌ City not found!")
-    
+
     city.name = name
     city.description = description
 
@@ -102,6 +102,7 @@ def update_city(
 
     db.commit()
     return {"message": f"✅ City '{city.name}' updated successfully!"}
+
 
 
 @router.get("/city/{city_id}")
@@ -116,6 +117,3 @@ def get_city(city_id: int, db: Session = Depends(get_db)):
         "description": city.description,
         "image_url": city.image_url
     }
-
-
-#hellowww

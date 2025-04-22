@@ -8,7 +8,7 @@ const fetchArticles = () => {
             preview: 'Historical site related to Dr. Jose Rizal...',
             content: '# This is some content',
             imageUrl: jose_rizal_img1,
-            tour: true
+            landmark: true
         },
         {
             id: 2,
@@ -16,7 +16,7 @@ const fetchArticles = () => {
             preview: 'Another important location in Rizal\'s life...',
             content: 'This is some content',
             imageUrl: jose_rizal_img1,
-            tour: true
+            landmark: true
         },
         {
             id: 3,
@@ -24,7 +24,7 @@ const fetchArticles = () => {
             preview: 'Memorial site honoring the national hero...',
             content: '* This is some content',
             imageUrl: jose_rizal_img1,
-            tour: false
+            landmark: false
         }
     ]
 }
