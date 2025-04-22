@@ -1,109 +1,110 @@
 <template>
   <div>
     
+	<!--landmarks selection list-->
+    <div class="landmark-controls">
+		<div
+		v-for="landmark in allLandmarks"
+		:key="landmark.id"
+		class="control-item"
+		>
+		<input
+		type="checkbox"
+		:id="'landmark-${landmark.id}'"
+		v-model="selectedLandmarkIds"
+		:value="landmark.id"
+		@change="handleToggle(landmark.id)"
+		/>
 
-    <div class="article-controls">
-      <div v-for="article in allArticles" :key="article.id" class="control-item">
-        <input 
-          type="checkbox" 
-          :id="'article-'+article.id" 
-          v-model="selectedArticleIds"
-          :value="article.id"
-          @change="handleToggle(article.id)"
-        >
-        <label :for="'article-'+article.id">{{ article.title }}</label>
+        <label :for="'landmark-{{landmark.id}}'" class="control-label">
+		<img
+		:src="landmark.imageUrl"
+		:alt="'Thumbnail of {{landmark.name}}'"
+		class="thumbnail"
+		/>
+		{{ landmark.name }}
+		</label>
       </div>
-    </div>
-  
-    <div class="article-list">
-      <ArticleCard
-        v-for="article in orderedArticles"
-        :key="article.id"
-        :image-url="article.imageUrl"
-        :title="article.title"
-        :preview-text="article.preview"
-        :article-id="article.id"
-      />
     </div>
   </div>
 </template>
   
   <script setup>
   import { ref, computed, onMounted } from 'vue'
-  import ArticleCard from './ArticleCard.vue'
   import fetchArticles from '@/services/fetchArticles'
   
-  const allArticles = ref([])
-  const selectedArticleIds = ref([])
+  const allLandmarks = ref([])
+  const selectedLandmarkIds = ref([])
   const toggleOrder = ref([]) // Tracks the order of toggles
   
   // Initialise list of articles with default order
   onMounted(() => {
-    allArticles.value = fetchArticles()
-    selectedArticleIds.value = allArticles.value.map(a => a.id)
-    toggleOrder.value = [...selectedArticleIds.value] 
+    allLandmarks.value = fetchArticles().filter(item => item.landmark === true);
+    selectedLandmarksIds.value = allLandarks.value.map(a => a.id)
+    toggleOrder.value = [...selectedLandmarksIds.value] 
   })
   
   // Handle toggle changes,
   // Selecting and unselecting an article should change it's position in the list
   // Old articles first, and newly selected articles should be last
-  const handleToggle = (articleId) => {
-    if (selectedArticleIds.value.includes(articleId)) {
-      toggleOrder.value.push(articleId)
+  const handleToggle = (landmarkId) => {
+    if (selectedLandmarksIds.value.includes(landmarkId)) {
+      toggleOrder.value.push(landmarkId)
     } else {
-      toggleOrder.value = toggleOrder.value.filter(id => id !== articleId)
+      toggleOrder.value = toggleOrder.value.filter(id => id !== landmarkId)
     }
   }
   
   // Get selected articles
-  const orderedArticles = computed(() => {
+  const orderedLandmarks = computed(() => {
     // Create a map for quick lookup
-    const articleMap = Object.fromEntries(
-      allArticles.value.map(a => [a.id, a])
+    const map = Object.fromEntries(
+      allLandmarks.value.map(a => [a.id, a])
     )
     
     // Return selected articles & in toggled order
     return toggleOrder.value
-      .filter(id => selectedArticleIds.value.includes(id))
-      .map(id => articleMap[id])
+      .filter(id => selectedLandmarkIds.value.includes(id))
+      .map(id => landmarkMap[id])
   })
   </script>
   
 <style scoped>
-.article-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.article-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    background: #f5f5f5;
-    border-radius: 8px;
+.landmark-controls {
+	display: flex;
+	flex-direction: column;    /* stack items vertically */
+	gap: 1rem;                 /* space between items */
+	padding: 1rem;
+	max-width: 600px;
+	margin: 0 auto;
+	background: #f5f5f5;
+	border-radius: 8px;
 }
 
 .control-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
-@media (max-width: 768px) {
-.article-list {
-    grid-template-columns: 1fr;
-    padding: 1rem;
+.control-label{
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
-.article-controls {
-        flex-direction: column;
-    }
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
 }
+
+@media (max-width: 480px) {
+  .thumbnail {
+    width: 32px;
+    height: 32px;
+  }
+}
+
 </style>
