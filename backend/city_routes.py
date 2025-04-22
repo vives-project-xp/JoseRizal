@@ -81,7 +81,9 @@ class CityUpdate(BaseModel):
 @router.put("/update_city/{city_id}")
 def update_city(
     city_id: int, 
-    city_data: CityUpdate, 
+    name: str = Form(...),
+    description: str = Form(...),
+    file: UploadFile = File(None),
     db: Session = Depends(get_db),
     current_admin = Depends(get_current_user)
 ):
@@ -89,13 +91,16 @@ def update_city(
     if not city:
         raise HTTPException(status_code=404, detail="❌ City not found!")
     
-    # 更新字段
-    city.name = city_data.name
-    city.description = city_data.description
-    if city_data.image_url is not None:  
-        city.image_url = city_data.image_url
+    city.name = name
+    city.description = description
+
+    if file:
+        file_path = f"{UPLOAD_DIR}/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        city.image_url = f"/{file_path}"
+
     db.commit()
-    
     return {"message": f"✅ City '{city.name}' updated successfully!"}
 
 
