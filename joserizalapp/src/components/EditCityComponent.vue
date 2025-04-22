@@ -2,7 +2,7 @@
     <div class="pageContent">
         <div class="city-card">
             <div class="card-content">
-                <h3 class="title">{{ city ? 'Edit City' : 'Add City' }}</h3>
+                <h3 class="title">Edit city</h3>
                 <p class="subtitle">City name</p>
                 <input type="text" placeholder="Enter location name" class="input-field" v-model="newCity.name" />
                 <p class="subtitle">Description</p>
@@ -11,7 +11,7 @@
                 <p class="subtitle">City Image</p>
                 <input type="file" class="input-field" ref="cityImage" @change="handleImageInput" />
                 <button class="action-button" @click="editCity">
-                    {{ city ? 'Save Changes' : 'Add City' }}
+                    {{ city ? 'Save' : 'Add City' }}
                 </button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
                 <p v-if="message" :class="['message', messageType]">{{ message }}</p>
@@ -30,10 +30,20 @@ export default {
     },
     data() {
         return {
-            newCity: this.city ? { ...this.city } : { name: '', description: '', image: null },
+            newCity: { name: '', description: '', image: null },
             message: '',
             messageType: '',
         };
+    },
+    watch: {
+        city: {
+            immediate: true,
+            handler(newCity) {
+                if (newCity) {
+                    this.getCityDetails();
+                }
+            },
+        },
     },
     methods: {
         handleImageInput(event) {
@@ -58,48 +68,75 @@ export default {
                 this.messageType = '';
             }, 3000);
         },
+        async getCityDetails() {
+            const token = this.getCookie('access_token');
+            try {
+                const fetchResponse = await fetch(`http://127.0.0.1:8000/city/${this.city.id}`, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token,
+                    },
+                });
+                if (!fetchResponse.ok) {
+                    const fetchErrorData = await fetchResponse.json();
+                    console.error('Error fetching city details:', fetchErrorData);
+                    this.showMessage(fetchErrorData.message || 'Failed to fetch city details', 'error');
+                    return;
+                }
+                const cityDetails = await fetchResponse.json();
+                this.newCity = { ...cityDetails };
+            } catch (error) {
+                console.error('Error fetching city details:', error);
+                this.showMessage('An error occurred while fetching city details', 'error');
+            }
+        },
+
         async editCity() {
             const token = this.getCookie('access_token');
-            if (!token) {
-                this.showMessage('You must be logged in to add a city', 'error');
-                return;
-            }
+
             if (!this.newCity.name || !this.newCity.name.trim()) {
                 this.showMessage('City name is required', 'error');
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('name', this.newCity.name);
-            formData.append('description', this.newCity.description);
-            if (this.newCity.image) {
-                formData.append('file', this.newCity.image);
+            if (!this.newCity.description || !this.newCity.description.trim()) {
+                this.newCity.description = '';
             }
 
-            console.log('city name:', this.newCity.name);
-            console.log('city description:', this.newCity.description);
-            console.log('city image:', this.newCity.image);   
-                    
             try {
-                const response = await fetch('http://127.0.0.1:8000/update_city/' + this.city.id, {
+                const updateCityData = {
+                    name: this.newCity.name,
+                    description: this.newCity.description,
+                    image: this.newCity.image,
+                };
+
+                const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': 'Bearer ' + token,
+                        'Authorization': `Bearer ${token}`,
+                        'content-type': 'application/json',
                     },
-                    body: formData,
+                    body: JSON.stringify(updateCityData),
                 });
-                if (response.ok) {
+
+                if (updateResponse.ok) {
                     this.showMessage('City updated successfully', 'success');
                     this.$emit('city-updated');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
-                    const errorData = await response.json();
-                    this.showMessage(errorData.message || 'Failed to update city', 'error');
+                    const updateErrorData = await updateResponse.json();
+                    console.error('Server error:', updateErrorData);
+                    this.showMessage(updateErrorData.message || 'Failed to update city', 'error');
                 }
             } catch (error) {
                 console.error('Error updating city:', error);
                 this.showMessage('An error occurred while updating the city', 'error');
             }
         },
+
     },
 };
 </script>
