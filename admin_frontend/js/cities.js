@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // Show all cities
 async function fetchCities() {
     const token = localStorage.getItem("access_token");
-    console.log("Token:", token);
 
     try {
         const response = await fetch("http://100.107.144.48:8000/cities", {
@@ -31,27 +30,74 @@ async function fetchCities() {
 
         cities.forEach(city => {
             const li = document.createElement("li");
-            
-            // If there is an image, it will be displayed before the city name
-            if (city.image_url) {
-                const img = document.createElement("img");
-                img.src = city.image_url;
-                img.alt = city.name;
-                img.style.width = "100px";
-                img.style.marginRight = "10px";
-                li.appendChild(img);
-            }
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.alignItems = "center";
 
             const cityText = document.createElement("span");
-            cityText.innerText = city.name;
+            cityText.textContent = city.name;
             cityText.style.cursor = "pointer";
             cityText.addEventListener("click", () => {
-               
                 localStorage.setItem("selected_city_id", city.id);
-                console.log("Selected city ID set to:", localStorage.getItem("selected_city_id"));
                 window.location.href = "locations.html";
             });
+
+            const btnContainer = document.createElement("div");
+
+            const editBtn = document.createElement("button");
+            editBtn.innerText = "edit";
+            editBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                window.location.href = `edit_city.html?id=${city.id}`;
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerText = "delete";
+            deleteBtn.style.marginLeft = "10px";
+            deleteBtn.addEventListener("click", async (event) => {
+                event.stopPropagation();
+            
+                if (!confirm(`Are you sure you want to delete "${city.name}" and all its locations?`)) {
+                    return;
+                }
+            
+                try {
+                    const token = localStorage.getItem("access_token");
+            
+                    
+                    const locRes = await fetch(`http://100.107.144.48:8000/locations?city_id=${city.id}`);
+                    const locations = await locRes.json();
+            
+                    
+                    for (const loc of locations) {
+                        await fetch(`http://100.107.144.48:8000/delete_location/${loc.id}`, {
+                            method: "DELETE",
+                            headers: { "Authorization": `Bearer ${token}` }
+                        });
+                    }
+            
+                    
+                    const cityRes = await fetch(`http://100.107.144.48:8000/delete_city/${city.id}`, {
+                        method: "DELETE",
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+            
+                    const result = await cityRes.json();
+                    alert(result.message);
+                    li.remove();
+            
+                } catch (error) {
+                    console.error("❌ Failed to delete city with locations:", error);
+                    alert("Deletion failed.");
+                }
+            });
+            
+
+            btnContainer.appendChild(editBtn);
+            btnContainer.appendChild(deleteBtn);
+
             li.appendChild(cityText);
+            li.appendChild(btnContainer);
 
             cityList.appendChild(li);
         });
@@ -61,6 +107,7 @@ async function fetchCities() {
         alert("❌ Failed to load cities.");
     }
 }
+
 
 // add a city
 async function addCity(event) {
@@ -184,4 +231,5 @@ async function loadArticles() {
 }
 
 loadArticles();
+
   

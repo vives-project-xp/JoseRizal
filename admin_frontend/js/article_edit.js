@@ -1,6 +1,5 @@
-//Author: YIBO LIANG 
-
-//obtain article_id from URL parameter
+document.addEventListener("DOMContentLoaded", () => {
+    //obtain article_id from URL parameter
     const params = new URLSearchParams(window.location.search);
     const articleId = params.get("id");
     if (!articleId) {

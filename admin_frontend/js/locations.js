@@ -107,7 +107,7 @@ async function deleteLocation(location_id) {
 
 // -------------------- Add Location --------------------
 async function addLocation() {
-    // 获取本地存储的选定城市 ID
+    
     const cityId = localStorage.getItem("selected_city_id");
     if (!cityId) {
         alert("❌ No city selected! Redirecting to city list.");
@@ -115,7 +115,7 @@ async function addLocation() {
         return;
     }
 
-    // 获取表单数据
+    
     const name = document.getElementById("locationName").value;
     const description = document.getElementById("locationDescription").value;
     const latitude = document.getElementById("latitude").value;
@@ -157,7 +157,7 @@ async function addLocation() {
 
         const result = await response.json();
         alert(result.message);
-        window.location.href = "locations.html"; 
+        window.location.href = "locations.html"; // 跳转到地点列表页面
     } catch (error) {
         console.error("Error adding location:", error);
         alert("❌ Error adding location: " + error.message);
@@ -175,7 +175,7 @@ function initMap() {
         zoom: 12
     });
 
-    // 监听用户点击地图，设置标记并填充坐标
+    
     map.addListener("click", (event) => {
         placeMarker(event.latLng);
     });
@@ -195,7 +195,7 @@ function placeMarker(location) {
     document.getElementById("latitude").value = location.lat();
     document.getElementById("longitude").value = location.lng();
 
-
+    
     document.getElementById("selectedCoords").innerText =
         "Selected Coordinates: (" + location.lat().toFixed(6) + ", " + location.lng().toFixed(6) + ")";
 }
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         if (mapDiv.style.display === "none" || mapDiv.style.display === "") {
           mapDiv.style.display = "block";
-         
+          
           if (!map) {
             initMap();
           } else {
