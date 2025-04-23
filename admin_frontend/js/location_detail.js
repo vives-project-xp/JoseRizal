@@ -1,5 +1,3 @@
-//YIBO LIANG
-
 // js/location_detail.js
 document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);

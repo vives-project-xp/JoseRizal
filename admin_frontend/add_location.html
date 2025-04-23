@@ -5,11 +5,11 @@
   <title>Add Location</title>
   <link rel="stylesheet" href="styles/style.css">
   <style>
-    
+    /* 简单的样式，可根据需要调整 */
     #map {
       height: 400px;
       width: 100%;
-      display: none; 
+      display: none; /* 默认隐藏，点击后显示 */
       margin-top: 10px;
     }
   </style>
@@ -23,18 +23,18 @@
   <label for="locationDescription">Description:</label>
   <input type="text" id="locationDescription" required><br>
 
-  <!-- Hidden coordinate input box, automatically filled after selecting from the map-->
+  <!-- 隐藏的坐标输入框，由地图选取后自动填充 -->
   <input type="hidden" id="latitude">
   <input type="hidden" id="longitude">
 
-  <!-- Display the currently selected coordinates -->
-  <p id="selectedCoords">No coordinates selected</p>
+  <!-- 显示当前选中的坐标 -->
+  <p id="selectedCoords">未选择坐标</p>
 
-  <!-- Button triggers map selection -->
+  <!-- 按钮触发地图选择 -->
   <button id="selectOnMapBtn">Select Location on Map</button>
   <br><br>
 
-  <!-- Map container -->
+  <!-- 地图容器 -->
   <div id="map"></div>
   
   <button onclick="addLocation()">Submit</button>
@@ -42,7 +42,7 @@
   <p id="output"></p>
 
   <script src="js/locations.js"></script>
-  <!-- Import the Google Maps API (please replace YOUR_API_KEY with the actual API Key) -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXX"></script>
+  <!-- 引入 Google Maps API（请替换 YOUR_API_KEY 为实际的 API Key） -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQQaFhWHLeUoePfuQc-1tq0JCks4t9iUY"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ let editor;
 ClassicEditor
   .create(document.querySelector('#editor'), {
     simpleUpload: {
-      uploadUrl: 'http://localhost:8000/upload_image',
+      uploadUrl: 'http://100.107.144.48:8000/upload_image',
       // 如果需要，可以添加请求头，例如认证信息：
       // headers: { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
     }
@@ -18,7 +18,7 @@ ClassicEditor
 // 加载地点数据到页面上
 async function loadLocations() {
   try {
-    const response = await fetch('http://localhost:8000/locations');
+    const response = await fetch('http://100.107.144.48:8000/locations');
     const locations = await response.json();
     const container = document.getElementById('locationContainer');
     
@@ -67,7 +67,7 @@ document.getElementById('add-article-form').addEventListener('submit', async fun
   const data = { title, content_html, location_ids };
   
   try {
-    const response = await fetch('http://localhost:8000/articles', {
+    const response = await fetch('http://100.107.144.48:8000/articles', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

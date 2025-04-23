@@ -121,20 +121,20 @@ async function addLocation() {
     const latitude = document.getElementById("latitude").value;
     const longitude = document.getElementById("longitude").value;
 
-    
+    // 确保用户已经在地图上选择了一个位置
     if (!latitude || !longitude) {
         alert("❌ Please select a location on the map!");
         return;
     }
 
-    
+    // 构造 JSON 数据
     const locationData = {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude)
     };
 
     const data = {
-        city_id: parseInt(cityId),  
+        city_id: parseInt(cityId),  // 确保 city_id 是整数
         name: name,
         description: description,
         location_data: locationData
@@ -157,7 +157,7 @@ async function addLocation() {
 
         const result = await response.json();
         alert(result.message);
-        window.location.href = "locations.html"; 
+        window.location.href = "locations.html"; // 跳转到地点列表页面
     } catch (error) {
         console.error("Error adding location:", error);
         alert("❌ Error adding location: " + error.message);
@@ -191,11 +191,11 @@ function placeMarker(location) {
         });
     }
 
-    
+    // 将选定的坐标填充到输入框（隐藏字段）
     document.getElementById("latitude").value = location.lat();
     document.getElementById("longitude").value = location.lng();
 
-
+    // 更新显示区域（如果需要显示当前选中坐标）
     document.getElementById("selectedCoords").innerText =
         "Selected Coordinates: (" + location.lat().toFixed(6) + ", " + location.lng().toFixed(6) + ")";
 }
@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (selectBtn) {
       selectBtn.addEventListener("click", function () {
         const mapDiv = document.getElementById("map");
-        
+        // 切换地图显示状态
         if (mapDiv.style.display === "none" || mapDiv.style.display === "") {
           mapDiv.style.display = "block";
-         
+          // 如果地图还没有初始化，则调用 initMap()；否则，触发 resize 事件确保地图正确显示
           if (!map) {
             initMap();
           } else {
