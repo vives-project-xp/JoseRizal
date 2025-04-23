@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("location-title").textContent = data.name;
       document.getElementById("location-description").textContent = data.description;
   
-      // 检查 location_data 是否包含经纬度信息
+      
       if (data.lat && data.lng) {
         const mapDiv = document.getElementById("map");
         const map = new google.maps.Map(mapDiv, {

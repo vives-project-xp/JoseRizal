@@ -107,7 +107,7 @@ async function deleteLocation(location_id) {
 
 // -------------------- Add Location --------------------
 async function addLocation() {
-    // 获取本地存储的选定城市 ID
+    
     const cityId = localStorage.getItem("selected_city_id");
     if (!cityId) {
         alert("❌ No city selected! Redirecting to city list.");
@@ -115,26 +115,26 @@ async function addLocation() {
         return;
     }
 
-    // 获取表单数据
+    
     const name = document.getElementById("locationName").value;
     const description = document.getElementById("locationDescription").value;
     const latitude = document.getElementById("latitude").value;
     const longitude = document.getElementById("longitude").value;
 
-    // 确保用户已经在地图上选择了一个位置
+    
     if (!latitude || !longitude) {
         alert("❌ Please select a location on the map!");
         return;
     }
 
-    // 构造 JSON 数据
+    
     const locationData = {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude)
     };
 
     const data = {
-        city_id: parseInt(cityId),  // 确保 city_id 是整数
+        city_id: parseInt(cityId),  
         name: name,
         description: description,
         location_data: locationData
@@ -175,7 +175,7 @@ function initMap() {
         zoom: 12
     });
 
-    // 监听用户点击地图，设置标记并填充坐标
+    
     map.addListener("click", (event) => {
         placeMarker(event.latLng);
     });
@@ -191,11 +191,11 @@ function placeMarker(location) {
         });
     }
 
-    // 将选定的坐标填充到输入框（隐藏字段）
+    
     document.getElementById("latitude").value = location.lat();
     document.getElementById("longitude").value = location.lng();
 
-    // 更新显示区域（如果需要显示当前选中坐标）
+    
     document.getElementById("selectedCoords").innerText =
         "Selected Coordinates: (" + location.lat().toFixed(6) + ", " + location.lng().toFixed(6) + ")";
 }
@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (selectBtn) {
       selectBtn.addEventListener("click", function () {
         const mapDiv = document.getElementById("map");
-        // 切换地图显示状态
+        
         if (mapDiv.style.display === "none" || mapDiv.style.display === "") {
           mapDiv.style.display = "block";
-          // 如果地图还没有初始化，则调用 initMap()；否则，触发 resize 事件确保地图正确显示
+          
           if (!map) {
             initMap();
           } else {

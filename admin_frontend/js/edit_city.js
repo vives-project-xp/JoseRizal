@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("cityImagePreview").appendChild(img);
             }
 
-            // 你可以在这里加载并展示该 city 对应的 locations
+            
             loadLocationsForCity(id);
 
         } catch (error) {
