@@ -23,9 +23,9 @@
                                         <img :src="location.image" alt="Location Image" class="location-image" />
                                     </div>
                                     <div class="location-actions">
-                                        <button class="action-button" @click="editLocation(location.id)">Edit</button>
+                                        <button class="action-button" @click="editLocation(location.id)">Edit Location</button>
                                         <button class="action-button"
-                                            @click="deleteLocation(location.id)">Delete</button>
+                                            @click="deleteLocation(location.id)">Delete Location</button>
                                     </div>
                                 </div>
                             </div>
@@ -45,6 +45,12 @@
                         <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
                     </div>
                 </div>
+                <div v-if="showEditLocationModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" @click="closeEditLocationModal">&times;</span>
+                        <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -53,11 +59,13 @@
 
 <script>
 import EditCityComponent from './EditCityComponent.vue';
+import EditLocationComponent from './EditLocationComponent.vue';
 
 export default {
     name: "CityListComponent",
     components: {
         EditCityComponent,
+        EditLocationComponent
     },
     data() {
         return {
@@ -67,6 +75,8 @@ export default {
             message: "",
             showEditCityModal: false,
             selectedCity: null,
+            showEditLocationModal: false,
+            selectedLocation: null,
         };
     },
     mounted() {
@@ -147,6 +157,13 @@ export default {
             });
         },
         editLocation(locationId) {
+            const location = this.locations.find(location => location.id === locationId);
+            if (!location) {
+                console.error("Location not found:", locationId);
+                return;
+            }
+            this.selectedLocation = location;
+            this.showEditLocationModal = true;
             console.log("Edit location with ID:", locationId);
         },
         async deleteLocation(locationId) {
@@ -236,6 +253,10 @@ export default {
         closeEditCityModal() {
             this.showEditCityModal = false;
             this.selectedCity = null;
+        },
+        closeEditLocationModal() {
+            this.showEditLocationModal = false;
+            this.selectedLocation = null;
         },
     },
 };
