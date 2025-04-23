@@ -8,6 +8,7 @@
         </div>
         <div class="displayContent">
             <CityListComponent />
+            <ArticleListComponent />
         </div>
     </div>
 </template>
@@ -17,6 +18,7 @@ import AddCityComponent from '@/components/AddCityComponent.vue'
 import AddLocationComponent from '@/components/AddLocationComponent.vue'
 import CityListComponent from '@/components/CityListComponent.vue'
 import AddArticleComponent from '@/components/AddArticleComponent.vue'
+import ArticleListComponent from '@/components/ArticlePageComponent.vue'
 </script>
 
 <script>
