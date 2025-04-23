@@ -11,7 +11,7 @@
                 <p class="subtitle">City Image</p>
                 <input type="file" class="input-field" ref="cityImage" @change="handleImageInput" />
                 <button class="action-button" @click="editCity">
-                    {{ city ? 'Save' : 'Add City' }}
+                    Save
                 </button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
                 <p v-if="message" :class="['message', messageType]">{{ message }}</p>
@@ -105,27 +105,25 @@ export default {
             }
 
             try {
-                const updateCityData = {
-                    name: this.newCity.name,
-                    description: this.newCity.description,
-                    image: this.newCity.image,
-                };
+                const formData = new FormData();
+                formData.append('name', this.newCity.name);
+                formData.append('description', this.newCity.description);
+                if (this.newCity.image) {
+                    formData.append('image', this.newCity.image);
+                }
 
                 const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'content-type': 'application/json',
                     },
-                    body: JSON.stringify(updateCityData),
+                    body: formData,
                 });
 
                 if (updateResponse.ok) {
                     this.showMessage('City updated successfully', 'success');
                     this.$emit('city-updated');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
+                    location.reload();
                 } else {
                     const updateErrorData = await updateResponse.json();
                     console.error('Server error:', updateErrorData);
