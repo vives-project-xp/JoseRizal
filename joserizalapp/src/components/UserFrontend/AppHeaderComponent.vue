@@ -7,6 +7,7 @@
         <a href="#" @click.prevent="navigate('introduction')">Introduction</a>
         <a href="#" @click.prevent="navigate('articleList')">Articles</a>
         <a href="#" @click.prevent="navigate('walkingTour')">Walking Tour</a>
+		<a href="#" @click.prevent="navigate('AboutUs')">About Us</a>
       </div>
     </div>
   </template>
@@ -23,6 +24,12 @@
   };
   
   const navigate = (componentId) => {
+	//routes to about us
+	if (componentId === 'AboutUs') {
+    router.push({ name: 'AboutUs' });
+    return;
+  	}
+  	//otherwise
     // Navigate to HomePage first, then scroll to component
     // Give a little delay to wait for that page to load
     router.push({ name: 'HomePage' }).then(() => {

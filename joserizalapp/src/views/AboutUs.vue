@@ -1,0 +1,104 @@
+<template>
+	<div class="page-container">
+		<div class="title">
+			<h1>About Us</h1>
+		</div>
+		<div class="page-description">
+			<div class="project-info">
+				<h3>Project Info</h3>
+				<p>
+					Ligula vivamus gravida viverra feugiat neque sociis nam aptent tristique, nec platea velit 
+					libero nisl nascetur interdum integer accumsan, tincidunt a vulputate vehicula nostra auctor 
+					eu lectus. Nam natoque massa ante commodo eget ultrices nullam libero, vestibulum parturient 
+					viverra enim senectus tempus luctus vivamus sed, lacus nunc mattis nibh ligula metus sociis. 
+					Himenaeos curabitur habitasse mi ornare penatibus risus posuere platea ullamcorper, tortor 
+					pretium fames auctor felis sem vivamus aptent netus, vestibulum sapien sodales curae duis 
+					faucibus viverra tristiqu
+				</p>
+			</div>
+			<div class="developers">
+				<h3>developers</h3>
+				<DevCard
+				v-for="dev in developers"
+				:name="dev.name"
+				:description="dev.description"
+				:image-url="dev.imageUrl"
+				/>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+import DevCard from '@/components/UserFrontend/DevCard.vue'
+import jose_rizal_img1 from '../assets/jose_rizal_clippingv2.png'
+
+
+const developers = ref([
+	{
+		name: 'Lynn Delaere',
+		description: 'student, ect ect',
+		imageUrl: jose_rizal_img1,
+	},
+	{
+		name: 'Fae Jordaan',
+		description: '# This is some description',
+		imageUrl: jose_rizal_img1,
+	},
+	{
+		name: 'Tristan Shawn Cerera den Ouden',
+		description: '# This is some description',
+		imageUrl: jose_rizal_img1,
+	},
+	{
+		name: 'Liang Yibo',
+		description: '# This is some description',
+		imageUrl: jose_rizal_img1,
+	}
+])
+
+</script>
+
+<style scoped>
+html, body{
+	margin: 0;
+  	padding: 0;
+	padding-top: 1px;
+}
+.page-container{
+	background-image: url("@/assets/background.png");
+	background-size: cover;
+  	background-attachment: fixed;
+	padding: 0%;
+}
+
+.title, h1 {
+	margin: 0;
+	padding-top: 10px;
+}
+
+.page-description {
+	margin: auto;
+	width:50%;
+	text-align: justify;
+}
+
+.project-info {
+	margin: 0;
+	padding: 0;
+}
+
+h3 {
+	margin: 0;
+	padding-bottom: 10px;
+	padding-top: 15px;
+}
+
+p{
+	margin: 0;
+	padding: 0;
+}
+
+</style>

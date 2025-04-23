@@ -5,6 +5,7 @@ import CityPage from '@/views/CityPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
 import { getCookie } from '@/utils/cookieUtils';
+import AboutUs from '@/views/AboutUs.vue'
 
 const isAuthenticated = () => {
     const token = getCookie('access_token');
@@ -46,7 +47,12 @@ const routes = [
                 next('/login');
             }
         }
-    }
+    },
+	{
+        path: '/about-us',
+        name: 'AboutUs',
+        component: AboutUs
+    },
 ]
 
 const router = createRouter({
