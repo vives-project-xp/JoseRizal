@@ -7,6 +7,7 @@ from routes.auth import router as auth_router
 from routes.city import router as city_router
 from routes.location import router as location_router
 from routes.media import router as media_router
+from routes.about import router as about_router
 
 
 app = FastAPI()
@@ -31,3 +32,4 @@ app.include_router(city_router)
 app.include_router(location_router)
 app.include_router(media_router, prefix="/media")
 app.include_router(article_router)
+app.include_router(about_router, prefix="/about")
