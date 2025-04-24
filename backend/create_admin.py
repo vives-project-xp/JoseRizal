@@ -1,12 +1,12 @@
 import bcrypt
-from database import get_db
+from database import SessionLocal
 from database.models import admin
 
 print("🚀 create_admin.py is running!")
 
 
 def create_admin():
-    db = get_db()
+    db = SessionLocal()
     print("✅ Database session created!")
 
     username = input("Enter admin username: ")
