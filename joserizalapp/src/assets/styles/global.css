@@ -27,6 +27,11 @@ Made it invisible for now, but you can still select text
   caret-color: transparent;
 }
 
+html, body {
+	margin: 0;
+	padding: 0;
+  }
+
 /* Base styles for the entire app */
 body {
   font-family: 'Quicksand', sans-serif;

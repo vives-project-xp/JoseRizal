@@ -17,13 +17,15 @@
 				</p>
 			</div>
 			<div class="developers">
-				<h3>developers</h3>
-				<DevCard
-				v-for="dev in developers"
-				:name="dev.name"
-				:description="dev.description"
-				:image-url="dev.imageUrl"
-				/>
+				<h3>Meet the developers</h3>
+				<div class="dev-list">
+					<DevCard
+					v-for="dev in developers"
+					:name="dev.name"
+					:description="dev.description"
+					:image-url="dev.imageUrl"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -71,7 +73,8 @@ html, body{
 	background-image: url("@/assets/background.png");
 	background-size: cover;
   	background-attachment: fixed;
-	padding: 0%;
+	padding: 10px;
+	min-height: 100vh;
 }
 
 .title, h1 {
@@ -100,5 +103,17 @@ p{
 	margin: 0;
 	padding: 0;
 }
+.developers {
+	margin-top: 10px;
+}
+.dev-list{
+	display: grid; 
+	grid-template-columns: repeat(2, 1fr); /* 2 articles per row */
+    gap: 0.2rem;
+    padding: 0.5rem;
+	row-gap: 1rem;       
+  	column-gap: 0rem;
+}
+
 
 </style>
