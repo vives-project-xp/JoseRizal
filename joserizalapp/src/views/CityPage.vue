@@ -25,11 +25,6 @@ import cityImage  from '../assets/generic_city.jpg';
 </script>
 
 <style scoped>
-.page-container {
-	background-image: url("@/assets/background.png");
-  	background-size: cover;
-  	background-attachment: fixed;
-}
 .city-page {
     display: flex;
 	flex-direction: column;
