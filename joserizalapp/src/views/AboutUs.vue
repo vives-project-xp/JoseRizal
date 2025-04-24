@@ -35,29 +35,32 @@
 import { ref } from 'vue'
 
 import DevCard from '@/components/UserFrontend/DevCard.vue'
-import jose_rizal_img1 from '../assets/jose_rizal_clippingv2.png'
+import imageDev1 from '@/assets/developer_pics/Fae.jpg'
+import imageDev2 from '@/assets/developer_pics/Lynn.png'
+import imageDev3 from '@/assets/developer_pics/Liang.jpg'
+import imageDev4 from '@/assets/developer_pics/Tristan.png'
 
 
 const developers = ref([
 	{
 		name: 'Lynn Delaere',
-		description: 'student, ect ect',
-		imageUrl: jose_rizal_img1,
+		description: 'Belgium \n Web developement',
+		imageUrl: imageDev2,
 	},
 	{
 		name: 'Fae Jordaan',
-		description: '# This is some description',
-		imageUrl: jose_rizal_img1,
+		description: 'Netherlands \n Web design',
+		imageUrl: imageDev1,
 	},
 	{
 		name: 'Tristan Shawn Cerera den Ouden',
-		description: '# This is some description',
-		imageUrl: jose_rizal_img1,
+		description: 'Netherlands \n Web developement',
+		imageUrl: imageDev4,
 	},
 	{
 		name: 'Liang Yibo',
-		description: '# This is some description',
-		imageUrl: jose_rizal_img1,
+		description: 'Spain \n Backend developement',
+		imageUrl: imageDev3,
 	}
 ])
 

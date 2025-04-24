@@ -90,6 +90,7 @@ const props = defineProps({
   	line-height: 1.5;
   	display: flex;
   	overflow: hidden;
+	white-space: pre-line;
 }
 
 </style>
