@@ -39,7 +39,7 @@ const props = defineProps({
 
 <style scoped>
 .dev-card {
-    max-width: 300px;
+    max-width: 280px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -47,7 +47,8 @@ const props = defineProps({
     transition: transform 0.2s ease;
     display: flex;
     flex-direction: column;
-	margin: 15px;
+	margin: 0px;
+	margin-bottom: 15px;
 }
 
 .dev-card:hover {
@@ -76,7 +77,7 @@ const props = defineProps({
 
 .name {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #333;
 }
