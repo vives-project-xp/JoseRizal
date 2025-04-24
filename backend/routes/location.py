@@ -1,14 +1,12 @@
-#Author:YIBO LIANG
-# backend/location_routes.py
-
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from pydantic import BaseModel
+from database import get_db
 from database.models import City, Location, admin
-from backend.dependencies import get_db
-from backend.auth import get_current_user
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from routes.auth import get_current_user
+from sqlalchemy.orm import Session
 
 router = APIRouter()
+
 
 # Define a Pydantic model to receive the request data for adding attractions
 class LocationCreate(BaseModel):
@@ -17,11 +15,12 @@ class LocationCreate(BaseModel):
     description: str
     location_data: dict
 
+
 @router.post("/add_location/")
 def add_location(
     location_info: LocationCreate,  # Parsing JSON data from the request body
     db: Session = Depends(get_db),
-    current_admin: admin = Depends(get_current_user)
+    current_admin: admin = Depends(get_current_user),
 ):
     # Check if the target city exists
     city = db.query(City).filter(City.id == location_info.city_id).first()
@@ -33,11 +32,13 @@ def add_location(
         city_id=location_info.city_id,
         name=location_info.name,
         description=location_info.description,
-        location_data=location_info.location_data
+        location_data=location_info.location_data,
     )
     db.add(new_location)
     db.commit()
-    return {"message": f" Location '{location_info.name}' added to city ID {location_info.city_id} successfully!"}
+    return {
+        "message": f" Location '{location_info.name}' added to city ID {location_info.city_id} successfully!"
+    }
 
 
 @router.get("/city/{city_id}/locations", response_model=list[dict])
@@ -49,11 +50,10 @@ def get_locations_by_city(city_id: int, db: Session = Depends(get_db)):
             "city_id": loc.city_id,
             "name": loc.name,
             "description": loc.description,
-            "location_data": loc.location_data
+            "location_data": loc.location_data,
         }
         for loc in locations
     ]
-
 
 
 @router.get("/location/{location_id}")
@@ -67,7 +67,7 @@ def get_location(location_id: int, db: Session = Depends(get_db)):
         "city_id": location.city_id,
         "name": location.name,
         "description": location.description,
-        "location_data": location.location_data
+        "location_data": location.location_data,
     }
 
 
@@ -75,7 +75,7 @@ def get_location(location_id: int, db: Session = Depends(get_db)):
 def delete_location(
     location_id: int,
     db: Session = Depends(get_db),
-    current_admin: admin = Depends(get_current_user)
+    current_admin: admin = Depends(get_current_user),
 ):
     location = db.query(Location).filter(Location.id == location_id).first()
     if not location:
@@ -91,12 +91,13 @@ class LocationUpdate(BaseModel):
     description: str
     location_data: dict
 
+
 @router.put("/update_location/{location_id}")
 def update_location(
     location_id: int,
     location_data: LocationUpdate,
     db: Session = Depends(get_db),
-    current_admin: admin = Depends(get_current_user)
+    current_admin: admin = Depends(get_current_user),
 ):
     location = db.query(Location).filter(Location.id == location_id).first()
     if not location:
@@ -119,7 +120,7 @@ def get_all_locations(db: Session = Depends(get_db)):
             "city_id": loc.city_id,
             "name": loc.name,
             "description": loc.description,
-            "location_data": loc.location_data
+            "location_data": loc.location_data,
         }
         for loc in locations
     ]
