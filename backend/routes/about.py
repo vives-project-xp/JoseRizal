@@ -1,11 +1,11 @@
-# about_routes.py
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from database.models import CMSContent
-from backend.dependencies import get_db  
+from database import get_db
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 router = APIRouter()
+
 
 # Pydantic schema
 class AboutInfoSchema(BaseModel):

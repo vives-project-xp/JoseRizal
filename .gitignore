@@ -1,13 +1,8 @@
-# Environments
-.env
+# Python virtual environments
 .venv
-env/
 venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Python
+# Python cache
 __pycache__
 
 # macOS specific file
