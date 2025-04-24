@@ -16,7 +16,6 @@
         <div class="pageContent" id="walkingTour">
           <WalkingTour />
         </div>
-        <PageBreakComponent visibility="top" />
       </div>
     </div>
   </div>
@@ -55,12 +54,6 @@ export default {
 </script>
 
 <style scoped>
-.appContainer {
-  background-image: url("@/assets/background.png");
-  background-size: cover;
-  background-attachment: fixed;
-}
-
 .pageContainer {
   padding: 5px;
 }

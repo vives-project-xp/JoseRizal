@@ -14,7 +14,6 @@
                 <div class="article-content" v-html="parsedContent"></div>
             </div>
         </div>
-        <PageBreakComponent visibility="top" />
     </div>  
 </template>
 
@@ -22,8 +21,6 @@
 import { ref, onMounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { Marked } from 'marked'
-
-import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue'
 
 import fetchArticles from '@/services/fetchArticles'
 
@@ -135,10 +132,6 @@ onMounted(async () => {
 
 <style scoped>
 .article-page {
-    min-height: 100vh;
-    background-image: url("@/assets/background.png");
-    background-size: cover;
-    background-attachment: fixed;
     display: flex;
     flex-direction: column;
 }
