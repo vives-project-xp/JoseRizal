@@ -1,4 +1,6 @@
-import jose_rizal_img1 from '../assets/jose_rizal_clippingv2.png'
+import img_jose_rizal_1 from '../assets/generic_landmark_pics/joserizal1.jpg'
+import img_jose_rizal_2 from '../assets/generic_landmark_pics/joserizal2.jpg'
+import img_jose_rizal_3 from '../assets/generic_landmark_pics/joserizal3.jpg'
 
 const fetchArticles = () => {
     return [
@@ -7,7 +9,7 @@ const fetchArticles = () => {
             title: 'Jose Rizal Landmark 1',
             preview: 'Historical site related to Dr. Jose Rizal...',
             content: '# This is some content',
-            imageUrl: jose_rizal_img1,
+            imageUrl: img_jose_rizal_1,
             landmark: true
         },
         {
@@ -15,7 +17,7 @@ const fetchArticles = () => {
             title: 'Jose Rizal Landmark 2',
             preview: 'Another important location in Rizal\'s life...',
             content: 'This is some content',
-            imageUrl: jose_rizal_img1,
+            imageUrl: img_jose_rizal_2,
             landmark: true
         },
         {
@@ -23,7 +25,7 @@ const fetchArticles = () => {
             title: 'Jose Rizal Landmark 3',
             preview: 'Memorial site honoring the national hero...',
             content: '* This is some content',
-            imageUrl: jose_rizal_img1,
+            imageUrl: img_jose_rizal_3,
             landmark: false
         }
     ]

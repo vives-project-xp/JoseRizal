@@ -21,10 +21,17 @@
             :alt="'Thumbnail of {{landmark.name}}'"
             class="thumbnail"
           />
-          {{ landmark.name }}
+          <p>{{ landmark.title }}</p>
         </label>
       </div>
-  </div>
+
+      <button 
+          class="view-tour"
+          @click="startTour"
+      >
+          Start Tour
+      </button>
+    </div>
   </div>
 </template>
   
@@ -97,6 +104,21 @@
   height: 40px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.view-tour {
+    align-self: flex-start;
+    padding: 0.5rem 1.5rem;
+    background: #666666;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.view-tour:hover {
+    background: rgb(140, 140, 140);
 }
 
 @media (max-width: 480px) {

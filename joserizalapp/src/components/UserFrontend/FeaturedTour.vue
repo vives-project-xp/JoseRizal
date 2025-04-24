@@ -10,7 +10,7 @@
 
         <div class="card-content">
         <div class="card-content-text">
-            <h3 class="title">{{ title }}</h3>
+            <h3 class="title">{{ title }} Complete Tour</h3>
         </div>
         <button 
             class="view-tour"
