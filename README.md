@@ -32,7 +32,18 @@
 <-- Write the technological stack of José Rizal walk -->
 
 ## Installation
-<-- Write the installation steps of José Rizal walk -->
+### Using Docker
+1. Ensure you have Docker installed on your system. You can download it from [Docker's official website](https://www.docker.com/).
+2. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd JoseRizal
+   ```
+3. Build the Docker image:
+   ```bash
+   docker compose up --build .
+   ```
+4. Access the application in your browser at `http://localhost:8000/docs`.
 
 ## Usage
 <-- Write the usage of José Rizal walk -->
