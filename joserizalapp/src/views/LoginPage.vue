@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import LoginPageComponent from '@/components/LoginPageComponent.vue';
+import LoginPageComponent from '@/components/AdminFrontend/LoginPageComponent.vue';
 </script>
 
 <style>

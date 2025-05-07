@@ -14,11 +14,11 @@
 </template>
 
 <script setup>
-import AddCityComponent from '@/components/AddCityComponent.vue'
-import AddLocationComponent from '@/components/AddLocationComponent.vue'
-import CityListComponent from '@/components/CityListComponent.vue'
-import AddArticleComponent from '@/components/AddArticleComponent.vue'
-import ArticleListComponent from '@/components/ArticleListComponent.vue'
+import AddCityComponent from '@/components/AdminFrontend/AddCityComponent.vue'
+import AddLocationComponent from '@/components/AdminFrontend/AddLocationComponent.vue'
+import CityListComponent from '@/components/AdminFrontend/CityListComponent.vue'
+import AddArticleComponent from '@/components/AdminFrontend/AddArticleComponent.vue'
+import ArticleListComponent from '@/components/AdminFrontend/ArticleListComponent.vue'
 </script>
 
 <script>
