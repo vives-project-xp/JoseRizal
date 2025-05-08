@@ -9,7 +9,7 @@
         <input type="text" placeholder="Enter location description" class="input-field" v-model="newCity.description" />
         <p class="subtitle">City Image</p>
         <input type="file" class="input-field" ref="cityImage" @change="handleImageInput" />
-        <button class="action-button" @click="addCity">
+        <button class="action-button" @click="addCity" :disabled="isSubmitting">
           Add City
         </button>
         <p v-if="message" :class="['message', messageType]">{{ message }}</p>
@@ -28,7 +28,8 @@ export default {
       },
       cityImage: null,
       message: "",
-      messageType: ""
+      messageType: "",
+      isSubmitting: false,
     };
   },
   methods: {
@@ -68,6 +69,7 @@ export default {
       }
 
       try {
+        this.isSubmitting = true;
         const response = await fetch("http://127.0.0.1:8000/add_city", {
           method: "POST",
           headers: {
@@ -83,6 +85,9 @@ export default {
           this.newCity.name = "";
           this.newCity.description = "";
           this.cityImage = null;
+          setTimeout(() => {
+            window.location.href = window.location.pathname;
+          }, 1000);
         } else {
           const errorData = await response.json();
           this.showMessage(errorData.message || "Failed to add city", "error");
@@ -90,6 +95,8 @@ export default {
       } catch (error) {
         console.error("Error adding city:", error);
         this.showMessage("An error occurred while adding the city", "error");
+      } finally {
+        this.isSubmitting = false;
       }
     },
 

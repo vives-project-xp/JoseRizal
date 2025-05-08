@@ -10,7 +10,7 @@
                     v-model="newCity.description" />
                 <p class="subtitle">City Image</p>
                 <input type="file" class="input-field" ref="cityImage" @change="handleImageInput" />
-                <button class="action-button" @click="editCity">
+                <button class="action-button" @click="editCity" :disabled="isSubmitting">
                     Save
                 </button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
@@ -33,6 +33,7 @@ export default {
             newCity: { name: '', description: '', image: null },
             message: '',
             messageType: '',
+            isSubmitting: false,
         };
     },
     watch: {
@@ -105,13 +106,13 @@ export default {
             }
 
             try {
+                this.isSubmitting = true;
                 const formData = new FormData();
                 formData.append('name', this.newCity.name);
                 formData.append('description', this.newCity.description);
                 if (this.newCity.image) {
                     formData.append('image', this.newCity.image);
                 }
-
                 const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
                     method: 'PUT',
                     headers: {
@@ -123,7 +124,9 @@ export default {
                 if (updateResponse.ok) {
                     this.showMessage('City updated successfully', 'success');
                     this.$emit('city-updated');
-                    location.reload();
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname;
+                    }, 1000);
                 } else {
                     const updateErrorData = await updateResponse.json();
                     console.error('Server error:', updateErrorData);
@@ -132,6 +135,8 @@ export default {
             } catch (error) {
                 console.error('Error updating city:', error);
                 this.showMessage('An error occurred while updating the city', 'error');
+            } finally {
+                this.isSubmitting = false;
             }
         },
 

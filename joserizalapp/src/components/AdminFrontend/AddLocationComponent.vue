@@ -18,7 +18,7 @@
           <input type="text" placeholder="Enter latitude" class="input-field" v-model="newLocation.location_data.latitude" />
           <input type="text" placeholder="Enter longitude" class="input-field" v-model="newLocation.location_data.longitude" />
         </div>
-        <button class="action-button" @click="addLocation">
+        <button class="action-button" @click="addLocation" :disabled="isSubmitting">
           Add Location
         </button>
         <p v-if="message" :class="['message', messageType]">{{ message }}</p>
@@ -43,6 +43,7 @@ export default {
       cities: [],
       message: "",
       messageType: "",
+      isSubmitting: false,
     };
   },
   mounted() {
@@ -130,6 +131,7 @@ export default {
       console.log("New location data:", newLocation);
 
       try {
+        this.isSubmitting = true;
         const response = await fetch("http://127.0.0.1:8000/add_location/", {
           method: "POST",
           headers: {
@@ -148,6 +150,9 @@ export default {
           this.newLocation.description = "";
           this.newLocation.location_data.latitude = null;
           this.newLocation.location_data.longitude = null;
+          setTimeout(() => {
+            window.location.href = window.location.pathname;
+          }, 1000);
         } else {
           const errorData = await response.json();
           this.showMessage(errorData.message || "Failed to add location", "error");
@@ -155,6 +160,8 @@ export default {
       } catch (error) {
         console.error("Error adding location:", error);
         this.showMessage("An error occurred while adding the location", "error");
+      } finally {
+        this.isSubmitting = false;
       }
     },
     showMessage(text, type) {

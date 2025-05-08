@@ -19,7 +19,7 @@
                     <option v-for="location in locations" :key="location.id" :value="location.id">{{ location.name }}
                     </option>
                 </select>
-                <button class="action-button" @click="updateArticle">Save</button>
+                <button class="action-button" @click="updateArticle" :disabled="isSubmitting">Save</button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
                 <p v-if="message" :class="['message', messageType]">{{ message }}</p>
             </div>
@@ -47,6 +47,7 @@ export default {
             locations: [],
             message: "",
             messageType: "",
+            isSubmitting: false,
         };
     },
     mounted() {
@@ -138,6 +139,7 @@ export default {
         async updateArticle() {
             const token = this.getCookie("access_token");
             try {
+                this.isSubmitting = true;
                 const response = await fetch(`http://127.0.0.1:8000/articles/${this.articleId}`, {
                     method: "PUT",
                     headers: {
@@ -149,7 +151,9 @@ export default {
                 if (response.ok) {
                     this.showMessage("Article updated successfully", "success");
                     this.$emit("article-updated");
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname;
+                    }, 1000);
                 } else {
                     const errorData = await response.json();
                     this.showMessage(errorData.message || "Failed to update article", "error");
@@ -157,6 +161,8 @@ export default {
             } catch (error) {
                 console.error("Error updating article:", error);
                 this.showMessage("An error occurred while updating the article", "error");
+            } finally {
+                this.isSubmitting = false;
             }
         },
         showMessage(text, type) {
