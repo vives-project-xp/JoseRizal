@@ -295,10 +295,6 @@ export default {
     gap: 8px;
 }
 
-.city-item {
-    /* Removed padding and border to match ArticleListComponent.vue */
-}
-
 .collapsible {
     background-color: #999999;
     color: white;
