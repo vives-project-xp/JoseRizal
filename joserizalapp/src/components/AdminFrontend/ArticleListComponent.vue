@@ -5,7 +5,8 @@
                 <h1 class="title">Article List</h1>
                 <div v-if="articles.length > 0" class="article-list">
                     <div class="article-item" v-for="article in articles" :key="article.id">
-                        <button class="collapsible" :class="{ 'active': expandedArticleId === article.id }" @click="toggleArticle(article.id)">
+                        <button class="collapsible" :class="{ 'active': expandedArticleId === article.id }"
+                            @click="toggleArticle(article.id)">
                             {{ article.title }}
                         </button>
                         <div class="content" :style="{ display: expandedArticleId === article.id ? 'block' : 'none' }">
@@ -21,6 +22,13 @@
                 <div v-else class="no-articles">
                     <p>No articles available.</p>
                 </div>
+                <div v-if="showEditArticleModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" @click="closeEditArticleModal">&times;</span>
+                        <EditArticleComponent :articleId="selectedArticle.id" @close="closeEditArticleModal"
+                            @article-updated="fetchArticles" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -28,12 +36,16 @@
 
 <script>
 import { marked } from "marked";
+import EditArticleComponent from "./EditArticleComponent.vue";
 
 export default {
+    components: {
+        EditArticleComponent,
+    },
     data() {
         return {
             articles: [],
-            expandedArticleId: null, 
+            expandedArticleId: null,
             showEditArticleModal: false,
             selectedArticle: null,
         };
@@ -178,7 +190,7 @@ export default {
     color: #444;
 }
 
-.article-description{
+.article-description {
     margin: 8px 0;
     font-size: 0.9rem;
     color: #666;
@@ -216,6 +228,58 @@ export default {
 
 .action-button:hover {
     background-color: #666666;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media screen and (min-width: 768px) {

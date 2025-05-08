@@ -141,7 +141,7 @@ export default {
             } catch (error) {
                 console.error("Error adding article:", error);
                 this.showMessage("Failed to add article", "error");
-            }
+          }
         },
         showMessage(message, type) {
             this.message = message;
