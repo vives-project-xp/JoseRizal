@@ -22,13 +22,13 @@
                 <div v-else class="no-articles">
                     <p>No articles available.</p>
                 </div>
-                <div v-if="showEditArticleModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditArticleModal">&times;</span>
-                        <EditArticleComponent :articleId="selectedArticle.id" @close="closeEditArticleModal"
-                            @article-updated="fetchArticles" />
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div v-if="showEditArticleModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" @click="closeEditArticleModal">&times;</span>
+                <EditArticleComponent :articleId="selectedArticle.id" @close="closeEditArticleModal"
+                    @article-updated="fetchArticles" />
             </div>
         </div>
     </div>

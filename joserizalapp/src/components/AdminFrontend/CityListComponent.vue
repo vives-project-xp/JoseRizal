@@ -23,9 +23,10 @@
                                         <img :src="location.image" alt="Location Image" class="location-image" />
                                     </div>
                                     <div class="location-actions">
-                                        <button class="action-button" @click="editLocation(location.id)">Edit Location</button>
-                                        <button class="action-button"
-                                            @click="deleteLocation(location.id)">Delete Location</button>
+                                        <button class="action-button" @click="editLocation(location.id)">Edit
+                                            Location</button>
+                                        <button class="action-button" @click="deleteLocation(location.id)">Delete
+                                            Location</button>
                                     </div>
                                 </div>
                             </div>
@@ -39,22 +40,21 @@
                 <div v-else class="no-cities">
                     <p>No cities available.</p>
                 </div>
-                <div v-if="showEditCityModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditCityModal">&times;</span>
-                        <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
-                    </div>
-                </div>
-                <div v-if="showEditLocationModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditLocationModal">&times;</span>
-                        <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal" />
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div v-if="showEditCityModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" @click="closeEditCityModal">&times;</span>
+                <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
+            </div>
+        </div>
+        <div v-if="showEditLocationModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" @click="closeEditLocationModal">&times;</span>
+                <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal" />
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
