@@ -63,7 +63,7 @@
 
   const startTour = () => {
     // open google maps with the selected landmarks
-    const baseUrl = 'https://www.google.com/maps/dir/?api=1'
+    const baseUrl = 'https://www.google.com/maps/dir/'
     const urls = orderedLandmarks.value.map(landmark => {
       return `${landmark.latitude},${landmark.longitude}` 
     })
