@@ -12,7 +12,7 @@
           <input type="text" placeholder="Enter latitude" class="input-field" v-model="location.location_data.latitude" />
           <input type="text" placeholder="Enter longitude" class="input-field" v-model="location.location_data.longitude" />
         </div>
-        <button class="action-button" @click="updateLocation">Save</button>
+        <button class="action-button" @click="updateLocation" :disabled="isSubmitting">Save</button>
         <button class="action-button" @click="$emit('close')">Cancel</button>
         <p v-if="message" :class="['message', messageType]">{{ message }}</p>
       </div>
@@ -40,6 +40,7 @@ export default {
       },
       message: "",
       messageType: "",
+      isSubmitting: false,
     };
   },
   mounted() {
@@ -81,6 +82,7 @@ export default {
     async updateLocation() {
       const token = this.getCookie("access_token");
       try {
+        this.isSubmitting = true;
         const response = await fetch(`http://127.0.0.1:8000/update_location/${this.locationId}`, {
           method: "PUT",
           headers: {
@@ -92,7 +94,9 @@ export default {
         if (response.ok) {
           this.showMessage("Location updated successfully", "success");
           this.$emit("location-updated");
-          location.reload();
+          setTimeout(() => {
+            window.location.href = window.location.pathname;
+          }, 1000);
         } else {
           const errorData = await response.json();
           this.showMessage(errorData.message || "Failed to update location", "error");
@@ -100,6 +104,8 @@ export default {
       } catch (error) {
         console.error("Error updating location:", error);
         this.showMessage("An error occurred while updating the location", "error");
+      } finally {
+        this.isSubmitting = false;
       }
     },
     showMessage(text, type) {
