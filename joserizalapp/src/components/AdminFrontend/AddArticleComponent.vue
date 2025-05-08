@@ -7,10 +7,15 @@
                 <input type="text" placeholder="Enter article name" class="input-field" v-model="newArticle.title" />
                 <p class="subtitle">Description</p>
                 <textarea placeholder="Enter article description in markdown" class="textarea-field" v-model="newArticle.content_html"></textarea>
-                <p class="subtitle">Related city</p>
-                <select class="input-field" v-model="newArticle.city_id">
+                <p class="subtitle">Select a city</p>
+                <select class="input-field" v-model="newArticle.city_id" @change="fetchLocations">
                     <option value="" disabled>Select a city</option>
                     <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
+                </select>
+                <p v-if="locations.length > 0" class="subtitle">Select a location</p>
+                <select v-if="locations.length > 0" class="input-field" v-model="newArticle.location_id">
+                    <option value="" disabled>Select a location</option>
+                    <option v-for="location in locations" :key="location.id" :value="location.id">{{ location.name }}</option>
                 </select>
                 <button class="action-button" @click="addArticle">
                     Add Article
@@ -29,8 +34,10 @@ export default {
                 title: "",
                 content_html: "",
                 city_id: null,
+                location_id: null,
             },
             cities: [],
+            locations: [],
             message: "",
             messageType: "",
         };
@@ -68,6 +75,33 @@ export default {
                 console.error("Error fetching cities:", error);
             }
         },
+        async fetchLocations() {
+            if (!this.newArticle.city_id) {
+                this.locations = [];
+                return;
+            }
+            const token = this.getCookie("access_token");
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/city/${this.newArticle.city_id}/locations`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token,
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Locations fetched successfully:", data);
+                    this.locations = data;
+                } else {
+                    console.error("Failed to fetch locations:", response.statusText);
+                    this.locations = [];
+                }
+            } catch (error) {
+                console.error("Error fetching locations:", error);
+                this.locations = [];
+            }
+        },
         async addArticle() {
             const token = this.getCookie("access_token");
 
@@ -75,6 +109,7 @@ export default {
                 title: this.newArticle.title,
                 content_html: this.newArticle.content_html,
                 city_id: this.newArticle.city_id,
+                location_id: this.newArticle.location_id,
             };
             if (!data.title.trim()) {
                 this.showMessage("Article title is required", "error");
@@ -95,7 +130,7 @@ export default {
                 });
                 if (response.ok) {
                     const responseData = await response.json();
-                    console.log("Article added successfully:", responseData);
+                    console.log("Article added successfully:", data)
                     this.showMessage("Article added successfully", "success");
                     this.newArticle = { title: "", content_html: "", city_id: null };
                 } else {
@@ -106,7 +141,7 @@ export default {
             } catch (error) {
                 console.error("Error adding article:", error);
                 this.showMessage("Failed to add article", "error");
-            }
+          }
         },
         showMessage(message, type) {
             this.message = message;
@@ -208,6 +243,7 @@ export default {
   margin-bottom: 12px;
   box-sizing: border-box;
   resize: vertical;
+  caret-color: auto;
 }
 
 .textarea-field:focus {
