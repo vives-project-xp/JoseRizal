@@ -60,6 +60,16 @@
       toggleOrder.value = toggleOrder.value.filter(id => id !== landmarkId)
     }
   }
+
+  const startTour = () => {
+    // open google maps with the selected landmarks
+    const baseUrl = 'https://www.google.com/maps/dir/?api=1'
+    const urls = orderedLandmarks.value.map(landmark => {
+      return `${landmark.latitude},${landmark.longitude}` 
+    })
+    const url = urls.join('/')
+    window.open(baseUrl + url, '_blank')
+  }
   
   // Get selected articles
   const orderedLandmarks = computed(() => {
@@ -71,7 +81,7 @@
     // Return selected articles & in toggled order
     return toggleOrder.value
       .filter(id => selectedLandmarkIds.value.includes(id))
-      .map(id => landmarkMap[id])
+      .map(id => map[id])
   })
   </script>
   
