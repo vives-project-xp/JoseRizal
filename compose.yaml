@@ -28,6 +28,20 @@ services:
       database:
         condition: service_healthy
 
+  frontend:
+    build: ./joserizalapp
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8000
+    volumes:
+      - ./joserizalapp:/app
+      - /app/node_modules
+    depends_on:
+      database:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   static_uploads:
