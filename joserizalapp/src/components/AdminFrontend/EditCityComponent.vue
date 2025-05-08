@@ -30,7 +30,8 @@ export default {
     },
     data() {
         return {
-            newCity: { name: '', description: '', image: null },
+            newCity: { name: '', description: ''},
+            cityImage: null,
             message: '',
             messageType: '',
             isSubmitting: false,
@@ -110,8 +111,8 @@ export default {
                 const formData = new FormData();
                 formData.append('name', this.newCity.name);
                 formData.append('description', this.newCity.description);
-                if (this.newCity.image) {
-                    formData.append('image', this.newCity.image);
+                if (this.$refs.cityImage.files[0]) {
+                    formData.append('file', this.$refs.cityImage.files[0]);
                 }
                 const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
                     method: 'PUT',

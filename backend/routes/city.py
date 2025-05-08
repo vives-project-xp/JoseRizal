@@ -92,6 +92,10 @@ async def update_city(
     city.description = description
 
     if file:
+        # Remove the old image if it exists
+        if city.image_url and os.path.exists(city.image_url):
+            os.remove(city.image_url)
+            
         file_path = f"{UPLOAD_DIR}/{file.filename}"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)

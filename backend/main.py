@@ -26,11 +26,10 @@ app.mount(
     StaticFiles(directory="uploaded_images"),
     name="uploaded_images",
 )
-
 app.mount(
-    "/uploaded_videos",
-    StaticFiles(directory="uploaded_videos"),
-    name="uploaded_videos",
+    "/static",
+    StaticFiles(directory="static"),
+    name="static",
 )
 
 app.include_router(auth_router, prefix="/auth")
