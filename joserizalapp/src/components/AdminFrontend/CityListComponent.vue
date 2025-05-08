@@ -2,7 +2,7 @@
     <div class="pageContent">
         <div class="city-card">
             <div class="card-content">
-                <h3 class="title">Cities</h3>
+                <h1 class="title">Cities</h1>
                 <div v-if="cities.length > 0" class="cities-container">
                     <div v-for="city in cities" :key="city.id" class="city-item">
                         <button type="button" class="collapsible" :class="{ 'active': city.showLocations }"
@@ -44,13 +44,13 @@
         </div>
         <div v-if="showEditCityModal" class="modal">
             <div class="modal-content">
-                <span class="close-button" @click="closeEditCityModal">&times;</span>
+                <span class="close-button" @click="closeEditCityModal">×</span>
                 <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
             </div>
         </div>
         <div v-if="showEditLocationModal" class="modal">
             <div class="modal-content">
-                <span class="close-button" @click="closeEditLocationModal">&times;</span>
+                <span class="close-button" @click="closeEditLocationModal">×</span>
                 <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal" />
             </div>
         </div>
@@ -281,10 +281,16 @@ export default {
     padding: 16px;
 }
 
+
+
 .cities-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.city-item {
+    /* Removed padding and border to match ArticleListComponent.vue */
 }
 
 .collapsible {
@@ -387,22 +393,6 @@ export default {
     background-color: #666666;
 }
 
-@media screen and (min-width: 768px) {
-    .city-card {
-        max-width: 600px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-content {
-        padding: 24px;
-    }
-
-    .city-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-    }
-}
-
 .modal {
     position: fixed;
     top: 0;
@@ -432,5 +422,21 @@ export default {
     font-size: 1.5rem;
     cursor: pointer;
     color: #666;
+}
+
+@media screen and (min-width: 768px) {
+    .city-card {
+        max-width: 600px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-content {
+        padding: 24px;
+    }
+
+    .city-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
 }
 </style>
