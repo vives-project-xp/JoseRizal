@@ -10,7 +10,11 @@
                             {{ city.name }}
                         </button>
                         <div class="content" :style="{ display: city.showLocations ? 'block' : 'none' }">
-                            <div v-if="locations.length === 0" class="no-locations">
+                        <div class="city-image" v-if="city.image_url">
+                            <img :src="city.image_url" alt="City Image"
+                                class="city-image" />
+                        </div>
+                        <div v-if="locations.length === 0" class="no-locations">
                                 <p>No locations available for this city.</p>
                             </div>
                             <div>
@@ -58,6 +62,7 @@
 </template>
 
 <script>
+import { h } from 'vue';
 import EditCityComponent from './EditCityComponent.vue';
 import EditLocationComponent from './EditLocationComponent.vue';
 
@@ -107,6 +112,7 @@ export default {
                     console.log("Cities fetched successfully:", data);
                     this.cities = data.map(city => ({
                         ...city,
+                        image_url: city.image_url ? `http://127.0.0.1:8000${city.image_url}` : null,
                         showLocations: false,
                     }));
                 } else {
