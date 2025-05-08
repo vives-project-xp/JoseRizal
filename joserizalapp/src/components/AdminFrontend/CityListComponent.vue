@@ -9,7 +9,15 @@
                             @click="toggleLocations(city.id)">
                             {{ city.name }}
                         </button>
+
                         <div class="content" :style="{ display: city.showLocations ? 'block' : 'none' }">
+                            <div class="city-image" v-if="city.image_url">
+                                <img :src="city.image_url" alt="City Image" class="city-image" />
+                            </div>
+                            <div class="city-actions">
+                                <button class="action-button" @click="editCity(city.id)">Edit City</button>
+                                <button class="action-button" @click="deleteCity(city.id)">Delete City</button>
+                            </div>
                             <div v-if="locations.length === 0" class="no-locations">
                                 <p>No locations available for this city.</p>
                             </div>
@@ -29,10 +37,6 @@
                                             Location</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="city-actions">
-                                <button class="action-button" @click="editCity(city.id)">Edit City</button>
-                                <button class="action-button" @click="deleteCity(city.id)">Delete City</button>
                             </div>
                         </div>
                     </div>
@@ -58,6 +62,7 @@
 </template>
 
 <script>
+import { h } from 'vue';
 import EditCityComponent from './EditCityComponent.vue';
 import EditLocationComponent from './EditLocationComponent.vue';
 
@@ -107,6 +112,7 @@ export default {
                     console.log("Cities fetched successfully:", data);
                     this.cities = data.map(city => ({
                         ...city,
+                        image_url: city.image_url ? `http://127.0.0.1:8000${city.image_url}` : null,
                         showLocations: false,
                     }));
                 } else {
@@ -281,16 +287,10 @@ export default {
     padding: 16px;
 }
 
-
-
 .cities-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.city-item {
-    /* Removed padding and border to match ArticleListComponent.vue */
 }
 
 .collapsible {
@@ -346,20 +346,17 @@ export default {
 }
 
 .location-name {
-    margin: 0 0 8px 0;
     font-size: 1rem;
     font-weight: 500;
     color: #444;
 }
 
 .location-description {
-    margin: 8px 0;
     font-size: 0.9rem;
     color: #666;
 }
 
 .location-coordinates {
-    margin: 8px 0 0 0;
     font-size: 0.8rem;
     color: #888;
 }
@@ -383,6 +380,7 @@ export default {
     color: white;
     border: none;
     padding: 10px 16px;
+    margin-left: 16px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
