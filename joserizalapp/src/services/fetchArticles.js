@@ -9,6 +9,9 @@ const fetchArticles = () => {
             title: 'Jose Rizal Landmark 1',
             preview: 'Historical site related to Dr. Jose Rizal...',
             content: '# This is some content',
+            // belgium coords
+            longitude: 3.72078687023803,
+            latitude: 51.05727128133882, 
             imageUrl: img_jose_rizal_1,
             landmark: true
         },
@@ -18,6 +21,9 @@ const fetchArticles = () => {
             preview: 'Another important location in Rizal\'s life...',
             content: 'This is some content',
             imageUrl: img_jose_rizal_2,
+            // coords for the second landmark
+            longitude: 3.7227790682206052,
+            latitude: 51.06198939692039,
             landmark: true
         },
         {
@@ -26,7 +32,10 @@ const fetchArticles = () => {
             preview: 'Memorial site honoring the national hero...',
             content: '* This is some content',
             imageUrl: img_jose_rizal_3,
-            landmark: false
+            // coords for the third landmark
+            longitude: 3.720754609464725,
+            latitude: 51.05483215886014,
+            landmark: true
         }
     ]
 }
