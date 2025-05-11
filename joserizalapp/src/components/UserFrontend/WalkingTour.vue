@@ -24,9 +24,14 @@ import fetchCities from '@/services/fetchCities'
 
 const cities = ref([])
 
-onMounted(() => {
-    cities.value = fetchCities()
-})
+onMounted(async () => {
+    const fetchedCities = await fetchCities();
+    cities.value = fetchedCities.map(city => ({
+        id: city.id,
+        imageUrl: city.image_url,
+        title: city.name
+    }));
+});
 </script>
     
 <style scoped>
