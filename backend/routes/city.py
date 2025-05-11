@@ -38,7 +38,7 @@ async def add_city(
         file_path = f"{UPLOAD_DIR}/{file.filename}"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        image_url = f"/{file_path}"
+        image_url = f"/{file_path}" 
 
     new_city = City(name=name, description=description, image_url=image_url)
     db.add(new_city)

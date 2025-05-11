@@ -1,11 +1,15 @@
 from database import get_db
 from database.models import City, Location, admin
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, Form, UploadFile, File
+from pydantic import BaseModel, HttpUrl
 from routes.auth import get_current_user
 from sqlalchemy.orm import Session
+from typing import Optional
+import os, shutil, json
 
 router = APIRouter()
+UPLOAD_DIR = "static/uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 # Define a Pydantic model to receive the request data for adding attractions
@@ -13,32 +17,55 @@ class LocationCreate(BaseModel):
     city_id: int
     name: str
     description: str
-    location_data: dict
+    location_data: str
+    image_url: Optional[HttpUrl] = None 
 
 
 @router.post("/add_location/")
-def add_location(
-    location_info: LocationCreate,  # Parsing JSON data from the request body
+async def add_location(
+    city_id: int = Form(...),
+    name: str = Form(...),
+    description: str = Form(...),
+    location_data: str = Form(...),
+    file: UploadFile = File(None),
     db: Session = Depends(get_db),
     current_admin: admin = Depends(get_current_user),
 ):
-    # Check if the target city exists
-    city = db.query(City).filter(City.id == location_info.city_id).first()
+    city = db.query(City).get(city_id)
     if not city:
-        raise HTTPException(status_code=404, detail=" City not found!")
+        raise HTTPException(status_code=404, detail="❌ City not found!")
+    
+    image_url = None
+    if file:
+        file_path = f"{UPLOAD_DIR}/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        image_url = f"/{file_path}"
 
-    # Create a new attraction record
+    location_data = json.loads(location_data)
+
     new_location = Location(
-        city_id=location_info.city_id,
-        name=location_info.name,
-        description=location_info.description,
-        location_data=location_info.location_data,
+        city_id=city_id,
+        name=name,
+        description=description,
+        location_data=location_data,
+        image_url=image_url,
     )
     db.add(new_location)
     db.commit()
+    db.refresh(new_location)
     return {
-        "message": f" Location '{location_info.name}' added to city ID {location_info.city_id} successfully!"
+        "message": f"Location '{new_location.name}' created.",
+        "location": {
+            "id": new_location.id,
+            "image_url": new_location.image_url,
+            "city_id": new_location.city_id,
+            "name": new_location.name,
+            "description": new_location.description,
+            "location_data": new_location.location_data,
+        },
     }
+
 
 
 @router.get("/city/{city_id}/locations", response_model=list[dict])
@@ -51,6 +78,7 @@ def get_locations_by_city(city_id: int, db: Session = Depends(get_db)):
             "name": loc.name,
             "description": loc.description,
             "location_data": loc.location_data,
+            "image_url": loc.image_url,
         }
         for loc in locations
     ]
@@ -89,27 +117,49 @@ def delete_location(
 class LocationUpdate(BaseModel):
     name: str
     description: str
-    location_data: dict
-
+    location_data: str
+    image_url: Optional[HttpUrl] = None 
 
 @router.put("/update_location/{location_id}")
-def update_location(
+async def update_location(
     location_id: int,
-    location_data: LocationUpdate,
+    name: str = Form(...),
+    description: str = Form(...),
+    location_data: str = Form(...),
+    file: UploadFile = File(None),
     db: Session = Depends(get_db),
     current_admin: admin = Depends(get_current_user),
 ):
-    location = db.query(Location).filter(Location.id == location_id).first()
+    location = db.query(Location).get(location_id)
     if not location:
         raise HTTPException(status_code=404, detail="❌ Location not found!")
 
-    location.name = location_data.name
-    location.description = location_data.description
-    location.location_data = location_data.location_data
+    location.name = name
+    location.description = description
+    location.location_data = json.loads(location_data)
+
+    if file:
+        if location.image_url and os.path.exists(location.image_url):
+            os.remove(location.image_url)
+        file_path = f"{UPLOAD_DIR}/{file.filename}"
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        location.image_url = f"/{file_path}"
+
     db.commit()
-
-    return {"message": f"✅ Location '{location.name}' updated successfully!"}
-
+    db.refresh(location)
+    
+    return {
+        "message": f"Location '{location.name}' updated.",
+        "location": {
+            "id": location.id,
+            "image_url": location.image_url,
+            "city_id": location.city_id,
+            "name": location.name,
+            "description": location.description,
+            "location_data": location.location_data,
+        },
+    }
 
 @router.get("/locations", response_model=list[dict])
 def get_all_locations(db: Session = Depends(get_db)):
@@ -121,6 +171,7 @@ def get_all_locations(db: Session = Depends(get_db)):
             "name": loc.name,
             "description": loc.description,
             "location_data": loc.location_data,
+            "image_url": loc.image_url,
         }
         for loc in locations
     ]
