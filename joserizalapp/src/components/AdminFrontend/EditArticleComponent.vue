@@ -178,7 +178,6 @@ export default {
 </script>
 
 <style scoped>
-/* Reuse styles from AddArticleComponent.vue */
 .pageContent {
     display: flex;
     padding: 16px;
@@ -208,6 +207,7 @@ export default {
     font-size: 14px;
     margin-bottom: 12px;
     box-sizing: border-box;
+    caret-color: auto;
 }
 
 .input-field:focus,

@@ -5,7 +5,6 @@
         <h3 class="title">Add Location</h3>
         <p class="subtitle">Pick a city</p>
         <select class="input-field" v-model="newLocation.city_id">
-          <!-- <option value="" disabled>Select a city</option> -->
           <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
         </select>
         <p class="subtitle">Location name</p>
@@ -207,12 +206,25 @@ export default {
   font-size: 14px;
   margin-bottom: 12px;
   box-sizing: border-box;
+  caret-color: auto;
 }
 
 .input-field:focus {
   border-color: #666666;
   box-shadow: 0 0 0 3px rgba(140, 140, 140, 0.200);
   outline: none;
+}
+
+input[type="file"].input-field {
+  position: relative;
+  padding: 12px;
+  cursor: pointer;
+  color: #999999;
+  opacity: 0.5;
+}
+
+.input-field::file-selector-button {
+  display: none;
 }
 
 .input-field::placeholder {

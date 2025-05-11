@@ -193,13 +193,14 @@ export default {
 
 .input-field,
 .textarea-field {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 12px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    caret-color: auto;
 }
 
 .input-field:focus,
@@ -207,6 +208,17 @@ export default {
   border-color: #666666;
   box-shadow: 0 0 0 3px rgba(140, 140, 140, 0.2);
   outline: none;
+}
+input[type="file"].input-field {
+  position: relative;
+  padding: 12px;
+  cursor: pointer;
+  color: #999999;
+  opacity: 0.5;
+}
+
+.input-field::file-selector-button {
+  display: none;
 }
 
 .action-button {

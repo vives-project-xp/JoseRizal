@@ -47,19 +47,17 @@
                 </div>
             </div>
         </div>
-        <div v-if="showEditCityModal" class="modal">…</div>
+        <div v-if="showEditCityModal" class="modal">
+            <EditCityComponent :city="selectedCity" @close="closeEditCityModal" @city-updated="onCityUpdated" />
+        </div>
         <div v-if="showEditLocationModal" class="modal">
-            <EditLocationComponent
-                :locationId="selectedLocation.id"
-                @close="closeEditLocationModal"
-                @location-updated="fetchLocation(selectedCityId)"
-            />
+            <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal"
+                @location-updated="() => fetchLocation(selectedCityId)" />
         </div>
     </div>
 </template>
 
 <script>
-import { h } from 'vue';
 import EditCityComponent from './EditCityComponent.vue';
 import EditLocationComponent from './EditLocationComponent.vue';
 

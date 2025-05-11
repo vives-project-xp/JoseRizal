@@ -10,12 +10,10 @@
           v-model="newArticle.content_html"></textarea>
         <p class="subtitle">Select a city</p>
         <select class="input-field" v-model="newArticle.city_id" @change="fetchLocations">
-          <option value="" disabled>Select a city</option>
           <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
         </select>
         <p v-if="locations.length > 0" class="subtitle">Select a location</p>
         <select v-if="locations.length > 0" class="input-field" v-model="newArticle.location_id">
-          <option value="" disabled>Select a location</option>
           <option v-for="location in locations" :key="location.id" :value="location.id">{{ location.name }}</option>
         </select>
         <button class="action-button" @click="addArticle" :disabled="isSubmitting">
