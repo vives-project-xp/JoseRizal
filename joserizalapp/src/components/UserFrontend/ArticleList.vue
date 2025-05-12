@@ -21,13 +21,19 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ArticleCard from './ArticleCard.vue'
-import fetchArticles from '@/services/fetchArticles'
-
+import { fetchArticles } from '@/services/fetchArticles'
+import joserizalImage from '@/assets/generic_landmark_pics/joserizal1.jpg'
 const articles = ref([])
 
-onMounted(() => {
-    articles.value = fetchArticles()
-})
+onMounted(async () => {
+    const fetchedArticles = await fetchArticles();
+    articles.value = fetchedArticles.map(article => ({
+        id: article.id,
+        imageUrl: article.image_url || joserizalImage,
+        title: article.title,
+        preview: article.preview_text
+    }));
+});
 </script>
 
 <style scoped>

@@ -5,6 +5,8 @@
         <h3 class="title">Add Article</h3>
         <p class="subtitle">Article name</p>
         <input type="text" placeholder="Enter article name" class="input-field" v-model="newArticle.title" />
+        <p class="subtitle">Preview Text</p>
+        <input type="text" placeholder="Enter preview text" class="input-field" v-model="newArticle.preview_text" />
         <p class="subtitle">Description</p>
         <textarea placeholder="Enter article description in markdown" class="textarea-field"
           v-model="newArticle.content_html"></textarea>
@@ -32,6 +34,7 @@ export default {
       newArticle: {
         title: "",
         content_html: "",
+        preview_text: "",
         city_id: null,
         location_id: null,
       },
@@ -108,6 +111,7 @@ export default {
       const data = {
         title: this.newArticle.title,
         content_html: this.newArticle.content_html,
+        preview_text: this.newArticle.preview_text,
         city_id: this.newArticle.city_id,
         location_id: this.newArticle.location_id,
       };
@@ -133,7 +137,7 @@ export default {
           const responseData = await response.json();
           console.log("Article added successfully:", data)
           this.showMessage("Article added successfully", "success");
-          this.newArticle = { title: "", content_html: "", city_id: null };
+          this.newArticle = { title: "", content_html: "", preview_text: "", city_id: null };
           setTimeout(() => {
             window.location.href = window.location.pathname;
           }, 1000);

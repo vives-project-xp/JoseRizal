@@ -46,6 +46,7 @@ def get_articles(db: Session = Depends(get_db)):
                 "id": article.id,
                 "title": article.title,
                 "content_html": article.content_html,
+                "preview_text": article.preview_text,
                 "created_at": (
                     article.created_at.isoformat() if article.created_at else None
                 ),
@@ -70,6 +71,7 @@ def get_article(article_id: int, db: Session = Depends(get_db)):
         "id": article.id,
         "title": article.title,
         "content_html": article.content_html,
+        "preview_text": article.preview_text,
         "created_at": article.created_at.isoformat() if article.created_at else None,
         "updated_at": article.updated_at.isoformat() if article.updated_at else None,
         "locations": [{"id": loc.id, "name": loc.name} for loc in article.locations],
@@ -85,7 +87,7 @@ def create_article(data: dict, db: Session = Depends(get_db)):
             status_code=400, detail="Required field is missing: title 和 content_html"
         )
 
-    article = Article(title=data["title"], content_html=data["content_html"])
+    article = Article(title=data["title"], content_html=data["content_html"], preview_text=data.get("preview_text"))
 
     # If location_ids is passed in, associate the article with the corresponding location
     location_ids = data.get("location_ids")
@@ -118,6 +120,8 @@ def update_article(article_id: int, data: dict, db: Session = Depends(get_db)):
         article.title = data["title"]
     if "content_html" in data:
         article.content_html = data["content_html"]
+    if "preview_text" in data:
+        article.preview_text = data["preview_text"]
 
     if "location_ids" in data:
         # Remove all connected places first

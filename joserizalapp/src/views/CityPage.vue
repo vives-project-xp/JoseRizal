@@ -30,7 +30,8 @@ import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue
 
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { fetchCityById, fetchLocations } from '@/services/fetchCities';
+import { fetchCityById} from '@/services/fetchCities';
+import { fetchLocations } from '@/services/fetchLocations';
 
 const route = useRoute()
 const listOfCities = ref([])
