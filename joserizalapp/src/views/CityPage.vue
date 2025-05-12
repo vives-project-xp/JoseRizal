@@ -7,15 +7,17 @@
         <h1>{{ selectedCity.title }}</h1>
         <p>Explore and discover all of {{selectedCity.title }}'s landmarks related to Jose Rizal...</p>
         <FeaturedTour 
-            :imageUrl='selectedCity.imageUrl'
-            :title='selectedCity.title'
-            :cityId='selectedCity.id'
+            v-if="selectedCity && selectedCity.id && locations.length > 0" 
+            :imageUrl="selectedCity.image_url || cityImage" 
+            :title="selectedCity.name" 
+            :cityId="selectedCity.id" 
+            :locations="locations" 
         />
         
         <PageBreakComponent />
 		<h3>Customise Your Tour</h3>
-        <p>Alternatively, you can customise your tour of {{ selectedCity.title }} instead...</p>
-        <CustomTour />
+        <p>Alternatively, you can customise your tour of {{ selectedCity.name }} instead...</p>
+        <CustomTour v-if="locations.length > 0" :locations="locations" />
     	</div>
 	</div>
 </template>
@@ -28,42 +30,52 @@ import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue
 
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import fetchCities from '@/services/fetchCities';
+import { fetchCityById, fetchLocations } from '@/services/fetchCities';
 
 const route = useRoute()
 const listOfCities = ref([])
 const selectedCity = ref({})
+const locations = ref([]);
 
 const isLoading = ref(true)
 const error = ref(null)
 
 import cityImage  from '../assets/generic_city.jpg';
 
-const fetchCity = async(id) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
+const fetchCity = async (id) => {
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    console.log("THIS IS THE CITY ID CHOSEN: ", id)
+    console.log("THIS IS THE CITY ID CHOSEN: ", id);
 
-    listOfCities.value = fetchCities()
-
-    return listOfCities.value[id-1] || null
-}
+    try {
+        const cityResponse = await fetchCityById(id);
+        if (cityResponse) {
+            selectedCity.value = cityResponse;
+            const locationsResponse = await fetchLocations(id);
+            if (locationsResponse) {
+                locations.value = locationsResponse;
+            } else {
+                throw new Error('Locations not found');
+            }
+        } else {
+            throw new Error('City not found');
+        }
+    } catch (error) {
+        console.error('Error fetching city or locations:', error);
+        throw error;
+    }
+};
 
 onMounted(async () => {
     try {
-        const result = await fetchCity(route.params.id)
-        if (result) {
-        selectedCity.value = result
-        } else {
-        error.value = 'City not found'
-        }
+        await fetchCity(route.params.id);
     } catch (err) {
-        console.log(err)
-        error.value = 'Failed to load selected city'
+        console.log(err);
+        error.value = 'Failed to load selected city';
     } finally {
-        isLoading.value = false
+        isLoading.value = false;
     }
-})
+});
 
 </script>
 

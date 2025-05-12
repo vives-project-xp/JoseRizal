@@ -20,7 +20,7 @@
 import { ref, onMounted } from 'vue'
 
 import CityCard from './CityCard.vue'
-import fetchCities from '@/services/fetchCities'
+import { fetchCities } from '@/services/fetchCities'
 
 const cities = ref([])
 

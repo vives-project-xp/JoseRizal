@@ -1,48 +1,68 @@
 <template>
     <div class="city-card">
         <div class="card-image">
-        <img 
-            :src="imageUrl" 
-            :alt="title"
-            class="image"
-        >
+            <img :src="imageUrl" :alt="title" class="image">
         </div>
 
         <div class="card-content">
-        <div class="card-content-text">
-            <h3 class="title">{{ title }} Complete Tour</h3>
-        </div>
-        <button 
-            class="view-tour"
-            @click="startTour"
-        >
-            Start Tour
-        </button>
+            <div class="card-content-text">
+                <h3 class="title">{{ title }} Complete Tour</h3>
+            </div>
+            <button class="view-tour" @click="startTour">
+                Start Tour
+            </button>
         </div>
     </div>
 </template>
 
 <script setup>
-
-const props = defineProps({
-    imageUrl: {
+    const props = defineProps({
+        imageUrl: {
         type: String,
-        required: true
+    required: true
     },
     title: {
         type: String,
-        required: true
+    required: true
     },
 
     cityId: {
         type: [Number, String],
-        required: true
+    required: true
+    },
+    locations: {
+        type: Array,
+    required: true
     }
-})
+});
 
 const startTour = () => {
-    console.log("what up")
-}
+    if (props.locations.length < 2) {
+        alert("Not enough locations to start a tour!");
+    return;
+    }
+
+    const baseUrl = 'https://www.google.com/maps/dir/?api=1';
+
+    // Set the starting point
+    const origin = `${props.locations[0].location_data.latitude},${props.locations[0].location_data.longitude}`;
+    console.log("latitude: ", props.locations[0].location_data.latitude);
+    console.log("longitude: ", props.locations[0].location_data.longitude);
+
+    // Set the destination
+    const destination = `${props.locations[props.locations.length - 1].location_data.latitude},${props.locations[props.locations.length - 1].location_data.longitude}`;
+
+    // Waypoints are all the locations except the first and last
+    const waypoints = props.locations.slice(1, -1)
+        .map(location => `${location.location_data.latitude},${location.location_data.longitude}`)
+    .join('|');
+
+    // Build the full URL
+    const url = `${baseUrl}&origin=${origin}&destination=${destination}&waypoints=${waypoints}`;
+
+    // Open the tour in a new tab
+    window.open(url, '_blank');
+};
 </script>
 
 <style scoped>
