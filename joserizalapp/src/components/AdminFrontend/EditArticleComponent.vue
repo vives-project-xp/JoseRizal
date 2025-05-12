@@ -8,6 +8,8 @@
                 <p class="subtitle">Description</p>
                 <textarea placeholder="Enter article description in markdown" class="textarea-field"
                     v-model="article.content_html"></textarea>
+                <p class="subtitle">Preview Text</p>
+                <input type="text" placeholder="Enter preview text" class="input-field" v-model="article.preview_text" />
                 <p class="subtitle">Select a city</p>
                 <select class="input-field" v-model="article.city_id" @change="fetchLocations">
                     <option value="" disabled>Select a city</option>
@@ -40,6 +42,7 @@ export default {
             article: {
                 title: "",
                 content_html: "",
+                preview_text: "",
                 city_id: null,
                 location_id: null,
             },
