@@ -9,6 +9,7 @@
                             @click="toggleArticle(article.id)">
                             {{ article.title }}
                         </button>
+                        <p class="article-preview">{{ article.preview_text }}</p>
                         <div class="content" :style="{ display: expandedArticleId === article.id ? 'block' : 'none' }">
                             <div class="article-description" v-html="formatMarkdown(article.content_html)"></div>
                             <img :src="article.image" alt="Article Image" class="article-image" v-if="article.image" />

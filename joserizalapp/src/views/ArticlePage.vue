@@ -22,7 +22,7 @@ import { ref, onMounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { Marked } from 'marked'
 
-import fetchArticles from '@/services/fetchArticles'
+import { fetchArticles } from '@/services/fetchArticles'
 
 const route = useRoute()
 const mockArticles = ref([])

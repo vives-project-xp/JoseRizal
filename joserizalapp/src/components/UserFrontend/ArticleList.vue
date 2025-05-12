@@ -21,7 +21,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ArticleCard from './ArticleCard.vue'
-import fetchArticles from '@/services/fetchArticles'
+import { fetchArticles } from '@/services/fetchArticles'
 
 const articles = ref([])
 
