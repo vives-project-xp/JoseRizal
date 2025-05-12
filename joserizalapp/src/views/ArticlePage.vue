@@ -22,7 +22,7 @@ import { ref, onMounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { Marked } from 'marked'
 
-import { fetchArticles } from '@/services/fetchArticles'
+import { fetchArticles, fetchArticleById } from '@/services/fetchArticles'
 
 const route = useRoute()
 const mockArticles = ref([])
@@ -36,17 +36,18 @@ const marked = new Marked({
 })
 
 const parsedContent = computed(() => {
-  return article.value.content ? marked.parse(article.value.content) : ''
+  return article.value.content_html ? marked.parse(article.value.content_html) : ''
 })
 
 // Mock fetch function
 const fetchArticle = async (id) => {
-    await new Promise(resolve => setTimeout(resolve, 500)) // Simulate delay
-
-    mockArticles.value = fetchArticles()
-
-    return mockArticles.value[id-1] || null
-}
+    try {
+        return await fetchArticleById(id);
+    } catch (error) {
+        console.error("Error fetching article by ID:", error);
+        return null;
+    }
+};
 
 onMounted(async () => {
     try {
