@@ -8,6 +8,8 @@
                 <p class="subtitle">Description</p>
                 <textarea placeholder="Enter article description in markdown" class="textarea-field"
                     v-model="article.content_html"></textarea>
+                <p class="subtitle">Preview Text</p>
+                <input type="text" placeholder="Enter preview text" class="input-field" v-model="article.preview_text" />
                 <p class="subtitle">Select a city</p>
                 <select class="input-field" v-model="article.city_id" @change="fetchLocations">
                     <option value="" disabled>Select a city</option>
@@ -19,7 +21,7 @@
                     <option v-for="location in locations" :key="location.id" :value="location.id">{{ location.name }}
                     </option>
                 </select>
-                <button class="action-button" @click="updateArticle">Save</button>
+                <button class="action-button" @click="updateArticle" :disabled="isSubmitting">Save</button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
                 <p v-if="message" :class="['message', messageType]">{{ message }}</p>
             </div>
@@ -40,6 +42,7 @@ export default {
             article: {
                 title: "",
                 content_html: "",
+                preview_text: "",
                 city_id: null,
                 location_id: null,
             },
@@ -47,6 +50,7 @@ export default {
             locations: [],
             message: "",
             messageType: "",
+            isSubmitting: false,
         };
     },
     mounted() {
@@ -138,6 +142,7 @@ export default {
         async updateArticle() {
             const token = this.getCookie("access_token");
             try {
+                this.isSubmitting = true;
                 const response = await fetch(`http://127.0.0.1:8000/articles/${this.articleId}`, {
                     method: "PUT",
                     headers: {
@@ -149,7 +154,9 @@ export default {
                 if (response.ok) {
                     this.showMessage("Article updated successfully", "success");
                     this.$emit("article-updated");
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname;
+                    }, 1000);
                 } else {
                     const errorData = await response.json();
                     this.showMessage(errorData.message || "Failed to update article", "error");
@@ -157,6 +164,8 @@ export default {
             } catch (error) {
                 console.error("Error updating article:", error);
                 this.showMessage("An error occurred while updating the article", "error");
+            } finally {
+                this.isSubmitting = false;
             }
         },
         showMessage(text, type) {
@@ -172,7 +181,6 @@ export default {
 </script>
 
 <style scoped>
-/* Reuse styles from AddArticleComponent.vue */
 .pageContent {
     display: flex;
     padding: 16px;
@@ -202,6 +210,7 @@ export default {
     font-size: 14px;
     margin-bottom: 12px;
     box-sizing: border-box;
+    caret-color: auto;
 }
 
 .input-field:focus,

@@ -2,7 +2,7 @@
     <div class="pageContent">
         <div class="city-card">
             <div class="card-content">
-                <h3 class="title">Cities</h3>
+                <h1 class="title">Cities</h1>
                 <div v-if="cities.length > 0" class="cities-container">
                     <div v-for="city in cities" :key="city.id" class="city-item">
                         <button type="button" class="collapsible" :class="{ 'active': city.showLocations }"
@@ -10,28 +10,34 @@
                             {{ city.name }}
                         </button>
                         <div class="content" :style="{ display: city.showLocations ? 'block' : 'none' }">
+                            <div class="city-image" v-if="city.image_url">
+                                <img :src="city.image_url" alt="City Image" class="city-image" />
+                            </div>
+                            <div class="city-actions">
+                                <button class="action-button" @click="editCity(city.id)">Edit City</button>
+                                <button class="action-button" @click="deleteCity(city.id)">Delete City</button>
+                            </div>
                             <div v-if="locations.length === 0" class="no-locations">
                                 <p>No locations available for this city.</p>
                             </div>
                             <div>
                                 <div class="location-item" v-for="location in locations" :key="location.id">
                                     <h5 class="location-name">{{ location.name }}</h5>
-                                    <p class="location-description">{{ location.description }}</p>
-                                    <p class="location-coordinates">Coordinates: {{ location.location_data.latitude }},
-                                        {{ location.location_data.longitude }}</p>
-                                    <div class="location-image" v-if="location.image">
-                                        <img :src="location.image" alt="Location Image" class="location-image" />
+                                    <p class="location-coordinates">
+                                        Coordinates: {{ location.latitude }}, {{ location.longitude }}
+                                    </p>
+                                    <div class="location-image" v-if="location.image_url">
+                                        <img :src="location.image_url" alt="Location Image" class="location-image" />
                                     </div>
                                     <div class="location-actions">
-                                        <button class="action-button" @click="editLocation(location.id)">Edit Location</button>
-                                        <button class="action-button"
-                                            @click="deleteLocation(location.id)">Delete Location</button>
+                                        <button class="action-button" @click="editLocation(location.id)">
+                                            Edit Location
+                                        </button>
+                                        <button class="action-button" @click="deleteLocation(location.id)">
+                                            Delete Location
+                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="city-actions">
-                                <button class="action-button" @click="editCity(city.id)">Edit City</button>
-                                <button class="action-button" @click="deleteCity(city.id)">Delete City</button>
                             </div>
                         </div>
                     </div>
@@ -39,22 +45,16 @@
                 <div v-else class="no-cities">
                     <p>No cities available.</p>
                 </div>
-                <div v-if="showEditCityModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditCityModal">&times;</span>
-                        <EditCityComponent :city="selectedCity" @close="closeEditCityModal" />
-                    </div>
-                </div>
-                <div v-if="showEditLocationModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditLocationModal">&times;</span>
-                        <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal" />
-                    </div>
-                </div>
             </div>
         </div>
+        <div v-if="showEditCityModal" class="modal">
+            <EditCityComponent :city="selectedCity" @close="closeEditCityModal" @city-updated="onCityUpdated" />
+        </div>
+        <div v-if="showEditLocationModal" class="modal">
+            <EditLocationComponent :locationId="selectedLocation.id" @close="closeEditLocationModal"
+                @location-updated="() => fetchLocation(selectedCityId)" />
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -63,10 +63,7 @@ import EditLocationComponent from './EditLocationComponent.vue';
 
 export default {
     name: "CityListComponent",
-    components: {
-        EditCityComponent,
-        EditLocationComponent
-    },
+    components: { EditCityComponent, EditLocationComponent },
     data() {
         return {
             cities: [],
@@ -107,6 +104,7 @@ export default {
                     console.log("Cities fetched successfully:", data);
                     this.cities = data.map(city => ({
                         ...city,
+                        image_url: city.image_url ? `http://127.0.0.1:8000${city.image_url}` : null,
                         showLocations: false,
                     }));
                 } else {
@@ -125,15 +123,26 @@ export default {
                         "Content-Type": "application/json",
                     },
                 });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Locations fetched successfully:", data);
-                    this.locations = data;
-                } else {
+                if (!response.ok) {
                     console.error("Failed to fetch locations:", response.statusText);
+                    return;
                 }
-
+                const data = await response.json();
+                console.log("Locations fetched successfully:", data);
+                this.locations = data.map(loc => {
+                    let coords = { latitude: null, longitude: null };
+                    try {
+                        coords = JSON.parse(loc.location_data);
+                    } catch (e) {
+                        console.error("Invalid JSON in location_data for id", loc.id, e);
+                    }
+                    return {
+                        ...loc,
+                        latitude: coords.latitude,
+                        longitude: coords.longitude,
+                        image_url: loc.image_url ? `http://127.0.1:8000${loc.image_url}` : null,
+                    };
+                });
             } catch (error) {
                 console.error("Error fetching locations:", error);
             }
@@ -340,29 +349,19 @@ export default {
 }
 
 .location-name {
-    margin: 0 0 8px 0;
     font-size: 1rem;
     font-weight: 500;
     color: #444;
 }
 
 .location-description {
-    margin: 8px 0;
     font-size: 0.9rem;
     color: #666;
 }
 
 .location-coordinates {
-    margin: 8px 0 0 0;
     font-size: 0.8rem;
     color: #888;
-}
-
-.location-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    margin-top: 8px;
 }
 
 .location-actions,
@@ -377,6 +376,7 @@ export default {
     color: white;
     border: none;
     padding: 10px 16px;
+    margin-left: 16px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -385,22 +385,6 @@ export default {
 
 .action-button:hover {
     background-color: #666666;
-}
-
-@media screen and (min-width: 768px) {
-    .city-card {
-        max-width: 600px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-content {
-        padding: 24px;
-    }
-
-    .city-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-    }
 }
 
 .modal {
@@ -432,5 +416,21 @@ export default {
     font-size: 1.5rem;
     cursor: pointer;
     color: #666;
+}
+
+@media screen and (min-width: 768px) {
+    .city-card {
+        max-width: 600px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-content {
+        padding: 24px;
+    }
+
+    .city-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
 }
 </style>

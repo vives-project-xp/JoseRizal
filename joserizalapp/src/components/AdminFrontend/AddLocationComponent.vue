@@ -5,7 +5,6 @@
         <h3 class="title">Add Location</h3>
         <p class="subtitle">Pick a city</p>
         <select class="input-field" v-model="newLocation.city_id">
-          <option value="" disabled>Select a city</option>
           <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
         </select>
         <p class="subtitle">Location name</p>
@@ -15,10 +14,14 @@
           v-model="newLocation.description" />
         <p class="subtitle">Location coordinates</p>
         <div class="coordinates-inputs">
-          <input type="text" placeholder="Enter latitude" class="input-field" v-model="newLocation.location_data.latitude" />
-          <input type="text" placeholder="Enter longitude" class="input-field" v-model="newLocation.location_data.longitude" />
+          <input type="text" placeholder="Enter latitude" class="input-field"
+            v-model="newLocation.location_data.latitude" />
+          <input type="text" placeholder="Enter longitude" class="input-field"
+            v-model="newLocation.location_data.longitude" />
         </div>
-        <button class="action-button" @click="addLocation">
+        <p class="subtitle">Location image</p>
+        <input type="file" class="input-field" ref="locationImage" @change="handleImageInput" />
+        <button class="action-button" @click="addLocation" :disabled="isSubmitting">
           Add Location
         </button>
         <p v-if="message" :class="['message', messageType]">{{ message }}</p>
@@ -40,9 +43,11 @@ export default {
           longitude: null,
         },
       },
+      locationImage: null,
       cities: [],
       message: "",
       messageType: "",
+      isSubmitting: false,
     };
   },
   mounted() {
@@ -80,21 +85,17 @@ export default {
     },
     async addLocation() {
       const token = this.getCookie("access_token");
-
       const cityId = this.newLocation.city_id;
       if (!cityId) {
         this.showMessage("City is required", "error");
         return;
       }
-
       const name = this.newLocation.name.trim();
       if (!name) {
         this.showMessage("Location name is required", "error");
         return;
       }
-
       const description = this.newLocation.description.trim();
-
       const latitude = this.newLocation.location_data.latitude;
       if (!latitude && latitude !== 0) {
         this.showMessage("Location latitude is required", "error");
@@ -118,36 +119,39 @@ export default {
         }
       }
 
-      const newLocation = {
-        city_id: cityId,
-        name: name,
-        description: description,
-        location_data: {
-          latitude: parseFloat(latitude),
-          longitude: parseFloat(longitude),
-        },
-      };
-      console.log("New location data:", newLocation);
+      const formData = new FormData();
+      formData.append("city_id", cityId);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append('location_data', JSON.stringify(this.newLocation.location_data));
+      if (this.locationImage) {
+        formData.append("file", this.locationImage);
+      }
 
       try {
+        this.isSubmitting = true;
         const response = await fetch("http://127.0.0.1:8000/add_location/", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             "Authorization": "Bearer " + token,
           },
-          body: JSON.stringify(newLocation),
+          body: formData,
         });
 
         if (response.ok) {
           const data = await response.json();
           console.log("Location added successfully:", data);
           this.showMessage(this.newLocation.name + " added successfully", "success");
-          this.newLocation.city_id = null;
-          this.newLocation.name = "";
-          this.newLocation.description = "";
-          this.newLocation.location_data.latitude = null;
-          this.newLocation.location_data.longitude = null;
+          this.newLocation = {
+            city_id: null,
+            name: "",
+            description: "",
+            location_data: { latitude: "", longitude: "" },
+          };
+          this.imageFile = null;
+          setTimeout(() => {
+            window.location.href = window.location.pathname;
+          }, 1000);
         } else {
           const errorData = await response.json();
           this.showMessage(errorData.message || "Failed to add location", "error");
@@ -155,7 +159,12 @@ export default {
       } catch (error) {
         console.error("Error adding location:", error);
         this.showMessage("An error occurred while adding the location", "error");
+      } finally {
+        this.isSubmitting = false;
       }
+    },
+    handleImageInput(event) {
+      this.locationImage = event.target.files[0] || null;
     },
     showMessage(text, type) {
       this.message = text;
@@ -197,12 +206,25 @@ export default {
   font-size: 14px;
   margin-bottom: 12px;
   box-sizing: border-box;
+  caret-color: auto;
 }
 
 .input-field:focus {
   border-color: #666666;
   box-shadow: 0 0 0 3px rgba(140, 140, 140, 0.200);
   outline: none;
+}
+
+input[type="file"].input-field {
+  position: relative;
+  padding: 12px;
+  cursor: pointer;
+  color: #999999;
+  opacity: 0.5;
+}
+
+.input-field::file-selector-button {
+  display: none;
 }
 
 .input-field::placeholder {

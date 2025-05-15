@@ -10,7 +10,7 @@
                     v-model="newCity.description" />
                 <p class="subtitle">City Image</p>
                 <input type="file" class="input-field" ref="cityImage" @change="handleImageInput" />
-                <button class="action-button" @click="editCity">
+                <button class="action-button" @click="editCity" :disabled="isSubmitting">
                     Save
                 </button>
                 <button class="action-button" @click="$emit('close')">Cancel</button>
@@ -30,9 +30,11 @@ export default {
     },
     data() {
         return {
-            newCity: { name: '', description: '', image: null },
+            newCity: { name: '', description: ''},
+            cityImage: null,
             message: '',
             messageType: '',
+            isSubmitting: false,
         };
     },
     watch: {
@@ -105,13 +107,13 @@ export default {
             }
 
             try {
+                this.isSubmitting = true;
                 const formData = new FormData();
                 formData.append('name', this.newCity.name);
                 formData.append('description', this.newCity.description);
-                if (this.newCity.image) {
-                    formData.append('image', this.newCity.image);
+                if (this.$refs.cityImage.files[0]) {
+                    formData.append('file', this.$refs.cityImage.files[0]);
                 }
-
                 const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
                     method: 'PUT',
                     headers: {
@@ -123,7 +125,9 @@ export default {
                 if (updateResponse.ok) {
                     this.showMessage('City updated successfully', 'success');
                     this.$emit('city-updated');
-                    location.reload();
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname;
+                    }, 1000);
                 } else {
                     const updateErrorData = await updateResponse.json();
                     console.error('Server error:', updateErrorData);
@@ -132,6 +136,8 @@ export default {
             } catch (error) {
                 console.error('Error updating city:', error);
                 this.showMessage('An error occurred while updating the city', 'error');
+            } finally {
+                this.isSubmitting = false;
             }
         },
 
@@ -139,4 +145,90 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.pageContent {
+    display: flex;
+    padding: 16px;
+    background-color: #f5f5f5;
+}
+
+.city-card {
+    width: 100%;
+    max-width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.input-field,
+.textarea-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    caret-color: auto;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+    border-color: #666666;
+    box-shadow: 0 0 0 3px rgba(140, 140, 140, 0.2);
+    outline: none;
+}
+
+input[type="file"].input-field {
+  position: relative;
+  padding: 12px;
+  cursor: pointer;
+  color: #999999;
+  opacity: 0.5;
+}
+
+.input-field::file-selector-button {
+  display: none;
+}
+
+.action-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    background-color: #999999;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.action-button:hover {
+    background-color: #666666;
+}
+
+.message {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.success {
+    background-color: #c6f6d5;
+    color: #276749;
+}
+
+.error {
+    background-color: #fed7d7;
+    color: #c53030;
+}
+</style>

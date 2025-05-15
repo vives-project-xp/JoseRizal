@@ -38,7 +38,7 @@ async def add_city(
         file_path = f"{UPLOAD_DIR}/{file.filename}"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        image_url = f"/{file_path}"
+        image_url = f"/{file_path}" 
 
     new_city = City(name=name, description=description, image_url=image_url)
     db.add(new_city)
@@ -53,7 +53,7 @@ async def add_city(
 @router.get("/cities", response_model=list[dict])
 def get_cities(db: Session = Depends(get_db)):
     cities = db.query(City).all()
-    return [{"id": city.id, "name": city.name} for city in cities]
+    return [{"id": city.id, "name": city.name, "description": city.description, "image_url": city.image_url} for city in cities]
 
 
 @router.delete("/delete_city/{city_id}")
@@ -92,6 +92,10 @@ async def update_city(
     city.description = description
 
     if file:
+        # Remove the old image if it exists
+        if city.image_url and os.path.exists(city.image_url):
+            os.remove(city.image_url)
+            
         file_path = f"{UPLOAD_DIR}/{file.filename}"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)

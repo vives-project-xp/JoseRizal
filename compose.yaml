@@ -1,23 +1,26 @@
 services:
   database:
+    container_name: postgres
     image: postgres:17.4
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: joserizal
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d joserizal"]
       interval: 2s
       retries: 10
 
   backend:
+    container_name: backend
     build: ./backend
     restart: always
+    env_file: .env
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql://postgres:postgres@database:5432/joserizal
       AUTH_SECRET: ${AUTH_SECRET}
     volumes:
       - static_uploads:/backend/static/uploads
@@ -29,20 +32,49 @@ services:
         condition: service_healthy
 
   frontend:
+    container_name: frontend
     build: ./joserizalapp
     restart: always
-    ports:
-      - "5173:5173"
+    env_file: .env
     environment:
       VITE_API_URL: http://localhost:8000
     volumes:
       - ./joserizalapp:/app
       - /app/node_modules
+    ports:
+      - "80:5173"
     depends_on:
       database:
         condition: service_healthy
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      database:
+        condition: service_healthy
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
 volumes:
   postgres_data:
   static_uploads:
   uploaded_images:
+  pgadmin_data:
+  portainer_data:

@@ -9,6 +9,7 @@
                             @click="toggleArticle(article.id)">
                             {{ article.title }}
                         </button>
+                        <p class="article-preview">{{ article.preview_text }}</p>
                         <div class="content" :style="{ display: expandedArticleId === article.id ? 'block' : 'none' }">
                             <div class="article-description" v-html="formatMarkdown(article.content_html)"></div>
                             <img :src="article.image" alt="Article Image" class="article-image" v-if="article.image" />
@@ -22,13 +23,13 @@
                 <div v-else class="no-articles">
                     <p>No articles available.</p>
                 </div>
-                <div v-if="showEditArticleModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button" @click="closeEditArticleModal">&times;</span>
-                        <EditArticleComponent :articleId="selectedArticle.id" @close="closeEditArticleModal"
-                            @article-updated="fetchArticles" />
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div v-if="showEditArticleModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" @click="closeEditArticleModal">&times;</span>
+                <EditArticleComponent :articleId="selectedArticle.id" @close="closeEditArticleModal"
+                    @article-updated="fetchArticles" />
             </div>
         </div>
     </div>
@@ -166,11 +167,11 @@ export default {
     float: right;
 }
 
-.collapsible.active:after {
+.active:after {
     content: "\2212";
 }
 
-.collapsible.active,
+.active,
 .collapsible:hover {
     background-color: #666666;
 }
@@ -181,13 +182,6 @@ export default {
     background-color: #f5f5f5;
     border-radius: 0 0 8px 8px;
     margin-bottom: 8px;
-}
-
-.article-title {
-    margin: 0 0 8px 0;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #444;
 }
 
 .article-description {
@@ -232,54 +226,33 @@ export default {
 
 .modal {
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
+    background-color: white;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation-name: slideIn;
-    animation-duration: 0.4s;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
 }
 
 .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
     cursor: pointer;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    color: #666;
 }
 
 @media screen and (min-width: 768px) {

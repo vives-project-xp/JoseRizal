@@ -39,7 +39,8 @@ class Location(Base):
     city_id = Column(Integer, ForeignKey("cities.id"), nullable=False)
     name = Column(String(255), nullable=False)
     description = Column(Text)
-    location_data = Column(JSONB, nullable=False)  # JSONB Storing location information
+    location_data = Column(JSONB, nullable=False)
+    image_url = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
@@ -151,6 +152,7 @@ class Article(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     content_html = Column(Text, nullable=False)
+    preview_text = Column(String(500), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
