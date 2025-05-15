@@ -32,7 +32,7 @@ async def upload_image(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to upload image: " + str(e))
 
-    return {"url": f"http://localhost:8000/{UPLOAD_FOLDER}/{unique_filename}"}
+    return {"url": f"/{UPLOAD_FOLDER}/{unique_filename}"}
 
 
 # get all articles

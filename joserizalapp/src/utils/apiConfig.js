@@ -48,6 +48,11 @@ export async function apiRequest(endpoint, options = {}) {
     ? endpoint
     : `${API_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
+  if (window.location.protocol === "https:") {
+    // If the current protocol is HTTPS, ensure the request is also made over HTTPS
+    url.replace("http://", "https://");
+  }
+
   // Make the request
   return fetch(url, options);
 }
