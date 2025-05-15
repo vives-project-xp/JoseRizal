@@ -17,7 +17,8 @@
 The José Rizal walk is an interactive application designed to educate users about the life and works of José Rizal, a national hero of the Philippines. It provides an engaging way to explore his contributions and legacy through a virtual experience.
 
 ## Project Description
-This project aims to create a virtual tour that highlights key moments in José Rizal's life. Users can navigate through various chapters of his story, interact with historical artifacts, and gain insights into his influence on Philippine history. The application is built with modern web technologies to ensure a seamless and immersive experience.
+This project aims to create a virtual tour that highlights key moments in José Rizal's life and the places that were significant to him. Users can navigate through the different cities and create a tour of the memorable places in his life. There will be a QR code for each location that that can be scanned to access more information about that specific place. The application also includes various articles and resources related to José Rizal's life, making it a comprehensive educational tool.
+The project is built using modern web technologies, ensuring a responsive and user-friendly experience. It is designed to be accessible to a wide audience, including students, educators, and history enthusiasts.
 
 ## Project Objectives
 - To promote awareness of José Rizal's life and works.
