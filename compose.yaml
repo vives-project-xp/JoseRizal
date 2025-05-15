@@ -38,11 +38,8 @@ services:
     env_file: .env
     environment:
       VITE_API_URL: http://localhost:8000
-    volumes:
-      - ./joserizalapp:/app
-      - /app/node_modules
     ports:
-      - "80:5173"
+      - "80:80"
     depends_on:
       database:
         condition: service_healthy
