@@ -159,32 +159,33 @@ const router = useRouter()
 /* MOBILE SIZE */
 @media (max-width: 480px) {
   .article-card {
-    max-width: 80px;
-    max-height: 140px;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    box-sizing: border-box;
   }
 
   .card-image {
-    flex: 2;               
+    height: 180px;
   }
-  
+
   .card-content {
-    flex: 1;              
-    padding: 0.5rem;
+    padding: 1rem;
   }
 
   .title {
-    font-size: 0.4rem;
-    padding: 0;
+    font-size: 1.2rem;
   }
 
   .preview {
-    font-size: 0.3rem;
+    font-size: 0.9rem;
   }
 
   .read-more {
-    padding: 0.1rem 0.5rem;
-    font-size: 0.4rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }
+
 
 </style>

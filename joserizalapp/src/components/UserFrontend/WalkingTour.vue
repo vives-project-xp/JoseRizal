@@ -66,11 +66,16 @@ p {
 }
 
 /*Mobile size*/
+/*Mobile size*/
 @media (max-width: 480px) {
     .article-list {
-        grid-template-columns: repeat(2, 1fr); /* 2 articles per row on mobile */
+        grid-template-columns: 1fr; /* Single column */
         gap: 1rem;
         padding: 1rem;
+    }
+
+    .article-list > * {
+        width: 100%; /* Make sure children fill the column */
     }
 }
 </style>

@@ -139,27 +139,23 @@ const navigateToCity = () => {
 /* MOBILE SIZE */
 @media (max-width: 480px) {
     .city-card {
-        max-width: 80px;
-        max-height: 140px;
+        width: 100%;
+        box-sizing: border-box;
+        max-width: none;
+        max-height: none;
     }
 
     .card-image {
-        flex: 2;               
-    }
-
-    .card-content {
-        flex: 1;              
-        padding: 0.5rem;
+        height: 180px;
     }
 
     .title {
-        font-size: 0.4rem;
-        padding: 0;
+        font-size: 1rem;
     }
 
     .view-tour {
-        padding: 0.1rem 0.5rem;
-        font-size: 0.4rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
 }
 

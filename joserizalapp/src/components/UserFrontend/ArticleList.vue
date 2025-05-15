@@ -70,9 +70,14 @@ p {
 /*Mobile size*/
 @media (max-width: 480px) {
     .article-list {
-        grid-template-columns: repeat(2, 1fr); /* 2 articles per row on mobile */
+        grid-template-columns: 1fr; /* 1 article per row on mobile */
         gap: 1rem;
         padding: 1rem;
     }
+
+    .article-list > * {
+        width: 100%;
+    }
 }
+
 </style>
