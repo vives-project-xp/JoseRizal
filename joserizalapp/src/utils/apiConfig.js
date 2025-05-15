@@ -22,15 +22,24 @@ export async function apiRequest(endpoint, options = {}) {
   // Ensure headers object exists
   options.headers = options.headers || {};
 
-  // Add common headers
-  options.headers = {
-    "Content-Type": "application/json",
-    ...options.headers,
-  };
+  // Only set Content-Type if we're not sending FormData
+  // For FormData, let the browser set the content type automatically
+  if (!(options.body instanceof FormData)) {
+    options.headers = {
+      "Content-Type": "application/json",
+      ...options.headers,
+    };
+  } else {
+    // For FormData, we should NOT set Content-Type
+    // Let the browser handle it (it will set multipart/form-data with boundary)
+    options.headers = {
+      ...options.headers,
+    };
+  }
 
   // Add authorization if token exists
   if (token) {
-    options.headers.Authorization = `${token}`;
+    options.headers.Authorization = `Bearer ${token}`;
   }
 
   // Build the full URL (handle both absolute and relative endpoints)

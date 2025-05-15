@@ -75,11 +75,6 @@ export default {
 
         const response = await apiRequest("/add_city", {
           method: "POST",
-          headers: {
-            // Don't set Content-Type for FormData
-            // browser will set it with proper boundary
-            "Content-Type": undefined
-          },
           body: formData
         });
 
