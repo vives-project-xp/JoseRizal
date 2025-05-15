@@ -15,11 +15,13 @@ The application is divided into three main management sections, plus an overview
 Form to add a new city.
 
 **Fields:**
+
 - City name
 - Description
 - City image upload
 
 **Action:**
+
 - `Add City` button to submit
 
 ---
@@ -29,6 +31,7 @@ Form to add a new city.
 Form to register a location under a specific city.
 
 **Fields:**
+
 - Pick a city (dropdown)
 - Location name
 - Description
@@ -36,6 +39,7 @@ Form to register a location under a specific city.
 - Location image upload
 
 **Action:**
+
 - `Add Location` button to submit
 
 ---
@@ -45,12 +49,13 @@ Form to register a location under a specific city.
 Form to publish articles connected to cities.
 
 **Fields:**
+
 - Article name
 - Preview text
 - Description (Markdown supported)
-- Select a city (dropdown)
 
 **Action:**
+
 - `Add Article` button to submit
 
 ---
@@ -60,6 +65,7 @@ Form to publish articles connected to cities.
 The dashboard also includes an overview panel for easy browsing and content management:
 
 ### Cities Section
+
 - View all added cities as expandable cards
 - Each city card displays:
   - City image
@@ -69,11 +75,13 @@ The dashboard also includes an overview panel for easy browsing and content mana
   - `Edit Location` / `Delete Location`
 
 ### Article List Section
+
 - View all articles as collapsible items
 - Each article preview shows:
   - Title
   - Short preview
   - Full article in styled markdown
-- Linked to their respective cities for easy traceability
+- Buttons for:
+  - `Edit article` / `Delete article`
 
 ---
