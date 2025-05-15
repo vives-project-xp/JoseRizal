@@ -4,9 +4,9 @@
         <div v-else-if="error">{{ error }}</div>
         <div v-else>
             <!-- ARTICLE TITLE,IMAGE,CONTENT -->
-            <div class="article-image-wrapper">
+            <!-- <div class="article-image-wrapper">
                 <img :src="article.imageUrl" :alt="article.title" class="article-image">
-            </div>
+            </div> -->
 
 
             <h1 class="article-title">{{ article.title }}</h1>

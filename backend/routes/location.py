@@ -77,7 +77,7 @@ def get_locations_by_city(city_id: int, db: Session = Depends(get_db)):
             "city_id": loc.city_id,
             "name": loc.name,
             "description": loc.description,
-            "location_data": loc.location_data,
+            "location_data": json.dumps(loc.location_data),
             "image_url": loc.image_url,
         }
         for loc in locations
@@ -95,7 +95,7 @@ def get_location(location_id: int, db: Session = Depends(get_db)):
         "city_id": location.city_id,
         "name": location.name,
         "description": location.description,
-        "location_data": location.location_data,
+        "location_data": json.dumps(location.location_data),
     }
 
 
@@ -170,7 +170,7 @@ def get_all_locations(db: Session = Depends(get_db)):
             "city_id": loc.city_id,
             "name": loc.name,
             "description": loc.description,
-            "location_data": loc.location_data,
+            "location_data": json.dumps(loc.location_data),
             "image_url": loc.image_url,
         }
         for loc in locations
