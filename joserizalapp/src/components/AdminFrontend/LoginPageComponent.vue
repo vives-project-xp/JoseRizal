@@ -23,6 +23,8 @@
 <script>
 import { getCookie } from '@/utils/cookieUtils';
 
+import { apiRequest, API_URL } from "../../utils/apiConfig";
+
 export default {
     name: 'LoginPageComponent',
     data() {
@@ -57,13 +59,12 @@ export default {
         },
         eraseCookie(name) {
             document.cookie = name + '=; Max-Age=-99999999;';
-        },
-        async handleLogin() {
+        }, async handleLogin() {
             this.errorMessage = '';
-            this.successMessage = '';
-            try {
+            this.successMessage = ''; try {
                 console.log('Attempting to log in with:', this.username, this.password);
-                const response = await fetch('http://127.0.0.1:8000/auth/token', {
+                // For login we need to use a special request with form data
+                const response = await apiRequest('/auth/token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

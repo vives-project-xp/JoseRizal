@@ -1,11 +1,9 @@
+import { API_URL, apiRequest } from "../utils/apiConfig";
+
 async function fetchArticles() {
   try {
-    const response = await fetch("http://localhost:8000/articles", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await apiRequest("/articles");
+
     if (response.ok) {
       const data = await response.json();
       console.log("Articles fetched successfully:", data);
@@ -22,12 +20,8 @@ async function fetchArticles() {
 
 async function fetchArticleById(id) {
   try {
-    const response = await fetch(`http://localhost:8000/articles/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await apiRequest(`/articles/${id}`);
+
     if (response.ok) {
       const data = await response.json();
       console.log("Article fetched successfully:", data);

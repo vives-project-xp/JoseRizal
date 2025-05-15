@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { apiRequest } from "../../utils/apiConfig";
+
 export default {
   data() {
     return {
@@ -58,17 +60,9 @@ export default {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
       }
       return null;
-    },
-    async fetchCities() {
-      const token = this.getCookie("access_token");
+    }, async fetchCities() {
       try {
-        const response = await fetch("http://127.0.0.1:8000/cities", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
-        });
+        const response = await apiRequest("/cities");
         if (response.ok) {
           const data = await response.json();
           console.log("Cities fetched successfully:", data);
@@ -77,21 +71,13 @@ export default {
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
-    },
-    async fetchLocations() {
+    }, async fetchLocations() {
       if (!this.newArticle.city_id) {
         this.locations = [];
         return;
       }
-      const token = this.getCookie("access_token");
       try {
-        const response = await fetch(`http://127.0.0.1:8000/city/${this.newArticle.city_id}/locations`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
-        });
+        const response = await apiRequest(`/city/${this.newArticle.city_id}/locations`);
         if (response.ok) {
           const data = await response.json();
           console.log("Locations fetched successfully:", data);
@@ -122,15 +108,10 @@ export default {
       if (!data.content_html.trim()) {
         this.showMessage("Article description is required", "error");
         return;
-      }
-      try {
+      } try {
         this.isSubmitting = true;
-        const response = await fetch("http://127.0.0.1:8000/articles", {
+        const response = await apiRequest("/articles", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
           body: JSON.stringify(data),
         });
         if (response.ok) {

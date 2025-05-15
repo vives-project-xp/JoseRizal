@@ -9,7 +9,8 @@
                 <textarea placeholder="Enter article description in markdown" class="textarea-field"
                     v-model="article.content_html"></textarea>
                 <p class="subtitle">Preview Text</p>
-                <input type="text" placeholder="Enter preview text" class="input-field" v-model="article.preview_text" />
+                <input type="text" placeholder="Enter preview text" class="input-field"
+                    v-model="article.preview_text" />
                 <p class="subtitle">Select a city</p>
                 <select class="input-field" v-model="article.city_id" @change="fetchLocations">
                     <option value="" disabled>Select a city</option>
@@ -30,6 +31,8 @@
 </template>
 
 <script>
+import { apiRequest } from "../../utils/apiConfig";
+
 export default {
     props: {
         articleId: {
@@ -67,17 +70,9 @@ export default {
                 if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
             }
             return null;
-        },
-        async fetchArticleDetails() {
-            const token = this.getCookie("access_token");
+        }, async fetchArticleDetails() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/articles/${this.articleId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    },
-                });
+                const response = await apiRequest(`/articles/${this.articleId}`);
                 if (response.ok) {
                     const data = await response.json();
                     this.article = data;
@@ -92,17 +87,9 @@ export default {
                 console.error("Error fetching article details:", error);
                 this.showMessage("An error occurred while fetching article details", "error");
             }
-        },
-        async fetchCities() {
-            const token = this.getCookie("access_token");
+        }, async fetchCities() {
             try {
-                const response = await fetch("http://127.0.0.1:8000/cities", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    },
-                });
+                const response = await apiRequest("/cities");
                 if (response.ok) {
                     const data = await response.json();
                     this.cities = data;
@@ -112,21 +99,13 @@ export default {
             } catch (error) {
                 console.error("Error fetching cities:", error);
             }
-        },
-        async fetchLocations() {
+        }, async fetchLocations() {
             if (!this.article.city_id) {
                 this.locations = [];
                 return;
             }
-            const token = this.getCookie("access_token");
             try {
-                const response = await fetch(`http://127.0.0.1:8000/city/${this.article.city_id}/locations`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    },
-                });
+                const response = await apiRequest(`/city/${this.article.city_id}/locations`);
                 if (response.ok) {
                     const data = await response.json();
                     this.locations = data;
@@ -138,17 +117,11 @@ export default {
                 console.error("Error fetching locations:", error);
                 this.locations = [];
             }
-        },
-        async updateArticle() {
-            const token = this.getCookie("access_token");
+        }, async updateArticle() {
             try {
                 this.isSubmitting = true;
-                const response = await fetch(`http://127.0.0.1:8000/articles/${this.articleId}`, {
+                const response = await apiRequest(`/articles/${this.articleId}`, {
                     method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    },
                     body: JSON.stringify(this.article),
                 });
                 if (response.ok) {

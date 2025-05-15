@@ -1,0 +1,56 @@
+// Get API URL from environment variable or use relative path as fallback
+export const API_URL = import.meta.env.VITE_API_URL || "/api";
+
+// Helper function to construct image URLs
+export function getImageUrl(path) {
+  if (!path) return null;
+
+  // If the path already has the /api prefix or starts with http, return it as is
+  if (path.startsWith("/api/") || path.startsWith("http")) {
+    return path;
+  }
+
+  // Ensure the path starts with a slash for proper URL construction
+  const formattedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${API_URL}${formattedPath}`;
+}
+
+// Create a wrapper for fetch that includes authorization and common headers
+export async function apiRequest(endpoint, options = {}) {
+  const token = getCookie("access_token");
+
+  // Ensure headers object exists
+  options.headers = options.headers || {};
+
+  // Add common headers
+  options.headers = {
+    "Content-Type": "application/json",
+    ...options.headers,
+  };
+
+  // Add authorization if token exists
+  if (token) {
+    options.headers.Authorization = `${token}`;
+  }
+
+  // Build the full URL (handle both absolute and relative endpoints)
+  // For relative endpoints, ensure they work with the API_URL that already includes '/api'
+  const url = endpoint.startsWith("http")
+    ? endpoint
+    : `${API_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+
+  // Make the request
+  return fetch(url, options);
+}
+
+// Helper function to get cookies (duplicated from various components)
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
