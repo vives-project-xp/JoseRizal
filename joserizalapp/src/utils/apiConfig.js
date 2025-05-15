@@ -1,5 +1,7 @@
 // Get API URL from environment variable or use relative path as fallback
-export const API_URL = import.meta.env.VITE_API_URL || "/api";
+export const API_URL = String(window.location.origin).includes("jose") ?
+  "https://api.joserizal.devbitapp.be/api" :
+   "http://localhost:8000/";
 
 // Helper function to construct image URLs
 export function getImageUrl(path) {
@@ -44,13 +46,13 @@ export async function apiRequest(endpoint, options = {}) {
 
   // Build the full URL (handle both absolute and relative endpoints)
   // For relative endpoints, ensure they work with the API_URL that already includes '/api'
-  const url = endpoint.startsWith("http")
+  let url = endpoint.startsWith("http")
     ? endpoint
     : `${API_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
   if (window.location.protocol === "https:") {
     // If the current protocol is HTTPS, ensure the request is also made over HTTPS
-    url.replace("http://", "https://");
+    url = url.replace("http://", "https://");
   }
 
   // Make the request
