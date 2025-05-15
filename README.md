@@ -1,81 +1,126 @@
-# José Rizal walk
-## Table of Contents
-- [Introduction](#introduction)
-- [Project Description](#project-description)
-- [Project Objectives](#project-objectives)
-- [Project features](#project-features)
-  - [Core Features](#core-features)
-  - [Additional Features](#additional-features)
-- [Technological Stack](#technological-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Future improvements](#future-improvements)
-- [Contributors](#contributors)
-- [License](#license)
+# José Rizal Walk
 
-## Introduction
-The José Rizal walk is an interactive application designed to educate users about the life and works of José Rizal, a national hero of the Philippines. It provides an engaging way to explore his contributions and legacy through a virtual experience.
+![José Rizal Walk Banner](./joserizalapp/src/assets/jose_rizal_banner.jpg)
 
-## Project Description
-This project aims to create a virtual tour that highlights key moments in José Rizal's life and the places that were significant to him. Users can navigate through the different cities and create a tour of the memorable places in his life. There will be a QR code for each location that that can be scanned to access more information about that specific place. The application also includes various articles and resources related to José Rizal's life, making it a comprehensive educational tool.
-The project is built using modern web technologies, ensuring a responsive and user-friendly experience. It is designed to be accessible to a wide audience, including students, educators, and history enthusiasts.
+---
 
-## Project Objectives
-- To promote awareness of José Rizal's life and works.
-- To provide an educational platform for students and history enthusiasts.
-- To utilize technology to preserve and share cultural heritage.
+## 🌏 **Explore the Legacy of a National Hero**
 
-## Project features
-### Core Features
-- Interactive timeline of José Rizal's life.
-- Virtual exhibits of historical artifacts.
-- Quizzes and activities to test knowledge about José Rizal.
-- Multilingual support for a wider audience.
+*José Rizal Walk* is an interactive virtual tour that brings the life and legacy of José Rizal, the national hero of the Philippines, to your fingertips. Step into history as you walk through the cities where Rizal lived, scan QR codes for enriched information, and dive into articles that highlight his contributions to freedom and knowledge.
 
-### Additional Features
-- Integration with social media for sharing achievements.
-- Augmented reality (AR) support for enhanced interactivity.
-- Accessibility features for users with disabilities.
+---
 
-## Technological Stack
-- **Frontend:** vue.js, 
-- **Backend:** FastAPI, PostgreSQL
-- **Containerization:** Docker
-- **Authentication:** bcrypt, pyjwt
-- **Version Control:** Git
+## 📌 **Table of Contents**
 
-## Installation
-### Using Docker
+* [🌏 Introduction](#introduction)
+* [📖 Project Description](#project-description)
+* [🎯 Project Objectives](#project-objectives)
+* [🚀 Project Features](#project-features)
+
+  * [🌟 Core Features](#core-features)
+  * [🌐 Future Extensions](#future-extensions)
+* [🛠 Technological Stack](#technological-stack)
+* [⚙️ Installation](#installation)
+
+  * [🖥 Local Installation](#local-installation)
+* [🔍 Future Improvements](#future-improvements)
+* [👥 Contributors](#contributors)
+
+---
+
+## 📝 **Introduction**
+
+The *José Rizal Walk* is more than just an application—it is a bridge to the past. By leveraging modern technology, we aim to educate users about José Rizal's remarkable journey and his contributions to Philippine independence. This project transforms historical exploration into an interactive and immersive experience.
+
+---
+
+## 📖 **Project Description**
+
+Imagine walking the very streets where José Rizal once stood. With *José Rizal Walk*, users can:
+
+* Navigate through cities where Rizal lived and contributed to the fight for freedom.
+* Scan QR codes placed at each landmark to access rich multimedia content and historical facts.
+* Learn about Rizal's works, ideals, and the impact he left on the Philippines and the world.
+
+This application is a perfect educational tool for students, history enthusiasts, and those eager to learn more about Philippine history in an engaging way.
+
+---
+
+## 🎯 **Project Objectives**
+
+* **Promote Awareness:** Shine a light on José Rizal's life and works through modern technology.
+* **Educational Platform:** Provide an interactive way for students and history enthusiasts to explore Philippine history.
+* **Cultural Preservation:** Use technology to preserve and share the legacy of a national hero.
+
+---
+
+## 🚀 **Project Features**
+
+### 🌟 **Core Features**
+
+* 📍 **Interactive Walking Tours:** Explore key locations in cities where Rizal lived.
+* 📰 **In-depth Articles & Resources:** Discover detailed write-ups on Rizal's contributions and ideals.
+* 🔓 **Admin Panel:** Manage content, locations, and user interactions seamlessly.
+
+### 🌐 **Future Extensions**
+
+* 🎲 **Interactive Quizzes and Games:** Test your knowledge about Rizal’s life.
+* 📲 **Social Media Integration:** Share your virtual tours and favorite locations.
+* ✍️ **User-Generated Content:** Share personal stories and experiences related to Rizal.
+* 🏆 **Gamification Elements:** Earn badges and rewards as you explore and learn.
+
+---
+
+## 🛠 **Technological Stack**
+
+* **Frontend:** Vue.js
+* **Backend:** FastAPI, PostgreSQL
+* **Containerization:** Docker
+* **Authentication:** bcrypt, pyjwt
+* **Version Control:** Git
+
+---
+
+## ⚙️ **Installation**
+
+### 🖥 **Local Installation**
+
 1. Ensure you have Docker installed on your system. You can download it from [Docker's official website](https://www.docker.com/).
 2. Clone the repository:
+
    ```bash
    git clone <repository-url>
-   cd JoseRizal
+   cd JoseRizalWalk
    ```
-3. Build the Docker image:
+3. Create a `.env` file in the root directory and configure the environment variables. Refer to `.env.example` for guidance.
+4. Build the Docker image:
+
    ```bash
-   docker compose up --build .
+   docker compose up --build
    ```
-4. Access the application in your browser at `http://localhost:8000/docs`.
+5. Access the application at [http://localhost/](http://localhost/).
+6. Explore the FastAPI documentation at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-## Usage
-1. Launch the application using Docker or by running the backend and frontend servers locally.
-2. Navigate to the homepage to start exploring the timeline of José Rizal's life.
-3. Use the navigation menu to access different sections, such as virtual exhibits and quizzes.
-4. Follow the instructions provided in each section to interact with the content.
+---
 
-## Future improvements
-- Add more historical content and artifacts.
-- Implement a mobile application version.
-- Enhance AR features for a more immersive experience.
-- Collaborate with historians for content accuracy.
+## 🔍 **Future Improvements**
 
-## Contributors
-- [Your Name] - Project Lead
-- [Contributor Name] - Backend Developer
-- [Contributor Name] - Frontend Developer
-- [Contributor Name] - UI/UX Designer
+* 📌 **Location-based Articles:** Link articles directly to the map locations.
+* 🔒 **User Authentication:** Enable users to save favorite articles and locations.
+* 🎨 **Enhanced UI/UX:** Polish the interface for a smoother experience.
+* 🔎 **Search Functionality:** Easily find articles or landmarks.
+* 🗣️ **Feedback System:** Collect user suggestions to drive improvements.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+---
 
+## 👥 **Contributors**
+
+* [Leroy Mathieu](https://www.linkedin.com/in/mathieu-leroy-2a3503171/): Project Owner
+* [Delaere Lynn](https://www.linkedin.com/in/lynn-delaere-29130a27b/): Front-and Backend Developer
+* [Tristan Shawn Cerera Den Ouden](https://www.linkedin.com/in/tristan-shawn-den-ouden/): Frontend Developer
+* [Jordaan Fae](): Frontend Developer
+* [Yibo Liang](): Backend Developer
+
+---
+
+🌐 *Rediscover history with the power of technology. Join us on the journey of José Rizal Walk.*
