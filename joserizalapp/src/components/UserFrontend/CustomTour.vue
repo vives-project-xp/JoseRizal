@@ -1,15 +1,12 @@
 <template>
-  <div>
+  <div class="landmark-card">
     <!--landmarks selection list-->
     <div class="landmark-controls">
       <div v-for="landmark in allLandmarks" :key="landmark.id" class="control-item">
-        <input type="checkbox" :id="'landmark-' + landmark.id" v-model="selectedLandmarkIds" :value="landmark.id"
-          @change="handleToggle(landmark.id)" />
-
-
         <label :for="'landmark-{{landmark.id}}'" class="control-label">
           <img :src="landmark.imageUrl" :alt="'Thumbnail of {{landmark.name}}'" class="thumbnail" />
-          <p>{{ landmark.title }}</p>
+          <p>{{ landmark.title }}</p> <input type="checkbox" :id="'landmark-' + landmark.id"
+            v-model="selectedLandmarkIds" :value="landmark.id" @change="handleToggle(landmark.id)" />
         </label>
       </div>
 
@@ -88,40 +85,66 @@ const startTour = () => {
 </script>
 
 <style scoped>
-.landmark-controls {
+.landmark-card {
   display: flex;
   flex-direction: column;
-  /* stack items vertically */
-  gap: 1rem;
-  /* space between items */
   padding: 1rem;
-  max-width: 600px;
-  margin: 0 auto;
-  background: #f5f5f5;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.thumbnail {
+  aspect-ratio: 2/1;
+  width: 100%;
+  max-width: px;
+  height: auto;
+  object-fit: cover;
   border-radius: 8px;
+  display: block;
+  background: #e0e0e0;
+}
+
+.landmark-controls {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgb(221, 221, 221);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .control-item {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 400px;
+  overflow: hidden;
 }
 
 .control-label {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
 }
 
-.thumbnail {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
+.control-label p {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.control-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #666666;
+  margin-top: 0.1rem;
 }
 
 .view-tour {
-  align-self: flex-start;
+  align-self: center;
   padding: 0.5rem 1.5rem;
   background: #666666;
   color: white;
@@ -135,10 +158,17 @@ const startTour = () => {
   background: rgb(140, 140, 140);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  .landmark-controls {
+    max-width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
   .thumbnail {
-    width: 32px;
-    height: 32px;
+    max-width: 100%;
+    aspect-ratio: 2/1;
+    height: auto;
   }
 }
 </style>

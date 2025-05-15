@@ -16,30 +16,30 @@
 </template>
 
 <script setup>
-    const props = defineProps({
-        imageUrl: {
+const props = defineProps({
+    imageUrl: {
         type: String,
-    required: true
+        required: true
     },
     title: {
         type: String,
-    required: true
+        required: true
     },
 
     cityId: {
         type: [Number, String],
-    required: true
+        required: true
     },
     locations: {
         type: Array,
-    required: true
+        required: true
     }
 });
 
 const startTour = () => {
     if (props.locations.length < 2) {
         alert("Not enough locations to start a tour!");
-    return;
+        return;
     }
 
     const baseUrl = 'https://www.google.com/maps/dir/?api=1';
@@ -55,7 +55,7 @@ const startTour = () => {
     // Waypoints are all the locations except the first and last
     const waypoints = props.locations.slice(1, -1)
         .map(location => `${location.location_data.latitude},${location.location_data.longitude}`)
-    .join('|');
+        .join('|');
 
     // Build the full URL
     const url = `${baseUrl}&origin=${origin}&destination=${destination}&waypoints=${waypoints}`;
@@ -109,7 +109,7 @@ const startTour = () => {
 }
 
 .view-tour {
-    align-self: flex-start;
+    align-self: center;
     padding: 0.5rem 1.5rem;
     background: #666666;
     color: white;
