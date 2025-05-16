@@ -8,7 +8,6 @@
 
 <script setup>
 import AppHeaderComponent from './components/UserFrontend/AppHeaderComponent.vue';
-import FooterComponent from './components/UserFrontend/FooterComponent.vue';
 </script>
 
 <style scoped>
