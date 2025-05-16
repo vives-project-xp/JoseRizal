@@ -120,12 +120,11 @@ To delete a city:
 
 If the city is deleted successfully, the city list will be updated to reflect the changes.
 
-![Deleting a city]()
+![Deleting a city](./Images_Admin/Delete_City_Admin.png)
 
 ## Managing Locations
 Locations are points of interest within a city. Each location has a name, description, geographical coordinates and an image.
 
-![City with location view](./Images_Admin/Cities_Location_List_Admin.png)
 
 ### Adding a Location
 To add a new location:
@@ -184,12 +183,11 @@ To delete a location:
 
 If the location is deleted successfully, the location list will be updated to reflect the changes.
 
-![Delete a location]()
+![Delete a location](./Images_Admin/Delete_Location_Admin.png)
 
 ## Managing Articles
 Articles are written content that provides information about various topics related to Jose Rizal. They are formatted using Markdown and can be used to provide in-depth information about locations, events, or themes related to Rizal's life and work.
 
-![Articles view](./Images_Admin/Article_List_Admin.png)
 
 ### Adding an Article
 To add a new article:
@@ -207,7 +205,7 @@ To add a new article:
 
 If all required fields are filled correctly, a success message will appear, and the article will be added to the database. The page will refresh after a short delay.
 
-![Adding a article](./Images_Admin/)
+![Adding a article](./Images_Admin/Add_Article_admin.png)
 
 ### Viewing and Managing Articles
 
@@ -243,4 +241,4 @@ To delete an article:
 
 If the article is deleted successfully, the article list will be updated to reflect the changes.
 
-![Deleting an Article](./Images_Admin/)
+![Deleting an Article](./Images_Admin/Delete_Article_Admin.png)
