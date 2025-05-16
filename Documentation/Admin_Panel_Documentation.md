@@ -205,7 +205,7 @@ To add a new article:
 
 If all required fields are filled correctly, a success message will appear, and the article will be added to the database. The page will refresh after a short delay.
 
-![Adding a article](./Images_Admin/Add_Article_admin.png)
+![Adding a article](./Images_Admin/Add_Article_Admin.png)
 
 ### Viewing and Managing Articles
 
