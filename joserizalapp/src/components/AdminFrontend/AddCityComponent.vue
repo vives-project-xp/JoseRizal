@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { API_URL, apiRequest } from "../../utils/apiConfig";
+
 export default {
   data() {
     return {
@@ -58,23 +60,21 @@ export default {
       if (!this.newCity.name.trim()) {
         this.showMessage("City name is required", "error");
         return;
-      }
-
-      const formData = new FormData();
-      formData.append("name", this.newCity.name);
-      formData.append("description", this.newCity.description);
-
-      if (this.cityImage) {
-        formData.append("file", this.cityImage);
-      }
-
-      try {
+      } try {
         this.isSubmitting = true;
-        const response = await fetch("http://127.0.0.1:8000/add_city", {
+
+        // For file uploads we need to use a special approach
+        // since apiRequest normally sends JSON data
+        const formData = new FormData();
+        formData.append("name", this.newCity.name);
+        formData.append("description", this.newCity.description);
+
+        if (this.cityImage) {
+          formData.append("file", this.cityImage);
+        }
+
+        const response = await apiRequest("/add_city", {
           method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`
-          },
           body: formData
         });
 
@@ -228,5 +228,4 @@ input[type="file"].input-field {
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
   }
 }
-
 </style>

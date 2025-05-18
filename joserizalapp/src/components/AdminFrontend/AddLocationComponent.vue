@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { apiRequest, API_URL } from "../../utils/apiConfig";
+
 export default {
   data() {
     return {
@@ -63,17 +65,9 @@ export default {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
       }
       return null;
-    },
-    async fetchCities() {
-      const token = this.getCookie("access_token");
+    }, async fetchCities() {
       try {
-        const response = await fetch("http://127.0.0.1:8000/cities", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
-        });
+        const response = await apiRequest("/cities");
         if (response.ok) {
           const data = await response.json();
           console.log("Cities fetched successfully:", data);
@@ -126,16 +120,17 @@ export default {
       formData.append('location_data', JSON.stringify(this.newLocation.location_data));
       if (this.locationImage) {
         formData.append("file", this.locationImage);
-      }
-
-      try {
+      } try {
         this.isSubmitting = true;
-        const response = await fetch("http://127.0.0.1:8000/add_location/", {
+        // For file uploads, we need to use the apiRequest function
+        // with special handling for FormData
+        const response = await apiRequest("/add_location/", {
           method: "POST",
           headers: {
-            "Authorization": "Bearer " + token,
+            // Remove content-type so browser can set it with proper boundary
+            "Content-Type": undefined
           },
-          body: formData,
+          body: formData
         });
 
         if (response.ok) {

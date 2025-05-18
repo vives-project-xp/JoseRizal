@@ -21,7 +21,7 @@ UPLOAD_DIR = "static/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-@router.post("/add_city/")
+@router.post("/add_city")
 async def add_city(
     name: str = Form(...),
     description: str = Form(...),

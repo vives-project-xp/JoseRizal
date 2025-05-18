@@ -38,6 +38,7 @@
 <script>
 import { marked } from "marked";
 import EditArticleComponent from "./EditArticleComponent.vue";
+import { apiRequest } from "../../utils/apiConfig";
 
 export default {
     components: {
@@ -57,12 +58,7 @@ export default {
     methods: {
         async fetchArticles() {
             try {
-                const response = await fetch("http://localhost:8000/articles", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                const response = await apiRequest("/articles");
                 if (response.ok) {
                     const data = await response.json();
                     this.articles = data;
@@ -89,18 +85,14 @@ export default {
             this.selectedArticle = article;
             this.showEditArticleModal = true;
             console.log("Edit article with ID:", articleId);
-        },
-        async deleteArticle(articleId) {
+        }, async deleteArticle(articleId) {
             console.log("Delete article with ID:", articleId);
             const confirmDelete = confirm("Are you sure you want to delete this article?");
             if (!confirmDelete) return;
 
             try {
-                const response = await fetch(`http://localhost:8000/articles/${articleId}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                const response = await apiRequest(`/articles/${articleId}`, {
+                    method: "DELETE"
                 });
                 if (response.ok) {
                     console.log("Article deleted successfully.");

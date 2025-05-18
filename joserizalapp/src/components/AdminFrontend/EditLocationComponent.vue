@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { apiRequest, API_URL } from "../../utils/apiConfig";
 
 export default {
   props: {
@@ -63,17 +64,9 @@ export default {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
       }
       return null;
-    },
-    async fetchLocationDetails() {
-      const token = this.getCookie("access_token");
+    }, async fetchLocationDetails() {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/location/${this.locationId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        });
+        const response = await apiRequest(`/location/${this.locationId}`);
         if (response.ok) {
           const data = await response.json();
           this.location = data;
@@ -131,14 +124,14 @@ export default {
       );
       if (this.locationImage) {
         formData.append("file", this.locationImage);
-      }
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/update_location/${this.locationId}`, {
+      } try {
+        const response = await apiRequest(`/update_location/${this.locationId}`, {
           method: "PUT",
           headers: {
-            Authorization: "Bearer " + token,
+            // Remove content-type so browser can set it with proper boundary
+            "Content-Type": undefined
           },
-          body: formData,
+          body: formData
         });
         if (response.ok) {
           const data = await response.json();
@@ -193,14 +186,14 @@ export default {
 
 .input-field,
 .textarea-field {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    margin-bottom: 12px;
-    box-sizing: border-box;
-    caret-color: auto;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  caret-color: auto;
 }
 
 .input-field:focus,
@@ -209,6 +202,7 @@ export default {
   box-shadow: 0 0 0 3px rgba(140, 140, 140, 0.2);
   outline: none;
 }
+
 input[type="file"].input-field {
   position: relative;
   padding: 12px;

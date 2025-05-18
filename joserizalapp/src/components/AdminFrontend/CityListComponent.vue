@@ -61,6 +61,8 @@
 import EditCityComponent from './EditCityComponent.vue';
 import EditLocationComponent from './EditLocationComponent.vue';
 
+import { apiRequest, API_URL, getImageUrl } from "../../utils/apiConfig";
+
 export default {
     name: "CityListComponent",
     components: { EditCityComponent, EditLocationComponent },
@@ -89,22 +91,14 @@ export default {
                 if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
             }
             return null;
-        },
-        async fetchCities() {
-            const token = this.getCookie("access_token");
+        }, async fetchCities() {
             try {
-                const response = await fetch("http://127.0.0.1:8000/cities", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                const response = await apiRequest("/cities");
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Cities fetched successfully:", data);
-                    this.cities = data.map(city => ({
+                    console.log("Cities fetched successfully:", data); this.cities = data.map(city => ({
                         ...city,
-                        image_url: city.image_url ? `http://127.0.0.1:8000${city.image_url}` : null,
+                        image_url: getImageUrl(city.image_url),
                         showLocations: false,
                     }));
                 } else {
@@ -113,16 +107,9 @@ export default {
             } catch (error) {
                 console.error("Error fetching cities:", error);
             }
-        },
-        async fetchLocation(cityId) {
-            const token = this.getCookie("access_token");
+        }, async fetchLocation(cityId) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/city/${cityId}/locations`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                const response = await apiRequest(`/city/${cityId}/locations`);
                 if (!response.ok) {
                     console.error("Failed to fetch locations:", response.statusText);
                     return;
@@ -135,12 +122,11 @@ export default {
                         coords = JSON.parse(loc.location_data);
                     } catch (e) {
                         console.error("Invalid JSON in location_data for id", loc.id, e);
-                    }
-                    return {
+                    } return {
                         ...loc,
                         latitude: coords.latitude,
                         longitude: coords.longitude,
-                        image_url: loc.image_url ? `http://127.0.1:8000${loc.image_url}` : null,
+                        image_url: getImageUrl(loc.image_url),
                     };
                 });
             } catch (error) {
@@ -172,16 +158,14 @@ export default {
             this.selectedLocation = location;
             this.showEditLocationModal = true;
             console.log("Edit location with ID:", locationId);
-        },
-        async deleteLocation(locationId) {
+        }, async deleteLocation(locationId) {
             console.log("Delete location with ID:", locationId);
-            const token = this.getCookie("access_token");
             const confirmDelete = confirm("Are you sure you want to delete this location?");
+            if (!confirmDelete) return;
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/delete_location/${locationId}`, {
-                    method: "DELETE",
-                    headers: { "Authorization": "Bearer " + token },
+                const response = await apiRequest(`/delete_location/${locationId}`, {
+                    method: "DELETE"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -213,24 +197,15 @@ export default {
             const token = this.getCookie("access_token");
             const confirmDelete = confirm("Are you sure you want to delete this city and all its locations?");
 
-            if (!confirmDelete) return;
-
-            try {
-                const responseLocations = await fetch(`http://127.0.0.1:8000/city/${cityId}/locations`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + token,
-                    },
-                });
+            if (!confirmDelete) return; try {
+                const responseLocations = await apiRequest(`/city/${cityId}/locations`);
 
                 if (responseLocations.ok) {
                     const locations = await responseLocations.json();
 
                     for (const location of locations) {
-                        await fetch(`http://127.0.0.1:8000/delete_location/${location.id}`, {
-                            method: "DELETE",
-                            headers: { "Authorization": "Bearer " + token },
+                        await apiRequest(`/delete_location/${location.id}`, {
+                            method: "DELETE"
                         });
                     }
                     console.log("All locations deleted successfully.");
@@ -240,9 +215,8 @@ export default {
                     return;
                 }
 
-                const responseCity = await fetch(`http://127.0.0.1:8000/delete_city/${cityId}`, {
-                    method: "DELETE",
-                    headers: { "Authorization": "Bearer " + token },
+                const responseCity = await apiRequest(`/delete_city/${cityId}`, {
+                    method: "DELETE"
                 });
 
                 if (responseCity.ok) {

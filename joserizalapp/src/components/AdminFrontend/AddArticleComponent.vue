@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { apiRequest } from "../../utils/apiConfig";
+
 export default {
   data() {
     return {
@@ -51,6 +53,38 @@ export default {
       }
       return null;
     },
+    async fetchCities() {
+      try {
+        const response = await apiRequest("/cities");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Cities fetched successfully:", data);
+          this.cities = data;
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    },
+    async fetchLocations() {
+      if (!this.newArticle.city_id) {
+        this.locations = [];
+        return;
+      }
+      try {
+        const response = await apiRequest(`/city/${this.newArticle.city_id}/locations`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Locations fetched successfully:", data);
+          this.locations = data;
+        } else {
+          console.error("Failed to fetch locations:", response.statusText);
+          this.locations = [];
+        }
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+        this.locations = [];
+      }
+    },
     async addArticle() {
       const token = this.getCookie("access_token");
 
@@ -68,15 +102,10 @@ export default {
       if (!data.content_html.trim()) {
         this.showMessage("Article description is required", "error");
         return;
-      }
-      try {
+      } try {
         this.isSubmitting = true;
-        const response = await fetch("http://127.0.0.1:8000/articles", {
+        const response = await apiRequest("/articles", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
           body: JSON.stringify(data),
         });
         if (response.ok) {

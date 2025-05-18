@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { apiRequest, API_URL } from "../../utils/apiConfig";
+
 export default {
     props: {
         city: {
@@ -30,7 +32,7 @@ export default {
     },
     data() {
         return {
-            newCity: { name: '', description: ''},
+            newCity: { name: '', description: '' },
             cityImage: null,
             message: '',
             messageType: '',
@@ -69,24 +71,16 @@ export default {
                 this.message = '';
                 this.messageType = '';
             }, 3000);
-        },
-        async getCityDetails() {
-            const token = this.getCookie('access_token');
+        }, async getCityDetails() {
             try {
-                const fetchResponse = await fetch(`http://127.0.0.1:8000/city/${this.city.id}`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + token,
-                    },
-                });
-                if (!fetchResponse.ok) {
-                    const fetchErrorData = await fetchResponse.json();
+                const response = await apiRequest(`/city/${this.city.id}`);
+                if (!response.ok) {
+                    const fetchErrorData = await response.json();
                     console.error('Error fetching city details:', fetchErrorData);
                     this.showMessage(fetchErrorData.message || 'Failed to fetch city details', 'error');
                     return;
                 }
-                const cityDetails = await fetchResponse.json();
+                const cityDetails = await response.json();
                 this.newCity = { ...cityDetails };
             } catch (error) {
                 console.error('Error fetching city details:', error);
@@ -114,10 +108,11 @@ export default {
                 if (this.$refs.cityImage.files[0]) {
                     formData.append('file', this.$refs.cityImage.files[0]);
                 }
-                const updateResponse = await fetch(`http://127.0.0.1:8000/update_city/${this.city.id}`, {
+                const updateResponse = await apiRequest(`/update_city/${this.city.id}`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        // Remove content-type for FormData
+                        'Content-Type': undefined
                     },
                     body: formData,
                 });
@@ -186,15 +181,15 @@ export default {
 }
 
 input[type="file"].input-field {
-  position: relative;
-  padding: 12px;
-  cursor: pointer;
-  color: #999999;
-  opacity: 0.5;
+    position: relative;
+    padding: 12px;
+    cursor: pointer;
+    color: #999999;
+    opacity: 0.5;
 }
 
 .input-field::file-selector-button {
-  display: none;
+    display: none;
 }
 
 .action-button {

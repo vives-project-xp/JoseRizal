@@ -4,9 +4,9 @@ services:
     image: postgres:17.4
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: joserizal
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -20,7 +20,7 @@ services:
     restart: always
     env_file: .env
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@database:5432/joserizal
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
       AUTH_SECRET: ${AUTH_SECRET}
     volumes:
       - static_uploads:/backend/static/uploads
@@ -37,12 +37,9 @@ services:
     restart: always
     env_file: .env
     environment:
-      VITE_API_URL: http://localhost:8000
-    volumes:
-      - ./joserizalapp:/app
-      - /app/node_modules
+      VITE_API_URL: /api
     ports:
-      - "80:5173"
+      - "80:80"
     depends_on:
       database:
         condition: service_healthy

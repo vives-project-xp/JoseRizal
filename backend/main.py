@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from routes.admin import router as admin_router
@@ -32,10 +32,17 @@ app.mount(
     name="static",
 )
 
-app.include_router(auth_router, prefix="/auth")
-app.include_router(admin_router)
-app.include_router(city_router)
-app.include_router(location_router)
-app.include_router(media_router, prefix="/media")
-app.include_router(article_router)
-app.include_router(about_router, prefix="/about")
+# Create an API router with the "/api" prefix
+api_router = APIRouter(prefix="/api")
+
+# Include all routers in the api_router
+api_router.include_router(auth_router, prefix="/auth")
+api_router.include_router(admin_router)
+api_router.include_router(city_router)
+api_router.include_router(location_router)
+api_router.include_router(media_router, prefix="/media")
+api_router.include_router(article_router)
+api_router.include_router(about_router, prefix="/about")
+
+# Include the api_router in the main app
+app.include_router(api_router)
