@@ -1,7 +1,7 @@
 // Get API URL from environment variable or use relative path as fallback
-export const API_URL = String(window.location.origin).includes("jose") ?
-  "https://api.joserizal.devbitapp.be/api" :
-   "http://localhost:8000/";
+export const API_URL = String(window.location.origin).includes("jose")
+  ? "https://api.joserizal.devbitapp.be/api"
+  : "http://localhost:8000/";
 
 // Helper function to construct image URLs
 export function getImageUrl(path) {
@@ -14,7 +14,7 @@ export function getImageUrl(path) {
 
   // Ensure the path starts with a slash for proper URL construction
   const formattedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${API_URL}${formattedPath}`;
+  return `${API_URL.replace(".be/api", ".be")}${formattedPath}`;
 }
 
 // Create a wrapper for fetch that includes authorization and common headers
