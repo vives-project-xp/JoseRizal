@@ -127,10 +127,6 @@ export default {
       } try {
         const response = await apiRequest(`/update_location/${this.locationId}`, {
           method: "PUT",
-          headers: {
-            // Remove content-type so browser can set it with proper boundary
-            "Content-Type": undefined
-          },
           body: formData
         });
         if (response.ok) {

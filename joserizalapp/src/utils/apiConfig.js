@@ -1,7 +1,7 @@
 // Get API URL from environment variable or use relative path as fallback
 export const API_URL = String(window.location.origin).includes("jose")
   ? "https://api.joserizal.devbitapp.be/api"
-  : "http://localhost:8000/";
+  : "http://localhost:8000/api";
 
 // Helper function to construct image URLs
 export function getImageUrl(path) {

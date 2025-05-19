@@ -114,22 +114,23 @@ export default {
       }
 
       const formData = new FormData();
-      formData.append("city_id", cityId);
+      formData.append("city_id", Number(cityId));
       formData.append("name", name);
       formData.append("description", description);
-      formData.append('location_data', JSON.stringify(this.newLocation.location_data));
+      formData.append('location_data', JSON.stringify({
+        latitude: parseFloat(this.newLocation.location_data.latitude),
+        longitude: parseFloat(this.newLocation.location_data.longitude)
+      }));
       if (this.locationImage) {
         formData.append("file", this.locationImage);
-      } try {
+      }
+
+      try {
         this.isSubmitting = true;
         // For file uploads, we need to use the apiRequest function
         // with special handling for FormData
         const response = await apiRequest("/add_location/", {
           method: "POST",
-          headers: {
-            // Remove content-type so browser can set it with proper boundary
-            "Content-Type": undefined
-          },
           body: formData
         });
 
