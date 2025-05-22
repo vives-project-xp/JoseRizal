@@ -7,13 +7,26 @@
 			<div class="project-info">
 				<h3>Project Info</h3>
 				<p>
-					Ligula vivamus gravida viverra feugiat neque sociis nam aptent tristique, nec platea velit 
-					libero nisl nascetur interdum integer accumsan, tincidunt a vulputate vehicula nostra auctor 
-					eu lectus. Nam natoque massa ante commodo eget ultrices nullam libero, vestibulum parturient 
-					viverra enim senectus tempus luctus vivamus sed, lacus nunc mattis nibh ligula metus sociis. 
-					Himenaeos curabitur habitasse mi ornare penatibus risus posuere platea ullamcorper, tortor 
-					pretium fames auctor felis sem vivamus aptent netus, vestibulum sapien sodales curae duis 
-					faucibus viverra tristiqu
+					Wij zijn vier gemotiveerde studenten die hebben deelgenomen aan een Blended Intensive Program 
+					(BIP), een unieke internationale leerervaring waarbij samenwerking met studenten uit verschillende landen en 
+					vakgebieden centraal staat. Tijdens dit programma leerden we niet alleen over elkaars culturen en achtergronden, 
+					maar werkten we ook intensief samen aan realistische en maatschappelijk relevante projecten.
+					<br/>
+					<br/>
+					Een van de projecten waarvoor wij onze krachten bundelden, was in opdracht van het consulaat van 
+					de Filipijnen in België en de Filipijnse ambassade. Ons doel: het leven en de erfenis van 
+					José Rizal – een nationale held van de Filipijnen – onder de aandacht brengen van de 
+					Gentse bevolking. Rizal verbleef een belangrijk deel van zijn leven in Gent, waar hij onder 
+					andere meewerkte aan de publicatie van zijn invloedrijke werken die de Filipijnse 
+					onafhankelijkheidsbeweging voedden.
+					<br/>
+					<br/>
+					Met ons project willen we een brug slaan tussen verleden en heden, tussen België en de Filipijnen. 
+					We ontwikkelden een campagne die Gentenaars informeert en inspireert, en die Rizals verblijf in 
+					Gent op een tastbare manier zichtbaar maakt in het stadsbeeld. Door storytelling, interactieve 
+					media en lokale partnerschappen brengen we zijn verhaal opnieuw tot leven – niet alleen als 
+					geschiedkundige figuur, maar als bron van inspiratie voor internationale verbondenheid, burgerzin 
+					en intellectuele vrijheid.
 				</p>
 			</div>
 			<div class="developers">
