@@ -6,6 +6,7 @@ import LoginPage from '@/views/LoginPage.vue'
 import AdminPage from '@/views/AdminPage.vue'
 import { getCookie } from '@/utils/cookieUtils';
 import AboutUs from '@/views/AboutUs.vue'
+import GamesPage from '@/views/GamesPage.vue'
 
 const isAuthenticated = () => {
     const token = getCookie('access_token');
@@ -48,10 +49,15 @@ const routes = [
             }
         }
     },
-	{
+    {
         path: '/about-us',
         name: 'AboutUs',
         component: AboutUs
+    },
+    {
+        path: '/games',
+        name: 'GamesPage',
+        component: GamesPage
     },
 ]
 
