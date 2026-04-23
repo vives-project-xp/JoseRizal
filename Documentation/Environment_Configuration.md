@@ -11,8 +11,8 @@ The project uses the following environment variables for database configuration:
 ```properties
 POSTGRES_DB="jose_rizal"    # Database name
 POSTGRES_USER="jose_rizal"  # Database username
-POSTGRES_PASSWORD="admin"   # Database password (this is a secret)
-AUTH_SECRET="admin"         # Authentication secret key
+POSTGRES_PASSWORD="..."     # Database password (this is a secret)
+AUTH_SECRET="..."           # Authentication secret key
 #! See .env
 ```
 
@@ -26,13 +26,13 @@ database:
   image: postgres:17.4
   restart: always
   environment:
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: postgres
-    POSTGRES_DB: joserizal
+    POSTGRES_USER: ${POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    POSTGRES_DB: ${POSTGRES_DB}
   volumes:
     - postgres_data:/var/lib/postgresql/data
   healthcheck:
-    test: ["CMD-SHELL", "pg_isready -U postgres -d joserizal"]
+    test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
     interval: 2s
     retries: 10
 ```
@@ -40,19 +40,19 @@ database:
 The backend service connects to the database using the following connection string:
 
 ```
-DATABASE_URL: postgresql://postgres:postgres@database:5432/joserizal
+DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
 ```
 
 ### Important Notes
 
 1. **Automated Configuration**: The database is automatically configured when you start the application using Docker Compose. No manual setup is required.
 
-2. **Default Credentials**: 
-   - Username: `postgres`
-   - Password: `postgres`
-   - Database: `joserizal`
+2. **Environment-based Credentials**:
+   - Username: configured by `POSTGRES_USER`
+   - Password: configured by `POSTGRES_PASSWORD`
+   - Database: configured by `POSTGRES_DB`
 
-3. **Environment Variable Precedence**: The hardcoded values in `compose.yaml` take precedence over the values in the `.env` file.
+3. **Environment Variable Usage**: The database, backend connection string, and database healthcheck all use the same values from `.env`.
 
 4. **pgAdmin Access**: A pgAdmin container is included for database management:
    - URL: http://localhost:5050
@@ -62,9 +62,9 @@ DATABASE_URL: postgresql://postgres:postgres@database:5432/joserizal
    To connect to your database using pgAdmin:
    - Host: database
    - Port: 5432
-   - Username: postgres
-   - Password: postgres
-   - Database: joserizal
+   - Username: value of `POSTGRES_USER`
+   - Password: value of `POSTGRES_PASSWORD`
+   - Database: value of `POSTGRES_DB`
 
 5. **Security Considerations**: 
    - The current configuration uses default credentials suitable for development.
@@ -91,7 +91,7 @@ engine = create_engine(DATABASE_URL)
 You can connect to the database directly using the PostgreSQL client inside the container:
 
 ```bash
-docker exec -it postgres psql -U postgres -d joserizal
+docker exec -it postgres sh -lc 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
 ```
 
 ## Modifying Database Configuration
