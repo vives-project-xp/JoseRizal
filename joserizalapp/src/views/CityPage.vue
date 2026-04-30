@@ -11,7 +11,8 @@
             :imageUrl="selectedCity.image_url || cityImage" 
             :title="selectedCity.name" 
             :cityId="selectedCity.id" 
-            :locations="locations" 
+            :locations="locations"
+            :cityName="selectedCity.name"
         />
         
         <PageBreakComponent />
@@ -25,12 +26,11 @@
 <script setup>
 import FeaturedTour from '../components/UserFrontend/FeaturedTour.vue';
 import CustomTour from '../components/UserFrontend/CustomTour.vue';
-
 import PageBreakComponent from '@/components/UserFrontend/PageBreakComponent.vue';
 
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { fetchCityById} from '@/services/fetchCities';
+import { fetchCityById } from '@/services/fetchCities';
 import { fetchLocations } from '@/services/fetchLocations';
 
 const route = useRoute()
@@ -41,7 +41,7 @@ const locations = ref([]);
 const isLoading = ref(true)
 const error = ref(null)
 
-import cityImage  from '../assets/generic_city.jpg';
+import cityImage from '../assets/generic_city.jpg';
 
 const fetchCity = async (id) => {
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -77,7 +77,6 @@ onMounted(async () => {
         isLoading.value = false;
     }
 });
-
 </script>
 
 <style scoped>

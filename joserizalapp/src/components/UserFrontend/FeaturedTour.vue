@@ -12,17 +12,19 @@
                 <button class="view-tour" @click="startTour">
                     Start Tour
                 </button>
-                <router-link to="/games">
+                <a v-if="isGhent" href="https://www.thinglink.com/scene/2083591878317441892" target="_blank">
                     <button class="virtual-tour">
                         Virtual Tour
                     </button>
-                </router-link>
+                </a>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
     imageUrl: {
         type: String,
@@ -39,7 +41,16 @@ const props = defineProps({
     locations: {
         type: Array,
         required: true
+    },
+    cityName: {
+        type: String,
+        default: ''
     }
+});
+
+const isGhent = computed(() => {
+    return props.cityName?.toLowerCase().includes('ghent') ||
+           props.cityName?.toLowerCase().includes('gent');
 });
 
 const startTour = () => {
@@ -51,6 +62,8 @@ const startTour = () => {
     const baseUrl = 'https://www.google.com/maps/dir/?api=1';
 
     const origin = `${props.locations[0].location_data.latitude},${props.locations[0].location_data.longitude}`;
+    console.log("latitude: ", props.locations[0].location_data.latitude);
+    console.log("longitude: ", props.locations[0].location_data.longitude);
 
     const destination = `${props.locations[props.locations.length - 1].location_data.latitude},${props.locations[props.locations.length - 1].location_data.longitude}`;
 

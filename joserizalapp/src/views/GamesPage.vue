@@ -5,11 +5,12 @@
 
     <div class="games-grid">
 
-      <div class="game-card">
+      <div class="game-card featured">
+        <div class="featured-badge">⭐ Featured Game</div>
         <h3>🖊️ Inked: Rizal's Desk</h3>
         <p>Step into Rizal's world and experience his life through an illustrated adventure.</p>
         <a href="https://jru-x-vives.itch.io/inked-rizals-desk" target="_blank">
-          <button class="game-btn">Play Now</button>
+          <button class="game-btn gold-btn">Play Now</button>
         </a>
       </div>
 
@@ -82,6 +83,26 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+  position: relative;
+}
+
+.game-card.featured {
+  background: linear-gradient(135deg, rgba(255, 248, 220, 0.95), rgba(255, 235, 150, 0.9));
+  border: 2px solid #c9a84c;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4), 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+.featured-badge {
+  position: absolute;
+  top: -12px;
+  background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b);
+  color: #3a2a00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .game-card h3 {
@@ -109,6 +130,22 @@ h1 {
 
 .game-btn:hover {
   background-color: #222222;
+}
+
+.gold-btn {
+  background: linear-gradient(135deg, #b8860b, #ffd700, #b8860b);
+  color: #3a2a00;
+  font-weight: 700;
+  border: 1px solid #a0720a;
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.5);
+  background-size: 200% auto;
+  transition: background-position 0.4s ease, box-shadow 0.2s ease;
+}
+
+.gold-btn:hover {
+  background-position: right center;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.6);
+  background-color: unset;
 }
 
 @media (max-width: 600px) {
