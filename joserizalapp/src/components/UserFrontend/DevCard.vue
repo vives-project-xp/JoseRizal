@@ -57,7 +57,7 @@ const props = defineProps({
 
 .card-image {
     width: 100%;
-    height: 200px;
+    height: 280px;
     overflow: hidden;
 }
 
@@ -65,6 +65,10 @@ const props = defineProps({
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
+    background-color: rgb(221, 221, 221);
+    transform: scale(1.15);
+    transform-origin: top center;
 }
 
 .card-content {

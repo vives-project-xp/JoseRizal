@@ -41,16 +41,27 @@
 			</div>
 			<div class="project-info">
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					This project develops a digital, interactive experience around the existing
+					José Rizal Guided Walk in Ghent, focused on heritage experience, education
+					and international collaboration.
 					<br/>
 					<br/>
-					Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-					Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					The project transforms the physical José Rizal city walk in Ghent into a
+					fully virtualised tour that can be experienced both on location and remotely.
+					It offers historical context through storytelling, interactive elements and
+					multimedia such as text, audio, video, 360° images and virtual environments.
+					Clickable hotspots, narrative storylines and mini-assignments per location
+					actively engage visitors and deepen their understanding of the historical context.
 					<br/>
 					<br/>
-					Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-					Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.
+					Alongside the virtual tour, an educational game was developed aimed at young
+					Filipino youth, exploring the life, ideas and themes of José Rizal — including
+					his studies, travels, freedom and identity. The game was created by students
+					of José Rizal University in the Philippines, who also collaborated closely
+					on the visual and artistic elements of the entire project. This international
+					partnership ensured historical and cultural accuracy, and formed the heart
+					of the collaboration between Belgium and the Philippines that made this
+					project possible.
 				</p>
 			</div>
 
@@ -75,18 +86,21 @@
 			</div>
 			<div class="developers">
 				<div class="dev-list">
-					<!-- 5 individual placeholder cards -->
-					<div class="placeholder-card" v-for="n in 5" :key="'individual-' + n">
-						<div class="placeholder-image"></div>
-						<p class="placeholder-name">Developer {{ n }}</p>
-						<p class="placeholder-role">Role placeholder</p>
-					</div>
-					<!-- 1 group picture placeholder spanning full width -->
-					<div class="placeholder-card group-card">
-						<div class="placeholder-image group-image"></div>
-						<p class="placeholder-name">Group Picture</p>
-						<p class="placeholder-role">The full team</p>
-					</div>
+					<!-- Belgian/Uzbek team -->
+					<DevCard
+					v-for="dev in developers3"
+					:name="dev.name"
+					:description="dev.description"
+					:image-url="dev.imageUrl"
+					/>
+
+					<!-- Filipino team -->
+					<DevCard
+					v-for="dev in developers2"
+					:name="dev.name"
+					:description="dev.description"
+					:image-url="dev.imageUrl"
+					/>
 				</div>
 			</div>
 
@@ -102,6 +116,18 @@ import imageDev1 from '@/assets/developer_pics/Fae.jpg'
 import imageDev2 from '@/assets/developer_pics/Lynn.png'
 import imageDev3 from '@/assets/developer_pics/Liang.jpg'
 import imageDev4 from '@/assets/developer_pics/Tristan.png'
+
+import imageVince from '@/assets/developer_pics/Vince_Julius_Cedeno.jpg'
+import imageAaron from '@/assets/developer_pics/Aaron_Jason_Cedeno.jpg'
+import imageTimothy from '@/assets/developer_pics/Timothy_Joseph_Angeles.jpg'
+import imageKyrsten from '@/assets/developer_pics/Kyrsten_Sasil.png'
+import imageRandall from '@/assets/developer_pics/Randall_Ramirez.png'
+
+import imageDelmar from '@/assets/developer_pics/Delmar_Ramcic.jpg'
+import imageJarno from '@/assets/developer_pics/Jarno_Bostyn.jpg'
+import imageNicolas from '@/assets/developer_pics/Nicolas_Hongerloot.jpg'
+import imageWard from '@/assets/developer_pics/Ward_Dereeper.jpg'
+import imageSanjar from '@/assets/developer_pics/Sanjar_Tilavkobilov_Sanjar_Isomiddin_Ugli.jpg'
 
 const developers = ref([
 	{
@@ -124,6 +150,62 @@ const developers = ref([
 		description: 'Spain \n Backend developement',
 		imageUrl: imageDev3,
 	}
+])
+
+const developers2 = ref([
+	{
+		name: 'Vince Julius S. Cedeño',
+		description: 'Philippines \n 3D Artist',
+		imageUrl: imageVince,
+	},
+	{
+		name: 'Aaron Jason A. Cedeño',
+		description: 'Philippines \n 3D Artist',
+		imageUrl: imageAaron,
+	},
+	{
+		name: 'Timothy Joseph V. Angeles',
+		description: 'Philippines \n Programmer',
+		imageUrl: imageTimothy,
+	},
+	{
+		name: 'Kyrsten Shaen C. Sasil',
+		description: 'Philippines \n Multimedia Artist',
+		imageUrl: imageKyrsten,
+	},
+	{
+		name: 'Randall Jay E. Ramirez',
+		description: 'Philippines \n Programmer',
+		imageUrl: imageRandall,
+	}
+])
+
+const developers3 = ref([
+	{
+		name: 'Delmar Ramcic',
+		description: 'Belgium \n Web Development',
+		imageUrl: imageDelmar,
+	},
+	{
+		name: 'Jarno Bostyn',
+		description: 'Belgium \n Virtual Tour',
+		imageUrl: imageJarno,
+	},
+	{
+		name: 'Nicolas Hongerloot',
+		description: 'Belgium \n Virtual Tour',
+		imageUrl: imageNicolas,
+	},
+	{
+		name: 'Ward Dereeper',
+		description: 'Belgium \n Virtual Tour',
+		imageUrl: imageWard,
+	},
+	{
+		name: 'Sanjar Tilavkobilov Sanjar Isomiddin Ugli',
+		description: 'Uzbekistan \n Virtual Tour',
+		imageUrl: imageSanjar,
+	},
 ])
 </script>
 
@@ -198,43 +280,38 @@ p {
 .placeholder-card {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	gap: 0.5rem;
-	background-color: rgba(255, 255, 255, 0.6);
+	align-items: flex-start;
+	background: rgb(221, 221, 221);
 	border-radius: 8px;
-	padding: 1rem;
-	border: 2px dashed #c9a84c;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	max-width: 280px;
+	margin-bottom: 15px;
 }
 
 .placeholder-image {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
-	background-color: #ddd;
-	border: 2px dashed #aaa;
-}
-
-.group-card {
-	grid-column: 1 / -1;
-}
-
-.group-image {
 	width: 100%;
-	height: 150px;
-	border-radius: 8px;
-	background-color: #ddd;
+	height: 250px;
+	background-color: #bbb;
 }
 
 .placeholder-name {
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 1rem;
-	margin: 0;
+	color: #333;
+	margin: 0.5rem 1rem 0 1rem;
+}
+
+.placeholder-country {
+	font-size: 1rem;
+	color: #666;
+	margin: 0 1rem;
 }
 
 .placeholder-role {
-	font-size: 0.85rem;
+	font-size: 1rem;
 	color: #666;
-	margin: 0;
+	margin: 0 1rem 1rem 1rem;
 }
 
 @media (max-width: 768px) {
