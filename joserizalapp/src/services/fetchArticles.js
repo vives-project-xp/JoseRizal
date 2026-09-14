@@ -1,37 +1,21 @@
-import { API_URL, apiRequest } from "../utils/apiConfig";
+import { loadContent } from "./loadContent";
 
 async function fetchArticles() {
   try {
-    const response = await apiRequest("/articles");
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Articles fetched successfully:", data);
-      return data;
-    } else {
-      console.error("Failed to fetch articles:", response.statusText);
-      return [];
-    }
+    const content = await loadContent();
+    return content.articles;
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    console.error("Error loading articles:", error);
     return [];
   }
 }
 
 async function fetchArticleById(id) {
   try {
-    const response = await apiRequest(`/articles/${id}`);
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Article fetched successfully:", data);
-      return data;
-    } else {
-      console.error("Failed to fetch article:", response.statusText);
-      return null;
-    }
+    const content = await loadContent();
+    return content.articles.find((article) => article.id === Number(id)) ?? null;
   } catch (error) {
-    console.error("Error fetching article:", error);
+    console.error("Error loading article:", error);
     return null;
   }
 }

@@ -317,3 +317,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Cloudflare Pages builds this file from the reviewed Markdown and YAML source.
+joserizalapp/public/content.json
+
+# Keep the reproducible frontend dependency lockfile.
+!joserizalapp/package-lock.json
