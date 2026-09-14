@@ -16,9 +16,10 @@ import { ref, onMounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { Marked } from 'marked'
 
-import { fetchArticleById } from '@/services/fetchArticles'
+import { fetchArticles, fetchArticleById } from '@/services/fetchArticles'
 
 const route = useRoute()
+const mockArticles = ref([])
 const article = ref({})
 const isLoading = ref(true)
 const error = ref(null)

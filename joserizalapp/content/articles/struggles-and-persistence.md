@@ -1,5 +1,6 @@
 ---
 id: 2
+order: 1
 title: Struggles and Persistence
 preview: Despite financial hardship in Ghent, Rizal persisted in publishing El Filibusterismo, thanks in part to a friend's help.
 locations: []

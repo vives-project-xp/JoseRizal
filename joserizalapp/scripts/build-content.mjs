@@ -27,8 +27,8 @@ function requireId(value, field) {
 
 function requireImage(image, field) {
   const path = requireText(image, field);
-  if (!path.startsWith("/content/images/")) {
-    fail(`${field} must start with /content/images/`);
+  if (!path.startsWith("/")) {
+    fail(`${field} must be an absolute site path starting with /`);
   }
   if (!existsSync(join(publicRoot, path.slice(1)))) {
     fail(`${field} refers to missing file ${path}`);
@@ -54,6 +54,7 @@ function parseArticle(fileName) {
 
   return {
     id: requireId(metadata.id, `articles/${fileName}: id`),
+    order: requireId(metadata.order, `articles/${fileName}: order`),
     title: requireText(metadata.title, `articles/${fileName}: title`),
     preview_text: requireText(metadata.preview, `articles/${fileName}: preview`),
     location_ids: metadata.locations ?? [],
@@ -70,6 +71,7 @@ const ids = {
   cities: new Set(),
   locations: new Set(),
   articles: new Set(),
+  articleOrders: new Set(),
 };
 const cities = [];
 const locations = [];
@@ -93,8 +95,10 @@ for (const city of cityDocument.cities) {
     if (ids.locations.has(locationId)) fail(`duplicate location id ${locationId}`);
     ids.locations.add(locationId);
 
-    const latitude = Number(location.latitude);
-    const longitude = Number(location.longitude);
+    const latitudeText = String(location.latitude);
+    const longitudeText = String(location.longitude);
+    const latitude = Number(latitudeText);
+    const longitude = Number(longitudeText);
     if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90) {
       fail(`location ${locationId}: latitude must be between -90 and 90`);
     }
@@ -107,7 +111,7 @@ for (const city of cityDocument.cities) {
       city_id: cityId,
       name: requireText(location.name, `location ${locationId}: name`),
       description: requireText(location.description, `location ${locationId}: description`),
-      location_data: { latitude, longitude },
+      location_data: { latitude: latitudeText, longitude: longitudeText },
       image_url: requireImage(location.image, `location ${locationId}: image`),
     });
   }
@@ -122,6 +126,8 @@ const articles = articleFiles.map(parseArticle);
 for (const article of articles) {
   if (ids.articles.has(article.id)) fail(`duplicate article id ${article.id}`);
   ids.articles.add(article.id);
+  if (ids.articleOrders.has(article.order)) fail(`duplicate article order ${article.order}`);
+  ids.articleOrders.add(article.order);
   if (!Array.isArray(article.location_ids)) {
     fail(`article ${article.id}: locations must be a list`);
   }
@@ -139,7 +145,8 @@ for (const article of articles) {
 
 cities.sort((a, b) => a.id - b.id);
 locations.sort((a, b) => a.id - b.id);
-articles.sort((a, b) => a.id - b.id);
+articles.sort((a, b) => a.order - b.order);
+for (const article of articles) delete article.order;
 
 mkdirSync(publicRoot, { recursive: true });
 writeFileSync(

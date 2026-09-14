@@ -85,3 +85,49 @@ img{
   margin: auto;
   width: 45%
 }
+
+/*
+ * These public-page rules previously came from globally scoped styles in the
+ * removed admin screens. Keep them explicit so the static migration preserves
+ * the existing website's layout without shipping the admin application.
+ */
+.pageContent {
+  background-image: url("@/assets/background.png");
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.pageHeader {
+  background-image: url("@/assets/background.png");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#articleList h1,
+#walkingTour h1,
+.page-container > .title > h1 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #666;
+}

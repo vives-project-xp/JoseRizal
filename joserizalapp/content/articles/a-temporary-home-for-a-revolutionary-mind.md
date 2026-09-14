@@ -1,5 +1,6 @@
 ---
 id: 1
+order: 5
 title: A Temporary Home for a Revolutionary Mind
 preview: In 1891, Rizal moved to Ghent, seeking affordability and solitude to complete El Filibusterismo, finding both in a quiet Belgian neighborhood.
 locations: []

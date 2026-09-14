@@ -1,5 +1,6 @@
 ---
 id: 5
+order: 4
 title: The Romance Behind the Revolution
 preview: Behind Rizal’s revolutionary mission in Ghent lies a lesser-known story of romance, heartbreak, and emotional struggle with Josephine Bracken.
 locations: []

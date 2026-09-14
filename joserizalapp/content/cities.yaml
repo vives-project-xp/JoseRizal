@@ -6,7 +6,7 @@ cities:
       winding canals, and vibrant student population—lies a lesser-known but
       significant historical connection to the Philippines: José Rizal, the
       country's national hero, once lived here.
-    image: /content/images/ghent.webp
+    image: /static/uploads/joserizal.jpg
     locations:
       - id: 4
         name: Gravensteen (Castle of the Counts)
@@ -15,9 +15,9 @@ cities:
           Alsace. It served as the residence of the Counts of Flanders until the
           14th century. The castle has been restored and is now a museum open to
           the public.
-        latitude: 51.057222
-        longitude: 3.720556
-        image: /content/images/gravensteen-ghent.webp
+        latitude: "51.057222"
+        longitude: "3.720556"
+        image: /static/uploads/Gravensteen,_Ghent.jpg
 
       - id: 5
         name: Saint Bavo's Cathedral (Sint-Baafskathedraal)
@@ -26,9 +26,9 @@ cities:
           13th century. It is renowned for housing the famous Ghent Altarpiece,
           also known as the Adoration of the Mystic Lamb, by the Van Eyck
           brothers.
-        latitude: 51.053
-        longitude: 3.727
-        image: /content/images/saint-bavos-cathedral.webp
+        latitude: "51.053000"
+        longitude: "3.727000"
+        image: /static/uploads/Saint_Bavo's_Cathedral.jpg
 
       - id: 6
         name: Belfry of Ghent (Belfort van Gent)
@@ -36,16 +36,16 @@ cities:
           The Belfry of Ghent is a 91-meter-tall medieval bell tower that was
           constructed in the 14th century. It is part of a UNESCO World Heritage
           Site and symbolizes the city's independence.
-        latitude: 51.05389
-        longitude: 3.72528
-        image: /content/images/belfry-of-ghent.webp
+        latitude: "51.053890"
+        longitude: "3.725280"
+        image: /static/uploads/Belfry _of_Ghent.jpg
 
   - id: 2
     name: Bruges
     description: >-
       The capital and largest city of the province of West Flanders, in the
       Flemish Region of Belgium.
-    image: /content/images/bruges.webp
+    image: /static/uploads/Bruges.jpg
     locations:
       - id: 7
         name: Belfry of Bruges (Belfort van Brugge)
@@ -53,9 +53,9 @@ cities:
           A medieval bell tower standing 83 meters tall, the Belfry is one of
           Bruges' most prominent symbols. It offers panoramic views of the city
           and houses a carillon of 47 bells.
-        latitude: 51.2082311
-        longitude: 3.2247853
-        image: /content/images/belfry-of-bruges.webp
+        latitude: "51.2082311"
+        longitude: "3.2247853"
+        image: /static/uploads/Belfry_of_Bruges.jpg
 
       - id: 8
         name: Markt (Market Square)
@@ -63,9 +63,9 @@ cities:
           The central square of Bruges, the Markt is surrounded by historic
           buildings, including the Belfry and the Provincial Court. It's a hub
           of activity with cafes, shops, and horse-drawn carriages.
-        latitude: 51.20866
-        longitude: 3.224106
-        image: /content/images/market-square-bruges.webp
+        latitude: "51.208660"
+        longitude: "3.224106"
+        image: /static/uploads/market squaere bruges.jpg
 
       - id: 9
         name: Basilica of the Holy Blood (Heilig-Bloedbasiliek)
@@ -73,6 +73,6 @@ cities:
           This basilica houses a revered relic said to contain a cloth with the
           blood of Jesus Christ. The church combines Romanesque and Gothic
           architectural styles and is located on Burg Square.
-        latitude: 51.208913
-        longitude: 3.227212
-        image: /content/images/basilica-of-the-holy-blood.webp
+        latitude: "51.208913"
+        longitude: "3.227212"
+        image: /static/uploads/Basilica_of_the_Holy_Blood.jpg
