@@ -16,7 +16,6 @@ coverage
 *.local
 pnpm-lock.yaml
 yarn.lock
-package-lock.json
 
 # Cypress (if using E2E tests)
 /cypress/videos/

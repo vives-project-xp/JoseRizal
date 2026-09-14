@@ -112,22 +112,22 @@
 import { ref } from 'vue'
 
 import DevCard from '@/components/UserFrontend/DevCard.vue'
-import imageDev1 from '@/assets/developer_pics/Fae.jpg'
-import imageDev2 from '@/assets/developer_pics/Lynn.png'
-import imageDev3 from '@/assets/developer_pics/Liang.jpg'
-import imageDev4 from '@/assets/developer_pics/Tristan.png'
+import imageDev1 from '@/assets/developer_pics/Fae.webp'
+import imageDev2 from '@/assets/developer_pics/Lynn.webp'
+import imageDev3 from '@/assets/developer_pics/Liang.webp'
+import imageDev4 from '@/assets/developer_pics/Tristan.webp'
 
-import imageVince from '@/assets/developer_pics/Vince_Julius_Cedeno.jpg'
-import imageAaron from '@/assets/developer_pics/Aaron_Jason_Cedeno.jpg'
-import imageTimothy from '@/assets/developer_pics/Timothy_Joseph_Angeles.jpg'
-import imageKyrsten from '@/assets/developer_pics/Kyrsten_Sasil.png'
-import imageRandall from '@/assets/developer_pics/Randall_Ramirez.png'
+import imageVince from '@/assets/developer_pics/Vince_Julius_Cedeno.webp'
+import imageAaron from '@/assets/developer_pics/Aaron_Jason_Cedeno.webp'
+import imageTimothy from '@/assets/developer_pics/Timothy_Joseph_Angeles.webp'
+import imageKyrsten from '@/assets/developer_pics/Kyrsten_Sasil.webp'
+import imageRandall from '@/assets/developer_pics/Randall_Ramirez.webp'
 
-import imageDelmar from '@/assets/developer_pics/Delmar_Ramcic.jpg'
-import imageJarno from '@/assets/developer_pics/Jarno_Bostyn.jpg'
-import imageNicolas from '@/assets/developer_pics/Nicolas_Hongerloot.jpg'
-import imageWard from '@/assets/developer_pics/Ward_Dereeper.jpg'
-import imageSanjar from '@/assets/developer_pics/Sanjar_Tilavkobilov_Sanjar_Isomiddin_Ugli.jpg'
+import imageDelmar from '@/assets/developer_pics/Delmar_Ramcic.webp'
+import imageJarno from '@/assets/developer_pics/Jarno_Bostyn.webp'
+import imageNicolas from '@/assets/developer_pics/Nicolas_Hongerloot.webp'
+import imageWard from '@/assets/developer_pics/Ward_Dereeper.webp'
+import imageSanjar from '@/assets/developer_pics/Sanjar_Tilavkobilov_Sanjar_Isomiddin_Ugli.webp'
 
 const developers = ref([
 	{
@@ -217,7 +217,7 @@ html, body {
 }
 
 .page-container {
-	background-image: url("@/assets/background.png");
+	background-image: url("@/assets/background.webp");
 	background-size: cover;
 	background-attachment: fixed;
 	padding: 10px;
