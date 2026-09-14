@@ -1,5 +1,6 @@
 ---
 id: 4
+order: 3
 title: The Ghent Printing Press Behind Rizal’s El Filibusterismo
 preview: In a quiet Ghent street, a small Belgian press helped José Rizal print El Filibusterismo—a novel that would ignite a revolution in the Philippines.
 locations: []

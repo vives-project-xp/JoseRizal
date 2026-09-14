@@ -1,5 +1,6 @@
 ---
 id: 3
+order: 2
 title: A Quiet Tribute
 preview: Ghent holds no grand monument to Rizal, but it quietly honors his legacy through memory and history.
 locations: []

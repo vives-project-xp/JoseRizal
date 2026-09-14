@@ -4,8 +4,8 @@
         <div v-else-if="error">{{ error }}</div>
 		<div v-else class="city-page">
         	<!-- TOURS -->
-        <h1>{{ selectedCity.name }}</h1>
-        <p>Explore and discover all of {{ selectedCity.name }}'s landmarks related to Jose Rizal...</p>
+        <h1>{{ selectedCity.title }}</h1>
+        <p>Explore and discover all of {{selectedCity.title }}'s landmarks related to Jose Rizal...</p>
         <FeaturedTour 
             v-if="selectedCity && selectedCity.id && locations.length > 0" 
             :imageUrl="selectedCity.image_url || cityImage" 

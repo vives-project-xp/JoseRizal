@@ -2,6 +2,7 @@
   <div class="app-container">
     <AppHeaderComponent @changePage="scrollToComponent" />
     <router-view />
+    <FooterComponent />
   </div>
 </template>
 
@@ -11,9 +12,9 @@ import AppHeaderComponent from './components/UserFrontend/AppHeaderComponent.vue
 
 <style scoped>
 .app-container {
-  background-image: url("@/assets/background.webp");
+  background-image: url("@/assets/background.png");
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
 }
-</style>
+</style>  
