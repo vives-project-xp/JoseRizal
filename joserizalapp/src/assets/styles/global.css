@@ -86,11 +86,7 @@ img{
   width: 45%
 }
 
-/*
- * These public-page rules previously came from globally scoped styles in the
- * removed admin screens. Keep them explicit so the static migration preserves
- * the existing website's layout without shipping the admin application.
- */
+/* Shared layout and form styles used by the public pages. */
 .pageContent {
   background-image: url("@/assets/background.png");
   background-size: cover;
