@@ -1,7 +1,7 @@
 # Editing site content
 
-The José Rizal website is fully static. Content changes are reviewed and
-deployed through Git instead of an online administrator account.
+Content changes are reviewed through pull requests and deployed from the
+`main` branch by Cloudflare Pages.
 
 ## Add or edit an article
 
@@ -30,11 +30,10 @@ Cities and their walking-tour locations live in
 [`cities.yaml`](cities.yaml). Keep every city and location ID unique. Store
 coordinates as decimal latitude and longitude.
 
-Put images under `../public/` and reference them with an absolute site path,
-for example `/content/images/file-name.webp`. Prefer compressed WebP images
-with lower-case, descriptive file names without spaces. Existing production
-images remain at their historical paths so the migration preserves them
-exactly.
+Put images under [`../public/static/uploads/`](../public/static/uploads/) and
+reference them with an absolute site path, for example
+`/static/uploads/file-name.webp`. Prefer compressed WebP images with lower-case,
+descriptive file names without spaces.
 
 ## Check a change
 
@@ -45,6 +44,6 @@ npm ci
 npm run check
 ```
 
-The build fails for duplicate IDs, invalid references or coordinates, missing
-required text, and missing image files. A successful build produces the static
-site in `dist/`, ready for Cloudflare Pages.
+The build fails for duplicate IDs or ordering values, invalid references or
+coordinates, missing required text, and missing image files. A successful
+build produces the site in `dist/`, ready for Cloudflare Pages.

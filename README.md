@@ -6,9 +6,16 @@ José Rizal Walk is an educational website about José Rizal's time in Belgium.
 It includes historical articles, city landmarks, custom walking-tour links,
 externally hosted games, and a virtual tour.
 
-The website is fully static and is intended to run on Cloudflare Pages. It has
-no application server, database, administrator account, or runtime API.
-Content changes are made through Git and reviewed like code changes.
+Cloudflare Pages builds and hosts the Vue single-page application. Site content
+is stored in this repository and deployed from the `main` branch, so content
+changes follow the same pull-request workflow as code changes.
+
+## How it works
+
+The build runs [`scripts/build-content.mjs`](joserizalapp/scripts/build-content.mjs)
+to validate the Markdown and YAML sources and generate `public/content.json`.
+Vite then bundles the application into `joserizalapp/dist/`, which Cloudflare
+Pages publishes.
 
 ## Edit content
 
@@ -17,14 +24,14 @@ Content changes are made through Git and reviewed like code changes.
 - Cities and walking-tour locations are in
   [`joserizalapp/content/cities.yaml`](joserizalapp/content/cities.yaml).
 - Content images are in
-  [`joserizalapp/public/content/images/`](joserizalapp/public/content/images/).
+  [`joserizalapp/public/static/uploads/`](joserizalapp/public/static/uploads/).
 
 Detailed editing and validation instructions are in
 [`joserizalapp/content/README.md`](joserizalapp/content/README.md).
 
 ## Develop locally
 
-Node.js is pinned in `joserizalapp/.node-version`.
+Node.js 24.21.0 is pinned in `joserizalapp/.node-version`.
 
 ```bash
 cd joserizalapp
@@ -33,7 +40,7 @@ npm run dev
 ```
 
 The development server prints its local URL. Content is validated and compiled
-before the server starts.
+before it starts.
 
 ## Validate and build
 
@@ -47,7 +54,7 @@ The static output is written to `joserizalapp/dist/`.
 
 ## Cloudflare Pages
 
-Connect this GitHub repository to a dedicated Pages project with:
+Connect this GitHub repository to a Pages project with:
 
 | Setting | Value |
 | --- | --- |
@@ -56,9 +63,9 @@ Connect this GitHub repository to a dedicated Pages project with:
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 
-Use `joserizal.devbitapp.be` as the custom domain. Cloudflare Pages treats the
-build as a Vue single-page application, so direct links such as `/articles/1`
-and `/cities/1` continue to work.
+Add `joserizal.devbitapp.be` through the Pages project's **Custom domains**
+screen. Direct routes such as `/articles/1` and `/cities/1` are handled by the
+Vue single-page application.
 
 ## Contributors
 
